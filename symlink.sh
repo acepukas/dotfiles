@@ -33,13 +33,25 @@ COMMAND=$1
 
 case $COMMAND in
 link)
-  for PAIR in "${!PATHS[@]}"; do
-    ln -s "$PAIR" "${PATHS[$PAIR]}"
+  for FILE in "${!PATHS[@]}"; do
+    LINK="${PATHS[$FILE]}"
+    if [ ! -L "$LINK" ]; then
+      echo "established symlink: $LINK -> $FILE"
+      ln -s "$FILE" "$LINK"
+    else
+      echo "synlink already established: $LINK -> $FILE"
+    fi
   done
   ;;
 unlink)
-  for PAIR in "${!PATHS[@]}"; do
-    unlink "${PATHS[$PAIR]}"
+  for FILE in "${!PATHS[@]}"; do
+    LINK="${PATHS[$FILE]}"
+    if [ -L "$LINK" ]; then
+      echo "unlink $LINK"
+      unlink "$LINK"
+    else
+      echo "not a symlink: $LINK "
+    fi
   done
   ;;
 *)
