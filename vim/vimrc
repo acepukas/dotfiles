@@ -170,7 +170,7 @@ set history=1000
 
 " persistent undo
 set undofile
-set undodir=$HOME/.vim/.vimundo
+set undodir=$HOME/.vimundo
 
 set undolevels=1000
 set undoreload=10000
