@@ -1,0 +1,67 @@
+snippet xh1t "XHTML 1.0 Transitional template"
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <title>${1:Page Title}</title>
+</head>
+<body${2: id="${3:page id}"}>
+
+    ${0}
+    
+</body>
+</html>
+endsnippet
+
+snippet script "with CDATA" !
+<script type="text/javascript" charset="utf-8">
+/* <![CDATA[ */
+    ${0}
+/* ]]> */
+</script>
+endsnippet
+
+snippet img "img tag" b
+<img src="${1:img_path}" ${2:alt="${3:alt_text}"} />
+endsnippet
+
+snippet qsvar "capture query string params via ssi" b
+<!--#if expr="$QUERY_STRING == /${1:paramName}=([^&]*)/" --><!--#set var="$1" value="\$1" --><!--#endif -->
+endsnippet
+
+snippet inc "SSI include" b
+<!--#include virtual="${1}" -->
+endsnippet
+
+snippet if "SSI if" b
+<!--#if expr="${1:CONDITION}" -->
+endsnippet
+
+snippet else "SSI else" b
+<!--#else -->
+endsnippet
+
+snippet elif "SSI else if" b
+<!--#elif expr="${1:CONDITION}" -->
+endsnippet
+
+snippet endif "SSI endif" b
+<!--#endif -->
+endsnippet
+
+snippet set "SSI set var statement" b
+<!--#set var="${1:VAR_NAME}" value="${2:VALUE}" -->
+endsnippet
+
+snippet echo "SSI echo" b
+<!--#echo var="${1:VAR_NAME}" -->
+endsnippet
+
+snippet ie6cc "IE 6 conditional comment" b
+<!--[if IE 6]>${1}<![endif]-->
+endsnippet
+
+snippet ie7cc "IE 7 conditional comment" b
+<!--[if IE 7]>${1}<![endif]-->
+endsnippet

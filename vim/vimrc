@@ -1,0 +1,796 @@
+" Notes {
+" vim: set foldmarker={,} foldlevel=0 foldmethod=marker:
+" }
+" No Compatible {
+set nocompatible
+"}
+" vim-plug Config {
+call plug#begin($HOME . '/.vim/plugged')
+
+" Basic config
+Plug 'vim-scripts/L9'
+Plug 'tomtom/tcomment_vim'
+Plug 'edsono/vim-matchit'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-obsession'
+Plug 'Lokaltog/vim-easymotion'
+Plug 'junegunn/vim-easy-align'
+Plug 'Raimondi/delimitMate'
+Plug 'wellle/targets.vim'
+Plug 'itchyny/lightline.vim'
+
+" color schemes
+Plug 'acepukas/Zenburn'
+Plug 'morhetz/gruvbox'
+Plug 'altercation/vim-colors-solarized'
+Plug 'chriskempson/base16-vim'
+Plug 'whatyouhide/vim-gotham'
+
+" TMUX
+Plug 'edkolev/tmuxline.vim'
+Plug 'benmills/vimux'
+Plug 'christoomey/vim-tmux-navigator'
+
+" Major feature plugins
+Plug 'romainl/vim-qf'
+Plug 'ervandew/supertab'
+Plug 'junegunn/fzf', { 'dir': $HOME . '/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'sjl/gundo.vim/'
+Plug 'alfredodeza/jacinto.vim'
+
+" C++ development plugins
+"
+" Plug 'acepukas/vim-cpp'
+Plug 'majutsushi/tagbar'
+Plug 'vim-scripts/TagHighlight'
+Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+Plug 'xolox/vim-easytags'
+Plug 'xolox/vim-misc'
+Plug 'vhdirk/vim-cmake'
+
+" web dev plugins
+"
+Plug 'scrooloose/syntastic'
+Plug 'othree/yajs.vim'
+Plug 'othree/es.next.syntax.vim'
+Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
+Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'vim-scripts/JavaScript-Indent'
+Plug 'acepukas/gen-jsdoc-func-doc'
+" Plug 'gavocanov/vim-js-indent'
+Plug 'digitaltoad/vim-pug'
+Plug 'wavded/vim-stylus'
+Plug 'flowtype/vim-flow'
+" Plug 'gregsexton/MatchTag'
+" Plug 'rstacruz/sparkup', { 'rtp': 'vim' }
+" Plug 'othree/html5-syntax.vim'
+" Plug 'hail2u/vim-css3-syntax'
+" Plug 'groenewege/vim-less'
+" Plug 'nono/vim-handlebars'
+" Plug 'acepukas/vim-handlebars-conf'
+
+call plug#end()
+" }
+" Terminal {
+
+if !(has('win32') || has('win64') || has('gui_running'))
+
+  if has('termguicolors')
+    set t_8f=[38;2;%lu;%lu;%lum
+    set t_8b=[48;2;%lu;%lu;%lum
+    set termguicolors
+  endif
+
+  if &term =~ "xterm"
+      set t_Co=256
+      if has("terminfo")
+          let &t_Sf=nr2char(27).'[3%p1%dm'
+          let &t_Sb=nr2char(27).'[4%p1%dm'
+      else
+          let &t_Sf=nr2char(27).'[3%dm'
+          let &t_Sb=nr2char(27).'[4%dm'
+      endif
+  endif
+
+  if &term =~ '256color'
+    " Disable Background Color Erase (BCE) so that color schemes work
+    " properly when Vim is used inside tmux and GNU screen.
+    " See also http://snk.tuxfamily.org/log/vim-256color-bce.html
+    set t_ut=
+  endif
+
+  if &term =~ '^screen'
+      " Page up/down keys
+      " http://sourceforge.net/p/tmux/tmux-code/ci/master/tree/FAQ
+      execute "set t_kP=\e[5;*~"
+      execute "set t_kN=\e[6;*~"
+
+      " Home/end keys
+      map <Esc>OH <Home>
+      map! <Esc>OH <Home>
+      map <Esc>OF <End>
+      map! <Esc>OF <End>
+
+      " Arrow keys
+      execute "set <xUp>=\e[1;*A"
+      execute "set <xDown>=\e[1;*B"
+      execute "set <xRight>=\e[1;*C"
+      execute "set <xLeft>=\e[1;*D"
+  endif
+
+endif
+"}
+" Character Encoding {
+if has("multi_byte")
+    if &termencoding == ""
+        let &termencoding = &encoding
+    endif
+    set encoding=utf-8
+    setglobal fileencoding=utf-8 bomb
+    set fileencodings=ucs-bom,utf-8,latin1
+endif
+" }
+" Initial Commands for setting up vim {
+
+" clearing all auto commands in case vimrc sourced again
+" All auto commands must come after this statement
+autocmd!
+
+" allowing per directory .vimrc files
+set exrc
+
+" secure prevents certain functions from
+" being used within per dir .vimrc files
+set secure
+
+syntax on
+filetype on
+filetype plugin on
+filetype indent on
+
+" prevents cursor from jumping to start of line
+" on buffer switch for example
+set nostartofline
+
+" delfault is 4000 which is too slow
+set updatetime=250
+
+" save 1000 lines of history
+set history=1000
+
+" persistent undo
+set undofile
+set undodir=$HOME/.vim/.vimundo
+
+set undolevels=1000
+set undoreload=10000
+
+set title
+set visualbell
+set noerrorbells
+
+" read file when changed externally
+set autoread
+
+" allows for more commands by using <leader> in custom mappings
+let g:mapleader=" "
+let mapleader=g:mapleader
+
+" fast saving
+nnoremap <leader>w :w!<cr>
+
+"fast editing of vimrc file
+nnoremap <leader>e :vsplit $MYVIMRC<cr>
+nnoremap <leader>v :so $MYVIMRC<cr>
+
+" setting environment paths
+set path=.,./**,,
+
+set showbreak=↪\  " for wrapped lines
+
+" Delete comment character when joining commented lines
+if v:version > 703 || v:version == 703 && has("patch541")
+  set formatoptions+=j     
+endif
+
+" Use only 1 space after "." when joining lines instead of 2
+set nojoinspaces
+
+" Split windows below and right instead of above and left
+set splitbelow splitright
+
+" }
+" UI Setup {
+
+set mouse=a
+
+set so=7
+
+" Text formatting
+set expandtab
+set sts=2
+set sw=2
+set shiftround
+" set smartindent
+set autoindent
+set copyindent
+set tw=0
+set tabstop=2
+set showmatch
+" set smarttab
+set backspace=2
+set ffs=unix,dos,mac
+
+" Searching (REGEX)
+" set ignorecase
+" set smartcase
+set incsearch
+set hlsearch " highlighting
+
+" backspace behaves
+set backspace=indent,eol,start
+
+" always show invisible chars
+set list
+" use the same symbols as TextMate for tabstops and EOLs"
+set listchars=trail:.,tab:▸\ ,eol:¬
+
+set number
+set relativenumber
+
+" allow for wild menu feature
+set wildmenu
+
+" Disable output and VCS files
+set wildignore+=*.o,*.out,*.obj,.git,*.rbc,*.rbo,*.class,.svn,*.gem
+
+" Disable archive files
+set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
+
+" Ignore bundler and sass cache
+set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
+
+" Ignore rails temporary asset caches
+set wildignore+=*/tmp/cache/assets/*/sprockets/*,*/tmp/cache/assets/*/sass/*
+
+" Ignore build dir
+set wildignore+=build/*,media/*
+
+" Ignore node modules
+set wildignore+=node_modules/*,bower_components/*
+
+" Disable temp and backup files
+set wildignore+=*.swp,*~,._*
+
+set wildignore+=types_*taghl,tags
+
+" zenburn colorscheme configuration
+" let g:zenburn_enable_TagHighlight=1
+" let g:zenburn_disable_Label_underline=1
+" let g:zenburn_alternate_Error=1
+" colorscheme zenburn
+
+" gruvbox colorscheme configuration
+let g:gruvbox_underline = 0
+let g:gruvbox_invert_selection = 0
+let g:gruvbox_contrast_dark = 'soft'
+let g:gruvbox_number_column = 'bg2'
+set background=dark
+colorscheme gruvbox
+
+" set background=dark
+" colorscheme solarized
+
+"set background=dark
+"colorscheme base16-ocean
+
+" colorscheme gotham
+
+" hilight off in insert mode
+autocmd InsertEnter * :setlocal nohlsearch
+autocmd InsertLeave * :setlocal hlsearch
+
+" do not display mode in output statusline
+set nosmd
+
+if has('gui_running')
+  " gvim specific stuff
+  set guioptions=acM
+  :syntax on
+
+  if has("gui_win32") " NT Windows
+    autocmd GUIEnter * :simalt ~x
+    set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h14
+  elseif has("mac")
+    set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h16
+  else
+    set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 20
+  endif
+endif
+
+" color column for 80 character mark
+set cc=80
+
+" clipboard
+if has("mac")
+elseif has("unix")
+  set clipboard=unnamed
+  noremap <leader>y "*y
+  noremap <leader>p pV`]=
+endif
+
+" }
+" Back Up Config {
+set nobackup
+set noswapfile
+" }
+" Session Management {
+"session management as projects
+set sessionoptions=buffers,folds,options,tabpages,winsize
+"}
+" Custom Commands "{
+
+" I don't want help right now!
+" nnoremap <F1> <Esc>
+vnoremap <F1> <Esc>
+inoremap <F1> <Esc>
+
+" kill the arrow keys
+nnoremap <Left>  :noh<CR>
+nnoremap <Right> :noh<CR>
+nnoremap <Up>    :noh<CR>
+nnoremap <Down>  :noh<CR>
+
+" no highlight search
+nnoremap <silent> <bs> :noh<cr>
+
+" prevent leaving visual mode when shifting left or right
+vnoremap > >gv
+vnoremap < <gv
+
+" normal mode command will reselect most recently pasted text
+nnoremap gV `[v`]
+
+" change to directory of current file for buffer only, not entire vim instance.
+nnoremap <leader>cd :cd %:p:h<cr> :echo expand("%:p:h")<cr>
+
+iab xdate <c-r>=strftime("%Y-%m-%d")<cr>
+
+" piece-wise copy items from line above
+inoremap <C-L> @@@<ESC>hhkywjl?@@@<CR>P/@@@<CR>3s
+
+" EscapeVimRegex will escape strings that are to be searched
+" against within a regex, preventing characters with special
+" meaning from interfering with the search
+
+fun! EscapeVimRegex(str)
+  let l:str = a:str
+  let l:subs = [
+    \{'char' : '\\',  'rep' : '\\\\'},
+    \{'char' : '\^',  'rep' : '\\^'},
+    \{'char' : '\$',  'rep' : '\\$'},
+    \{'char' : '\.',  'rep' : '\\.'},
+    \{'char' : '\*',  'rep' : '\\*'},
+    \{'char' : '\~',  'rep' : '\\~'},
+    \{'char' : '\[',  'rep' : '\\['},
+    \{'char' : '\\n', 'rep' : '\\\\n'},
+    \{'char' : '\:',  'rep' : '\\:'}
+  \]
+  for sub in l:subs
+    let l:str = substitute(l:str, sub['char'], sub['rep'], 'g')
+  endfor
+  return l:str
+endfun
+
+" string substitution for currently visually selected text
+vnoremap <leader>r "sy:%s:<C-R>=EscapeVimRegex(@s)<CR>::g<Left><Left>
+
+" count occurrences of visually selected text
+vnoremap <leader>c "sy:%s:<C-R>=EscapeVimRegex(@s)<CR>::n<CR>
+
+fun! ClearTabsAndCRs()
+  :%s/	/  /ge
+  :%s///ge
+endfun
+
+" do not enter visual mode
+nnoremap Q <Nop>
+
+" do not look shit up! ANNOYING!
+nnoremap K <Nop>
+vnoremap K <Nop>
+
+" center searched words
+nnoremap N Nzz
+nnoremap n nzz
+
+" navigate wrapped text more easily
+nnoremap k gk
+nnoremap j gj
+
+" recall last buffer
+nnoremap <leader><tab> :b!#<CR>
+
+" Toggle semicolon, comma or neither at
+" end of line without moving cursor
+nnoremap <leader>; :call ToggleSemiColonComma()<cr>
+
+fun! ToggleSemiColonComma()
+    let l:last = getline(line("."))[-1:]
+    if l:last =~ ","
+        execute "normal! mz$x`z"
+    elseif l:last =~ ";"
+        execute "normal! mz$r,`z"
+    elseif l:last !~ "(,|;)"
+        execute "normal! mzA;`z"
+    endif
+endfun
+
+" clear errors
+nnoremap <leader>0 :sign unplace *<CR>
+
+" calculate desired em value based
+" on px font and parent el px font.
+" only really useful for css/less/scss
+
+" expected output would be something like:
+
+"   1.125em; /* == (18px / 16px) */
+
+fun! PxToEm(sz,psz)
+python << EOF
+import vim
+
+try:
+  # get args
+  sz = float(vim.eval("a:sz"))
+  psz = float(vim.eval("a:psz"))
+
+  res = sz / psz
+  out = "font-size: "
+  out += "%.3f" % round(res,3)
+  out += "em; /* == ("
+  out += "%d" % sz
+  out += "px / "
+  out += "%d" % psz
+  out += "px) */"
+  cmd = "normal a" + out
+
+  vim.command(cmd)
+
+except Exception, e:
+  print e
+
+EOF
+endfun
+
+command! -nargs=+ PxToEm :call PxToEm(<f-args>)
+nnoremap <leader>f :PxToEm 
+
+" setting title of quickfix window when open
+autocmd BufWinEnter quickfix silent :file quickfix
+
+" quick short cut for deleting all lines with selected text
+vnoremap <leader>d "zy:g/"/d
+
+nnoremap <F12> :bd<CR>
+
+"}
+"BOM Management "{
+"making sure that no bom is prepended to files when written
+autocmd BufWrite * :set nobomb
+autocmd BufWrite * :set ff=unix
+"}
+" File Type Plugins "{
+autocmd FileType python set omnifunc=pythoncomplete#Complete
+" autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType handlebars set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType xhtml set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+autocmd FileType c set omnifunc=ccomplete#Complete
+
+if has("autocmd") && exists("+omnifunc")
+autocmd Filetype *
+  \ if &omnifunc == "" |
+  \ setlocal omnifunc=syntaxcomplete#Complete |
+  \ endif
+endif
+
+autocmd BufRead,BufNewFile *.txt set filetype=txt
+autocmd FileType txt setl expandtab
+
+" support for cmake files
+au BufNewFile,BufRead CMakeLists.txt set filetype=cmake
+
+" support for json syntax highlighting
+autocmd BufRead,BufNewFile *.json set filetype=json
+
+" support for stylus syntax highlighting
+autocmd BufRead,BufNewFile *.styl set filetype=stylus
+
+" support for nginx config file syntax highlighting
+autocmd BufRead,BufNewFile /usr/local/etc/nginx/*.conf set filetype=nginx
+
+" support for markdown syntax highlighting
+autocmd BufRead,BufNewFile *.md set filetype=markdown
+
+" php man page docs support
+autocmd BufRead,BufNewFile *.php set keywordprg=pman
+"}
+" Plugin Configuration "{
+
+"NERD Tree plugin
+nnoremap <F1> :NERDTreeToggle<CR>
+
+" load session if present
+nnoremap <F2> :source Session.vim<CR>
+
+" GUNDO
+nnoremap <F5> :GundoToggle<CR>
+let g:gundo_preview_bottom = 1
+
+" syntastic
+" let g:syntastic_debug = 3
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_pug_checkers = ['pug_lint']
+let g:syntastic_stl_format = '%E{e:%e l:%fe}%B{, }%W{w:%w l:%fw}'
+let g:syntastic_mode_map = { 'mode': 'passive' }
+
+augroup AutoSyntastic
+  autocmd!
+  autocmd BufWritePost *.c,*.cpp,*.js,*.pug call s:syntastic()
+augroup END
+function! s:syntastic() abort
+  SyntasticCheck
+  call lightline#update()
+endfunction
+
+" tern.js
+let tern#is_show_argument_hints_enabled = 'true'
+let g:my_tern_path = expand('<sfile>:h') . '/.vim/plugged/tern_for_vim/node_modules/tern/bin/tern'
+let g:tern#command = ["node", g:my_tern_path, '--no-port-file', '--persistent']
+let g:tern_request_timeout = 3
+
+" javascript-libraries-syntax
+let g:used_javascript_libs = 'jquery,underscore,backbone'
+
+" YCM
+let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>'] 
+let g:ycm_key_list_previous_completion = ['<C-S-TAB>', '<Up>'] 
+
+" let g:ycm_filepath_completion_use_working_dir = 1
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
+let g:ycm_collect_identifiers_from_tags_files = 1
+
+let g:ycm_add_preview_to_completeopt = 0
+let g:ycm_confirm_extra_conf = 0
+set completeopt-=preview
+
+let g:ycm_global_ycm_extra_conf = $HOME . '/.vim/.ycm_extra_conf.py'
+
+let g:ycm_filetype_blacklist = {
+  \ 'vim': 1
+  \}
+
+" SuperTab
+let g:SuperTabDefaultCompletionType = '<TAB>'
+
+" ultisnips
+let g:UltiSnipsEditSplit='vertical'
+let g:UltiSnipsSnippetsDir=$HOME . '/.vim/UltiSnips'
+let g:UltiSnipsSnippetDirectories=['UltiSnips']
+
+let g:UltiSnipsExpandTrigger='<c-z>'
+let g:UltiSnipsJumpForwardTrigger='<c-j>'
+let g:UltiSnipsJumpBackwardTrigger='<c-k>'
+let g:UltiSnipsListSnippets='<c-b>'
+
+" vim-qf
+nnoremap <silent> <C-Q> :exe "normal \<Plug>QfSwitch"<CR>
+let g:qf_mapping_ack_style = 1
+
+" FZF
+nnoremap <C-P> :FZF<CR>
+nnoremap <leader>x :Buffers<CR>
+nnoremap <leader>q :Ag 
+
+function! EscapePCRE(str)
+  let l:str = a:str
+  let l:subs = [
+    \{'char' : '\\', 'rep' : '\\\\'},
+    \{'char' : '\.', 'rep' : '\\.'},
+    \{'char' : '\^', 'rep' : '\\^'},
+    \{'char' : '\$', 'rep' : '\\$'},
+    \{'char' : '\*', 'rep' : '\\*'},
+    \{'char' : '+',  'rep' : '\\+'},
+    \{'char' : '?',  'rep' : '\\?'},
+    \{'char' : '(',  'rep' : '\\('},
+    \{'char' : ')',  'rep' : '\\)'},
+    \{'char' : '\[', 'rep' : '\\['},
+    \{'char' : '\]', 'rep' : '\\]'},
+    \{'char' : '{',  'rep' : '\\{'},
+    \{'char' : '\}', 'rep' : '\\}'},
+    \{'char' : '|',  'rep' : '\\|'},
+    \{'char' : '\\n','rep' : '\\\\n'}
+  \]
+  for sub in l:subs
+    let l:str = substitute(l:str, sub['char'], sub['rep'], 'g')
+  endfor
+  return l:str
+endfunction
+
+" Search files for word under cursor
+nnoremap <unique> <leader>s "zyiw :exe ':Ag ' . EscapePCRE(@z)<cr>
+" Search files for visually selected word under cursor
+vnoremap <unique> <leader>s "zy :exe ':Ag ' . EscapePCRE(@z)<cr>
+" bring up :Ag command prompt
+nnoremap <leader>a :Ag 
+
+" tagbar settings
+nnoremap <F7> :TagbarToggle<CR>
+let g:tagbar_width = 50
+
+" TagHighlight settings
+" let g:TagHighlightSettings = { }
+" let g:TagHighlightSettings['ExtensionLanguageOverrides'] = {'inl': 'c'}
+
+" vim-easy-align
+vnoremap <silent> <Enter> :EasyAlign<CR>
+
+if !exists('g:easy_align_delimiters')
+  let g:easy_align_delimiters = {}
+endif
+
+" Custom alignment delimeters for c style langs
+let g:easy_align_delimiters['d'] = {
+\ 'pattern': ' \(\S\+\s*[;=]\)\@=',
+\ 'left_margin': 0, 'right_margin': 0
+\ }
+
+" work around for ruby and vimux
+ruby << EOF
+class Object
+  def flush; end unless Object.new.respond_to?(:flush)
+end
+EOF
+
+" easy motion
+
+hi link EasyMotionTarget2First Constant
+hi link EasyMotionTarget2Second Constant
+
+" vim-flow - disabling system wide. Enable with dir level .vimrc if needed
+let g:flow#enable = 0
+let g:flow#omnifunc = 0
+
+" gen-jsdoc-func-doc
+let g:generateJSDocFuncDocKeyMap = '<C-F>'
+
+"}
+" lightline config "{
+
+" lightline needs status line visible
+set laststatus=2
+
+let g:lightline = {
+      \ 'colorscheme': 'gruvbox',
+      \ 'mode_map': { 'c': 'NORMAL' },
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ],
+      \   'right': [ [ 'syntastic', 'lineinfo' ],
+      \              [ 'percent' ],
+      \              [ 'obsession', 'fileformat', 'fileencoding', 'filetype' ] ]
+      \ },
+      \ 'component_function': {
+      \   'modified': 'MyModified',
+      \   'readonly': 'MyReadonly',
+      \   'fugitive': 'MyFugitive',
+      \   'filename': 'MyFilename',
+      \   'fileformat': 'MyFileformat',
+      \   'filetype': 'MyFiletype',
+      \   'fileencoding': 'MyFileencoding',
+      \   'mode': 'MyMode',
+      \   'obsession': 'MyObsession'
+      \ },
+      \ 'component_expand': {
+      \   'syntastic': 'SyntasticStatuslineFlag'
+      \ },
+      \ 'component_type': {
+      \   'syntastic': 'error'
+      \ },
+      \ 'separator': { 'left': '⮀', 'right': '⮂' },
+      \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
+      \ }
+
+function! MyModified()
+  return &ft =~ 'Tagbar\|help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
+
+function! MyReadonly()
+  return &ft !~? 'Tagbar\|help\|vimfiler\|gundo' && &readonly ? '⭤' : ''
+endfunction
+
+function! MyFilename()
+  " filename used for tests against various file types
+  let fname = expand('%:t')
+
+  " when displaying path of file, show path relative to current working
+  " directory. Has the added benefit of showing the full path of any files
+  " loaded outside of the current working directoy.
+  let curdir = substitute(fnamemodify(getcwd(),':p'),"\\/","\\\\/","g")
+  let fpath = expand('%:p')
+  let fpath = substitute(fpath,curdir,"","g")
+
+  return fname =~ '__Gundo\|NERD_tree' ? '' :
+        \ fname == '__Tagbar__' ? g:lightline.fname :
+        \ (&ft == 'vimfiler' ? vimfiler#get_status_string() : 
+        \  &ft == 'unite' ? unite#get_status_string() : 
+        \  &ft == 'vimshell' ? vimshell#get_status_string() :
+        \ '' != fname ? fpath : '[No Name]') .
+        \ ('' != MyReadonly() ? ' ' . MyReadonly() . ' ' : '') .
+        \ ('' != MyModified() ? ' ' . MyModified() : '')
+endfunction
+
+function! MyFugitive()
+  if &ft !~? 'Tagbar\|vimfiler\|Gundo\|NERD' && exists("*fugitive#head")
+    let _ = fugitive#head()
+    return strlen(_) ? '⭠ '._ : ''
+  endif
+  return ''
+endfunction
+
+function! MyFileformat()
+  return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! MyFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? '⭢⭣' . &filetype : 'no ft') : ''
+endfunction
+
+function! MyFileencoding()
+  return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+endfunction
+
+function! MyMode()
+  let fname = expand('%:t')
+  return fname == 'ControlP' ? 'CtrlP' :
+        \ fname =~ 'NERD_tree' ? 'NERDTree' :
+        \ fname == '__Gundo__' ? 'Gundo' :
+        \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
+        \ fname == '__Tagbar__' ? 'Tagbar' :
+        \ winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
+
+function! MyObsession()
+  if exists("*ObsessionStatus")
+    return ObsessionStatus('●', '○')
+  endif
+  return ''
+endfunction
+
+let g:tagbar_status_func = 'TagbarStatusFunc'
+
+function! TagbarStatusFunc(current, sort, fname, flags, ...) abort
+  let l:flagstr = join(a:flags, '')
+  if l:flagstr != ''
+      let l:flagstr = '[' . l:flagstr . '] '
+  endif
+  let l:status = '[s:' . a:sort . '] ' . l:flagstr . a:fname
+  let g:lightline.fname = l:status
+  return lightline#statusline(0)
+endfunction
+
+"}

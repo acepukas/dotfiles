@@ -1,0 +1,51 @@
+snippet fun "function" b
+${3:void} ${1:function_name}(${2}) {
+	${VISUAL}${0}
+}
+endsnippet
+
+snippet for "basic for loop" b
+for(${1:auto} ${2:i} = 0; $2 < ${3:count}; ++$2) {
+	${VISUAL}${0}
+}
+endsnippet
+
+snippet fori "iteration with for loop (itc = const, itr = reverse, itcr = const reverse)" b
+for(${1:auto} ${2:it} = ${3:container}.${2/^.*?(c)?(r)?$/(?1:c(?2:r):(?2:r))/}begin(), ${4:end} = $3.${2/^.*?(c)?(r)?$/(?1:c(?2:r):(?2:r))/}end(); $2 != $4; ++$2) {
+	${5:*$2}${VISUAL}${0}
+}
+endsnippet
+
+snippet cl "class" b
+class ${1:ClassName} {
+
+	public:
+
+		${2:explicit }$1 (${3});
+		${4:virtual }~$1 ();
+
+	private:
+
+		${5:/* data */}${VISUAL}${0}
+};
+endsnippet
+
+snippet st "Struct" b
+struct ${1:StructName} {
+	${2:/* data */}${VISUAL}${0}
+};
+endsnippet
+
+snippet if "if .." b
+if (${1:/* condition */}) {
+	${VISUAL}${0}
+}
+endsnippet
+
+snippet ife "if .. else (ife)"
+if (${1:/* condition */}) {
+	${2}
+} else {
+	${3:/* else */}
+}
+endsnippet

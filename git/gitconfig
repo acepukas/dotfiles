@@ -1,0 +1,17 @@
+# user git configuration
+[user]
+	name = Aaron Cepukas
+	email = acepukas@gmail.com
+[push]
+	default = matching
+[color]
+	branch = auto
+	status = auto
+[diff]
+	external = git_diff_wrapper
+[pager]
+	diff = 
+[merge]
+	tool = vimdiff
+[core]
+	excludesfile = /home/aaron/.gitignore_global
