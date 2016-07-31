@@ -14,7 +14,7 @@ To unlink, run the following *from your home directory*:
 ./dofiles/symlinks.sh unlink
 ```
 
-To add a new link, add an entry to the `PATHS` associative array in `symlink.sh`. Running `symlink.sh` won't attempt to relink established links.
+To add a new link, add an entry to the `PATHS` associative array in `symlinks.sh`. Running `symlinks.sh` won't attempt to relink established links.
 
 ## Utility Installation
 
