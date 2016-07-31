@@ -16,6 +16,8 @@ To unlink, run the following *from your home directory*:
 
 To add a new link, add an entry to the `PATHS` associative array in `symlink.sh`. Running `symlink.sh` won't attempt to relink established links.
 
+*NOTE:* On OS X the version of bash shipped with Darwin may be too out of date for the `symlink.sh` script. If so, a more up to date version of bash can be installed with `brew install bash`
+
 ## Utility Installation
 
 ### ZSH
