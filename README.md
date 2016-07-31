@@ -5,16 +5,16 @@
 To create symlinks to dot files run the following script *from your home directory*:
 
 ```sh
-./dofiles/symlinks.sh link
+./dofiles/symlink.sh link
 ```
 
 To unlink, run the following *from your home directory*:
 
 ```sh
-./dofiles/symlinks.sh unlink
+./dofiles/symlink.sh unlink
 ```
 
-To add a new link, add an entry to the `PATHS` associative array in `symlinks.sh`. Running `symlinks.sh` won't attempt to relink established links.
+To add a new link, add an entry to the `PATHS` associative array in `symlink.sh`. Running `symlink.sh` won't attempt to relink established links.
 
 ## Utility Installation
 
