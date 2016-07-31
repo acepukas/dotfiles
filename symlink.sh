@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 whotest[0]='test' || (echo 'Failure: arrays not supported in this version of bash.' && exit 2)
 
