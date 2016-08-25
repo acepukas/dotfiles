@@ -54,7 +54,7 @@ Plug 'alfredodeza/jacinto.vim'
 Plug 'majutsushi/tagbar'
 Plug 'vim-scripts/TagHighlight'
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
-Plug 'xolox/vim-easytags'
+" Plug 'xolox/vim-easytags'
 Plug 'xolox/vim-misc'
 Plug 'vhdirk/vim-cmake'
 
@@ -65,9 +65,7 @@ Plug 'othree/yajs.vim'
 Plug 'othree/es.next.syntax.vim'
 Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
 Plug 'othree/javascript-libraries-syntax.vim'
-Plug 'vim-scripts/JavaScript-Indent'
 Plug 'acepukas/gen-jsdoc-func-doc'
-" Plug 'gavocanov/vim-js-indent'
 Plug 'digitaltoad/vim-pug'
 Plug 'wavded/vim-stylus'
 Plug 'flowtype/vim-flow'
@@ -165,6 +163,10 @@ set nostartofline
 " delfault is 4000 which is too slow
 set updatetime=250
 
+" allow for fast return to NORMAL mode via ESC
+set timeoutlen=250
+set ttimeoutlen=0
+
 " save 1000 lines of history
 set history=1000
 
@@ -195,6 +197,8 @@ nnoremap <leader>v :so $MYVIMRC<cr>
 
 " setting environment paths
 set path=.,./**,,
+
+set tags=tags;/
 
 set showbreak=↪\  " for wrapped lines
 
@@ -281,12 +285,12 @@ set wildignore+=types_*taghl,tags
 " colorscheme zenburn
 
 " gruvbox colorscheme configuration
-let g:gruvbox_underline = 0
-let g:gruvbox_invert_selection = 0
-let g:gruvbox_contrast_dark = 'soft'
-let g:gruvbox_number_column = 'bg2'
-set background=dark
-colorscheme gruvbox
+" let g:gruvbox_underline = 0
+" let g:gruvbox_invert_selection = 0
+" let g:gruvbox_contrast_dark = 'soft'
+" let g:gruvbox_number_column = 'bg2'
+" set background=dark
+" colorscheme gruvbox
 
 " set background=dark
 " colorscheme solarized
@@ -294,7 +298,10 @@ colorscheme gruvbox
 "set background=dark
 "colorscheme base16-ocean
 
-" colorscheme gotham
+colorscheme gotham
+" custom highlights for gotham
+autocmd FileType javascript hi link javascriptFuncName SpellLocal
+autocmd FileType javascript hi link javascriptAsyncFuncKeyword PreProc
 
 " hilight off in insert mode
 autocmd InsertEnter * :setlocal nohlsearch
@@ -485,6 +492,20 @@ vnoremap <leader>d "zy:g/"/d
 
 nnoremap <F12> :bd<CR>
 
+function! Preserve(command)
+  " Preparation: save last search, and cursor position.
+  let _s=@/
+  let l = line(".")
+  let c = col(".")
+  " Do the business:
+  execute a:command
+  " Clean up: restore previous search history, and cursor position
+  let @/=_s
+  call cursor(l, c)
+endfunction
+
+nnoremap <leader>r :call Preserve("%!ramda-destruct")<CR>
+
 "}
 "BOM Management "{
 "making sure that no bom is prepended to files when written
@@ -545,6 +566,7 @@ let g:gundo_preview_bottom = 1
 " syntastic
 " let g:syntastic_debug = 3
 let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_eslint_exec = 'eslint_d'
 let g:syntastic_pug_checkers = ['pug_lint']
 let g:syntastic_stl_format = '%E{e:%e l:%fe}%B{, }%W{w:%w l:%fw}'
 let g:syntastic_mode_map = { 'mode': 'passive' }
@@ -565,7 +587,7 @@ let g:tern#command = ["node", g:my_tern_path, '--no-port-file', '--persistent']
 let g:tern_request_timeout = 3
 
 " javascript-libraries-syntax
-let g:used_javascript_libs = 'jquery,underscore,backbone'
+let g:used_javascript_libs = 'jquery,ramda'
 
 " YCM
 let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>'] 
@@ -605,7 +627,10 @@ let g:qf_mapping_ack_style = 1
 " FZF
 nnoremap <C-P> :FZF<CR>
 nnoremap <leader>x :Buffers<CR>
-nnoremap <leader>q :Ag 
+
+" case sensitive ag command
+command! -bang -nargs=* Ags call fzf#vim#ag(<q-args>, '-s', fzf#vim#layout(<bang>0))
+nnoremap <leader>q :Ags 
 
 function! EscapePCRE(str)
   let l:str = a:str
@@ -633,11 +658,9 @@ function! EscapePCRE(str)
 endfunction
 
 " Search files for word under cursor
-nnoremap <unique> <leader>s "zyiw :exe ':Ag ' . EscapePCRE(@z)<cr>
+nnoremap <unique> <leader>s "zyiw :exe ':Ags \b' . EscapePCRE(@z) . '\b'<cr>
 " Search files for visually selected word under cursor
-vnoremap <unique> <leader>s "zy :exe ':Ag ' . EscapePCRE(@z)<cr>
-" bring up :Ag command prompt
-nnoremap <leader>a :Ag 
+vnoremap <unique> <leader>s "zy :exe ':Ags ' . EscapePCRE(@z)<cr>
 
 " tagbar settings
 nnoremap <F7> :TagbarToggle<CR>
@@ -686,7 +709,7 @@ let g:generateJSDocFuncDocKeyMap = '<C-F>'
 set laststatus=2
 
 let g:lightline = {
-      \ 'colorscheme': 'gruvbox',
+      \ 'colorscheme': 'gotham',
       \ 'mode_map': { 'c': 'NORMAL' },
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ],

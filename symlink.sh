@@ -14,7 +14,7 @@ typeset -A PATHS
 PATHS=(
   ["$DOTFILES/bin/git_diff_wrapper"]="$HOME/bin/git_diff_wrapper"
   ["$DOTFILES/bin/todo.sh"]="$HOME/bin/todo.sh"
-  ["$DOTFILES/dircolors/gruvbox"]="$HOME/.dir_colors"
+  ["$DOTFILES/dircolors/gotham"]="$HOME/.dir_colors"
   ["$DOTFILES/gdb/gdbinit"]="$HOME/.gdbinit"
   ["$DOTFILES/git/gitconfig"]="$HOME/.gitconfig"
   ["$DOTFILES/git/gitignore_global"]="$HOME/.gitignore_global"

@@ -2,12 +2,16 @@ snippet custlog "Custom Log Output Style"
 console.log("%c"${0},"color: teal; font-size: 3em; background: lightblue");
 endsnippet
 
-snippet logvar "log a variable with  label"
+snippet logvar "log a variable with label"
 console.log('${1:VAR_NAME}: ', $1);
 endsnippet
 
-snippet logstr "log a variable with  label"
+snippet logstr "log a string with label"
 console.log(\`${1:VAR_NAME}: "${$1}"\`);
+endsnippet
+
+snippet log "console.log"
+console.log($0);
 endsnippet
 
 snippet TODO "C style TODO note comment"

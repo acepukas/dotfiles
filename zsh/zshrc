@@ -52,7 +52,7 @@ CASE_SENSITIVE="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(vi-mode git history history-substring-search vi-history undo gulp npm)
 
-HOSTNAME=`hostname`
+export HOSTNAME=`hostname`
 
 case "$HOSTNAME" in
   mu)
@@ -106,6 +106,8 @@ eval $(dircolors $HOME/.dir_colors)
 # Typing EOF (CTRL+D) will not exit interactive sessions
 set -o ignoreeof
 
+export KEYTIMEOUT=1
+
 # bookshelf testing
 export BOOKSHELF_TEST="$HOME/dev/bookshelf_config.js"
 
@@ -133,3 +135,12 @@ if [[ -a $HOME/bin/todo.sh ]]; then
   bashcompinit
   source $HOME/.todo/todo_completion
 fi
+
+# GULP COLOR REPLACEMENT
+#
+# Gulp uses colors that are incompatible with GOTHAM\
+# theme. Only use this if using the GOTHAM theme.
+
+function gulpc() {
+  gulp "$@" --color | sed -r 's/\[90m/[93m/g'
+}
