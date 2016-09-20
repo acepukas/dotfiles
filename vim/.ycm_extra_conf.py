@@ -10,6 +10,8 @@ BASE_FLAGS = [
     '-Werror',
     '-Wno-long-long',
     '-Wno-variadic-macros',
+    '-Wno-missing-braces',
+    '-Wno-unused-parameter',
     '-fexceptions',
     '-ferror-limit=10000',
     '-DNDEBUG',
