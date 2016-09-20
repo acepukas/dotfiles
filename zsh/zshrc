@@ -121,10 +121,10 @@ export FZF_DEFAULT_OPTS="-m --history $HOME/.fzf.history --bind alt-n:next-histo
 export PATH="$HOME/.fzf/bin:$PATH"
 
 # gruvbox
-GBPALETTE=$HOME/.vim/plugged/gruvbox/gruvbox_256palette.sh
-if [[ -a $GBPALETTE ]]; then
-  sh $GBPALETTE
-fi
+# GBPALETTE=$HOME/.vim/plugged/gruvbox/gruvbox_256palette.sh
+# if [[ -a $GBPALETTE ]]; then
+#   sh $GBPALETTE
+# fi
 
 # todo.txt
 if [[ -a $HOME/bin/todo.sh ]]; then

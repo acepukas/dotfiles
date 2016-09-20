@@ -296,12 +296,14 @@ set wildignore+=types_*taghl,tags
 " colorscheme solarized
 
 "set background=dark
-"colorscheme base16-ocean
+colorscheme base16-ocean
+hi! link SpellBad Error
+hi! link SpellCap Error
 
-colorscheme gotham
+" colorscheme gotham
 " custom highlights for gotham
-autocmd FileType javascript hi link javascriptFuncName SpellLocal
-autocmd FileType javascript hi link javascriptAsyncFuncKeyword PreProc
+" autocmd FileType javascript hi link javascriptFuncName SpellLocal
+" autocmd FileType javascript hi link javascriptAsyncFuncKeyword PreProc
 
 " hilight off in insert mode
 autocmd InsertEnter * :setlocal nohlsearch
@@ -575,6 +577,7 @@ augroup AutoSyntastic
   autocmd!
   autocmd BufWritePost *.c,*.cpp,*.js,*.pug call s:syntastic()
 augroup END
+
 function! s:syntastic() abort
   SyntasticCheck
   call lightline#update()
@@ -709,7 +712,7 @@ let g:generateJSDocFuncDocKeyMap = '<C-F>'
 set laststatus=2
 
 let g:lightline = {
-      \ 'colorscheme': 'gotham',
+      \ 'colorscheme': 'base16ocean',
       \ 'mode_map': { 'c': 'NORMAL' },
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ],
