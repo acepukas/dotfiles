@@ -285,20 +285,20 @@ set wildignore+=types_*taghl,tags
 " colorscheme zenburn
 
 " gruvbox colorscheme configuration
-" let g:gruvbox_underline = 0
-" let g:gruvbox_invert_selection = 0
-" let g:gruvbox_contrast_dark = 'soft'
-" let g:gruvbox_number_column = 'bg2'
-" set background=dark
-" colorscheme gruvbox
+let g:gruvbox_underline = 0
+let g:gruvbox_invert_selection = 0
+let g:gruvbox_contrast_dark = 'soft'
+let g:gruvbox_number_column = 'bg2'
+set background=dark
+colorscheme gruvbox
 
 " set background=dark
 " colorscheme solarized
 
 "set background=dark
-colorscheme base16-ocean
-hi! link SpellBad Error
-hi! link SpellCap Error
+" colorscheme base16-ocean
+" hi! link SpellBad Error
+" hi! link SpellCap Error
 
 " colorscheme gotham
 " custom highlights for gotham
@@ -712,7 +712,7 @@ let g:generateJSDocFuncDocKeyMap = '<C-F>'
 set laststatus=2
 
 let g:lightline = {
-      \ 'colorscheme': 'base16ocean',
+      \ 'colorscheme': 'gruvbox',
       \ 'mode_map': { 'c': 'NORMAL' },
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ],
