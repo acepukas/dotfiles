@@ -278,32 +278,57 @@ set wildignore+=*.swp,*~,._*
 
 set wildignore+=types_*taghl,tags
 
-" zenburn colorscheme configuration
+" zenburn {
+" colorscheme configuration
 " let g:zenburn_enable_TagHighlight=1
 " let g:zenburn_disable_Label_underline=1
 " let g:zenburn_alternate_Error=1
 " colorscheme zenburn
+" }
 
-" gruvbox colorscheme configuration
+" gruvbox {
+" colorscheme configuration
 let g:gruvbox_underline = 0
 let g:gruvbox_invert_selection = 0
+let g:gruvbox_italicize_comments = 0
 let g:gruvbox_contrast_dark = 'soft'
-let g:gruvbox_number_column = 'bg2'
+let g:gruvbox_number_column = 'bg1'
+" let g:gruvbox_sign_column = 'bg2'
 set background=dark
 colorscheme gruvbox
 
+" Better highlighting for syntastic errors
+hi! link SyntasticError Error
+hi! link SyntasticWarning Search
+
+" custom highlighting for javascript
+hi! link javascriptObjectLabel GruvboxBlue
+hi! link javascriptFuncArg GruvboxYellow
+hi! link javascriptArrowFunc GruvboxRed
+
+hi! link javascriptDocParamName GruvboxGreen
+hi! link javascriptDocParamType GruvboxGreen
+hi! link javascriptDocNamedParamType GruvboxGreen
+hi! link javascriptDocTags GruvboxGreen
+hi! link javascriptDocNotation GruvboxGreen
+" }
+
+" solarized {
 " set background=dark
 " colorscheme solarized
+" }
 
-"set background=dark
+" base16-ocean {
+" set background=dark
 " colorscheme base16-ocean
-" hi! link SpellBad Error
-" hi! link SpellCap Error
+" }
 
+" gotham {
 " colorscheme gotham
 " custom highlights for gotham
-" autocmd FileType javascript hi link javascriptFuncName SpellLocal
-" autocmd FileType javascript hi link javascriptAsyncFuncKeyword PreProc
+" hi! link javascriptFuncName SpellLocal
+" hi! link javascriptAsyncFuncKeyword PreProc
+" }
 
 " hilight off in insert mode
 autocmd InsertEnter * :setlocal nohlsearch
@@ -573,15 +598,30 @@ let g:syntastic_pug_checkers = ['pug_lint']
 let g:syntastic_stl_format = '%E{e:%e l:%fe}%B{, }%W{w:%w l:%fw}'
 let g:syntastic_mode_map = { 'mode': 'passive' }
 
+" syntastic symbols
+let g:syntastic_error_symbol = '✘✘'
+let g:syntastic_style_error_symbol = '☓☓'
+let g:syntastic_warning_symbol = '⚠⚠'
+let g:syntastic_style_warning_symbol = '⌁⌁'
+
+" specify which files are automatically checked by syntastic
 augroup AutoSyntastic
   autocmd!
   autocmd BufWritePost *.c,*.cpp,*.js,*.pug call s:syntastic()
 augroup END
 
+" update lightline after syntastic check is complete
 function! s:syntastic() abort
   SyntasticCheck
   call lightline#update()
 endfunction
+
+" git gutter
+let g:gitgutter_sign_added = ' +'
+let g:gitgutter_sign_modified = ' ~'
+let g:gitgutter_sign_removed = ' −'
+let g:gitgutter_sign_removed_first_line = ' ‾'
+let g:gitgutter_sign_modified_removed = ' ≃'
 
 " tern.js
 let tern#is_show_argument_hints_enabled = 'true'
