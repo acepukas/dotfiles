@@ -334,6 +334,9 @@ hi! link javascriptDocNotation GruvboxGreen
 autocmd InsertEnter * :setlocal nohlsearch
 autocmd InsertLeave * :setlocal hlsearch
 
+autocmd BufRead *.js hi! link javascriptInfinity javaScriptNumber
+autocmd BufRead *.js match javascriptInfinity /Infinity/
+
 " do not display mode in output statusline
 set nosmd
 
