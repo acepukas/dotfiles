@@ -10,7 +10,7 @@ call plug#begin($HOME . '/.vim/plugged')
 " Basic config
 Plug 'vim-scripts/L9'
 Plug 'tomtom/tcomment_vim'
-Plug 'edsono/vim-matchit'
+Plug 'geoffharcourt/vim-matchit'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-unimpaired'
@@ -21,6 +21,7 @@ Plug 'junegunn/vim-easy-align'
 Plug 'Raimondi/delimitMate'
 Plug 'wellle/targets.vim'
 Plug 'itchyny/lightline.vim'
+Plug 'DataWraith/auto_mkdir'
 
 " color schemes
 Plug 'acepukas/Zenburn'
@@ -574,6 +575,9 @@ autocmd BufRead,BufNewFile *.styl set filetype=stylus
 
 " support for nginx config file syntax highlighting
 autocmd BufRead,BufNewFile /usr/local/etc/nginx/*.conf set filetype=nginx
+autocmd BufRead,BufNewFile /etc/nginx/*.conf set filetype=nginx
+autocmd BufRead,BufNewFile /etc/nginx/sites-available/* set filetype=nginx
+autocmd BufRead,BufNewFile /etc/nginx/sites-enabled/* set filetype=nginx
 
 " support for markdown syntax highlighting
 autocmd BufRead,BufNewFile *.md set filetype=markdown
