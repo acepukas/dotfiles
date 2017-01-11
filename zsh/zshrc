@@ -58,6 +58,9 @@ case "$HOSTNAME" in
   mu)
     plugins+=(nvm)
     ;;
+  atlantis)
+    plugins+=(nvm)
+    ;;
   Aarons-MacBook-Pro.local)
     plugins+=(brew)
     plugins+=(osx)
