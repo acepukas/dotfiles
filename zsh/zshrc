@@ -61,6 +61,9 @@ case "$HOSTNAME" in
   atlantis)
     plugins+=(nvm)
     ;;
+  hy-brasil)
+    plugins+=(nvm)
+    ;;
   Aarons-MacBook-Pro.local)
     plugins+=(brew)
     plugins+=(osx)
