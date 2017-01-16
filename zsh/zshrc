@@ -63,6 +63,7 @@ case "$HOSTNAME" in
     ;;
   hy-brasil)
     plugins+=(nvm)
+    export ARCHFLAGS="-arch i386"
     ;;
   Aarons-MacBook-Pro.local)
     plugins+=(brew)
@@ -80,7 +81,7 @@ esac
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
-export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/bin:/home/aaron/.gem/ruby/2.4.0/bin:$PATH"
 
 # You may need to manually set your language environment
 export LC_ALL=en_US.UTF-8
