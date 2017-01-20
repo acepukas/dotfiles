@@ -47,7 +47,6 @@ Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'sjl/gundo.vim/'
-Plug 'alfredodeza/jacinto.vim'
 
 " C++ development plugins
 "
@@ -614,7 +613,7 @@ let g:syntastic_style_warning_symbol = '⌁⌁'
 " specify which files are automatically checked by syntastic
 augroup AutoSyntastic
   autocmd!
-  autocmd BufWritePost *.c,*.cpp,*.js,*.pug call s:syntastic()
+  autocmd BufWritePost *.c,*.cpp,*.js,*.json,*.pug call s:syntastic()
 augroup END
 
 " update lightline after syntastic check is complete
@@ -699,17 +698,20 @@ function! EscapePCRE(str)
     \{'char' : '{',  'rep' : '\\{'},
     \{'char' : '\}', 'rep' : '\\}'},
     \{'char' : '|',  'rep' : '\\|'},
-    \{'char' : '\\n','rep' : '\\\\n'}
+    \{'char' : '\\n','rep' : '\\\\n'},
+    \{'char' : '-',  'rep' : '\\-'}
   \]
   for sub in l:subs
     let l:str = substitute(l:str, sub['char'], sub['rep'], 'g')
   endfor
+  echom 'searched for ' . l:str
   return l:str
 endfunction
 
 " Search files for word under cursor
 nnoremap <unique> <leader>s "zyiw :exe ':Ags \b' . EscapePCRE(@z) . '\b'<cr>
-" Search files for visually selected word under cursor
+
+" Search files for visually selected text
 vnoremap <unique> <leader>s "zy :exe ':Ags ' . EscapePCRE(@z)<cr>
 
 " tagbar settings
