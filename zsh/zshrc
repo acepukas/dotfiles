@@ -66,6 +66,9 @@ case "$HOSTNAME" in
   hy-brasil)
     plugins+=(nvm)
     ;;
+  shangri-la)
+    plugins+=(nvm)
+    ;;
   Aarons-MacBook-Pro.local)
     plugins+=(brew)
     plugins+=(osx)
@@ -156,6 +159,10 @@ case "$HOSTNAME" in
   hy-brasil)
     export PATH="$HOME/.gem/ruby/2.4.0/bin:$PATH"
     export ARCHFLAGS="-arch i386"
+    ;;
+  shangri-la)
+    export PATH="$HOME/.gem/ruby/2.4.0/bin:$PATH"
+    export ARCHFLAGS="-arch x86_64"
     ;;
   Aarons-MacBook-Pro.local)
     if [[ -a $HOME/.mac.zshrc ]]; then
