@@ -21,6 +21,7 @@ PATHS=(
   ["$DOTFILES/silver_searcher/agignore"]="$HOME/.agignore"
   ["$DOTFILES/tmux/tmux.conf"]="$HOME/.tmux.conf"
   ["$DOTFILES/tmux/themes"]="$HOME/.tmux/themes"
+  ["$DOTFILES/tmux/terminal"]="$HOME/.tmux/terminal"
   ["$DOTFILES/todo.txt/todo"]="$HOME/.todo"
   ["$DOTFILES/todo.txt/todo.actions.d"]="$HOME/.todo.actions.d"
   ["$DOTFILES/vim/vimrc"]="$HOME/.vimrc"
