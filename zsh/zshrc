@@ -106,9 +106,6 @@ alias zshconfig="vim $HOME/.zshrc"
 alias ohmyzsh="vim $HOME/.oh-my-zsh/oh-my-zsh.sh"
 alias tmux='tmux -2'
 
-# dircolors
-eval $(dircolors $HOME/.dir_colors)
-
 # OTHER
 
 # Typing EOF (CTRL+D) will not exit interactive sessions
@@ -172,3 +169,7 @@ case "$HOSTNAME" in
   *)
     ;;
 esac
+
+# dircolors
+eval $(dircolors $HOME/.dir_colors)
+
