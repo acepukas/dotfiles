@@ -60,7 +60,7 @@ Plug 'vhdirk/vim-cmake'
 
 " web dev plugins
 "
-Plug 'scrooloose/syntastic'
+Plug 'w0rp/ale'
 Plug 'othree/yajs.vim'
 Plug 'othree/es.next.syntax.vim'
 Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
@@ -297,9 +297,9 @@ let g:gruvbox_number_column = 'bg1'
 set background=dark
 colorscheme gruvbox
 
-" Better highlighting for syntastic errors
-hi! link SyntasticError Error
-hi! link SyntasticWarning Search
+" Better highlighting for ale errors
+hi! link ALEErrorSign GruvboxRedSign
+hi! link ALEWarningSign GruvboxYellowSign
 
 " custom highlighting for javascript
 hi! link javascriptObjectLabel GruvboxBlue
@@ -596,29 +596,27 @@ nnoremap <F2> :source Session.vim<CR>
 nnoremap <F5> :GundoToggle<CR>
 let g:gundo_preview_bottom = 1
 
-" syntastic
-" let g:syntastic_debug = 3
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_javascript_eslint_exec = 'eslint_d'
-let g:syntastic_pug_checkers = ['pug_lint']
-let g:syntastic_stl_format = '%E{e:%e l:%fe}%B{, }%W{w:%w l:%fw}'
-let g:syntastic_mode_map = { 'mode': 'passive' }
+" ale syntax checking config
+let g:ale_javascript_eslint_executable = 'eslint_d'
+let g:ale_javascript_eslint_use_global = 1
 
-" syntastic symbols
-let g:syntastic_error_symbol = '✘✘'
-let g:syntastic_style_error_symbol = '☓☓'
-let g:syntastic_warning_symbol = '⚠⚠'
-let g:syntastic_style_warning_symbol = '⌁⌁'
+let g:ale_linters = {
+      \ 'javascript': ['eslint'],
+      \ 'json': ['jsonlint'],
+      \ 'pug': ['pug-lint']
+      \ }
 
-" specify which files are automatically checked by syntastic
-augroup AutoSyntastic
+let g:ale_sign_column_always = 1
+let g:ale_sign_error = '✘✘'
+let g:ale_sign_warning = '⚠⚠'
+let g:ale_statusline_format = ['✘ %d', '⚠ %d', '']
+
+augroup AutoALE
   autocmd!
-  autocmd BufWritePost *.c,*.cpp,*.js,*.json,*.pug call s:syntastic()
+  autocmd User ALELint call s:updateLightLine()
 augroup END
 
-" update lightline after syntastic check is complete
-function! s:syntastic() abort
-  SyntasticCheck
+function! s:updateLightLine() abort
   call lightline#update()
 endfunction
 
@@ -758,7 +756,7 @@ let g:lightline = {
       \ 'mode_map': { 'c': 'NORMAL' },
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ],
-      \   'right': [ [ 'syntastic', 'lineinfo' ],
+      \   'right': [ [ 'ale', 'lineinfo' ],
       \              [ 'percent' ],
       \              [ 'obsession', 'fileformat', 'fileencoding', 'filetype' ] ]
       \ },
@@ -774,10 +772,10 @@ let g:lightline = {
       \   'obsession': 'MyObsession'
       \ },
       \ 'component_expand': {
-      \   'syntastic': 'SyntasticStatuslineFlag'
+      \   'ale': 'ALEGetStatusLine'
       \ },
       \ 'component_type': {
-      \   'syntastic': 'error'
+      \   'ale': 'error'
       \ },
       \ 'separator': { 'left': '⮀', 'right': '⮂' },
       \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
