@@ -675,9 +675,22 @@ let g:qf_mapping_ack_style = 1
 nnoremap <C-P> :FZF<CR>
 nnoremap <leader>x :Buffers<CR>
 
-" case sensitive ag command
-command! -bang -nargs=* Ags call fzf#vim#ag(<q-args>, '-s', fzf#vim#layout(<bang>0))
-nnoremap <leader>q :Ags 
+" case sensitive rg command
+nnoremap <leader>q :RGS 
+
+let g:rg_command = $RG_COMMAND_BASE . ' --column --line-number --no-heading --color "always" ' . $RG_GLOB . ' '
+
+" Search recursive ignoring case
+command! -bang -nargs=* RG call fzf#vim#grep(g:rg_command . '--ignore-case --fixed-strings ' . shellescape(<q-args>), 1, <bang>0)
+
+" Search recursive case sensitive
+command! -bang -nargs=* RGS call fzf#vim#grep(g:rg_command . '--fixed-strings ' . shellescape(<q-args>), 1, <bang>0)
+
+" Search recursive case sensitive as RegExp
+command! -bang -nargs=* RGX call fzf#vim#grep(g:rg_command . shellescape(<q-args>), 1, <bang>0)
+
+" Seach recursive case sensitive with word boundaries
+command! -bang -nargs=* RGSW call fzf#vim#grep(g:rg_command . '-w --fixed-strings ' . shellescape(<q-args>), 1, <bang>0)
 
 function! EscapePCRE(str)
   let l:str = a:str
@@ -696,8 +709,7 @@ function! EscapePCRE(str)
     \{'char' : '{',  'rep' : '\\{'},
     \{'char' : '\}', 'rep' : '\\}'},
     \{'char' : '|',  'rep' : '\\|'},
-    \{'char' : '\\n','rep' : '\\\\n'},
-    \{'char' : '-',  'rep' : '\\-'}
+    \{'char' : '\\n','rep' : '\\\\n'}
   \]
   for sub in l:subs
     let l:str = substitute(l:str, sub['char'], sub['rep'], 'g')
@@ -707,10 +719,10 @@ function! EscapePCRE(str)
 endfunction
 
 " Search files for word under cursor
-nnoremap <unique> <leader>s "zyiw :exe ':Ags \b' . EscapePCRE(@z) . '\b'<cr>
+nnoremap <unique> <leader>s "zyiw :exe ':RGSW ' . EscapePCRE(@z)<cr>
 
 " Search files for visually selected text
-vnoremap <unique> <leader>s "zy :exe ':Ags ' . EscapePCRE(@z)<cr>
+vnoremap <unique> <leader>s "zy :exe ':RGS ' . EscapePCRE(@z)<cr>
 
 " tagbar settings
 nnoremap <F7> :TagbarToggle<CR>

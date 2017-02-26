@@ -116,9 +116,12 @@ export KEYTIMEOUT=1
 # disable ctrl-s and ctrl-q
 stty -ixon
 
+# RIPGREP config
+export RG_COMMAND_BASE='rg --ignore-file ~/.ignore --hidden --follow'
+
 # FZF
 [ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh
-export FZF_DEFAULT_COMMAND='ag --hidden -g ""'
+export FZF_DEFAULT_COMMAND="$RG_COMMAND_BASE --files"
 export FZF_DEFAULT_OPTS="-m --history $HOME/.fzf.history --bind alt-n:next-history,alt-p:previous-history,ctrl-n:down,ctrl-p:up"
 export PATH="$HOME/.fzf/bin:$PATH"
 
