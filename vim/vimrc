@@ -74,6 +74,7 @@ Plug 'gregsexton/MatchTag'
 Plug 'rstacruz/sparkup', { 'rtp': 'vim' }
 Plug 'othree/html5-syntax.vim'
 Plug 'hail2u/vim-css3-syntax'
+Plug 'ap/vim-css-color'
 " Plug 'groenewege/vim-less'
 " Plug 'nono/vim-handlebars'
 " Plug 'acepukas/vim-handlebars-conf'
