@@ -148,7 +148,7 @@ endif
 " All auto commands must come after this statement
 autocmd!
 
-" allowing per directory .vimrc files
+" allow per directory .vimrc files
 set exrc
 
 " secure prevents certain functions from
@@ -156,12 +156,13 @@ set exrc
 set secure
 
 syntax on
+set synmaxcol=512
+
 filetype on
 filetype plugin on
 filetype indent on
 
-" prevents cursor from jumping to start of line
-" on buffer switch for example
+" prevents cursor from jumping to start of line on buffer switch for example
 set nostartofline
 
 " delfault is 4000 which is too slow
@@ -192,19 +193,10 @@ set autoread
 let g:mapleader=" "
 let mapleader=g:mapleader
 
-" fast saving
-nnoremap <leader>w :w!<cr>
-
-"fast editing of vimrc file
-nnoremap <leader>e :vsplit $MYVIMRC<cr>
-nnoremap <leader>v :so $MYVIMRC<cr>
-
 " setting environment paths
 set path=.,./**,,
 
 set tags=tags;/
-
-set showbreak=↪\  " for wrapped lines
 
 " Delete comment character when joining commented lines
 if v:version > 703 || v:version == 703 && has("patch541")
@@ -222,6 +214,7 @@ set splitbelow splitright
 
 set mouse=a
 
+" line context
 set so=7
 
 " Text formatting
@@ -250,8 +243,14 @@ set backspace=indent,eol,start
 
 " always show invisible chars
 set list
-" use the same symbols as TextMate for tabstops and EOLs"
-set listchars=trail:.,tab:▸\ ,eol:¬
+" use the same symbols as TextMate for tabstops and EOLs
+set listchars+=tab:▸\  " tabs
+set listchars+=trail:.
+set listchars+=eol:¬
+set listchars+=extends:»
+set listchars+=precedes:«
+set listchars+=nbsp:⣿
+set showbreak=↪\  " for wrapped lines
 
 set number
 set relativenumber
@@ -338,9 +337,6 @@ hi! link javascriptDocNotation GruvboxGreen
 autocmd InsertEnter * :setlocal nohlsearch
 autocmd InsertLeave * :setlocal hlsearch
 
-autocmd BufRead *.js hi! link javascriptInfinity javaScriptNumber
-autocmd BufRead *.js match javascriptInfinity /Infinity/
-
 " do not display mode in output statusline
 set nosmd
 
@@ -365,9 +361,9 @@ set cc=80
 " clipboard
 if has("mac")
 elseif has("unix")
-  set clipboard=unnamed
-  noremap <leader>y "*y
-  noremap <leader>p pV`]=
+  vnoremap <silent> <leader>y :w !xsel -i -b<CR>
+  nnoremap <silent> <leader>y V:w !xsel -i -b<CR>
+  nnoremap <silent> <leader>p :silent :r !xsel -o -b<CR>
 endif
 
 " }}}
@@ -391,6 +387,13 @@ nnoremap <Left>  :noh<CR>
 nnoremap <Right> :noh<CR>
 nnoremap <Up>    :noh<CR>
 nnoremap <Down>  :noh<CR>
+
+" fast saving
+nnoremap <leader>w :w!<cr>
+
+"fast editing of vimrc file
+nnoremap <leader>e :vsplit $MYVIMRC<cr>
+nnoremap <leader>v :so $MYVIMRC<cr>
 
 " no highlight search
 nnoremap <silent> <bs> :noh<cr>
@@ -439,10 +442,13 @@ vnoremap <leader>r "sy:%s:<C-R>=EscapeVimRegex(@s)<CR>::g<Left><Left>
 " count occurrences of visually selected text
 vnoremap <leader>c "sy:%s:<C-R>=EscapeVimRegex(@s)<CR>::n<CR>
 
-fun! ClearTabsAndCRs()
+fun! ClearWhiteSpace()
   :%s/	/  /ge
   :%s///ge
+  :%s/\s\+$//
 endfun
+
+command ClearWhiteSpace :call ClearWhiteSpace()<CR>
 
 " do not enter visual mode
 nnoremap Q <Nop>
@@ -477,13 +483,18 @@ fun! ToggleSemiColonComma()
     endif
 endfun
 
-" calculate desired em value based
-" on px font and parent el px font.
-" only really useful for css/less/scss
+" Calculate desired em value based on px font and parent el px font. So first
+" argument to PxToEm would be the desired font size in pixels (px). Second
+" argument is the size in pixels of the parent HTML element. The output is the
+" font-size in EMs based on calculation plus a comment indicating the inputs
+" for calculation. Font size in px of parent element must be known for this to
+" work. Only really useful for css/less/scss.
+
+" Example:
+" :PxToEm 18 16<enter>
 
 " expected output would be something like:
-
-"   1.125em; /* == (18px / 16px) */
+"   font-size: 1.125em; /* == (18px / 16px) */
 
 fun! PxToEm(sz,psz)
 python << EOF
@@ -521,6 +532,7 @@ autocmd BufWinEnter quickfix silent :file quickfix
 " quick short cut for deleting all lines with selected text
 vnoremap <leader>d "zy:g/"/d
 
+" delete/close buffer
 nnoremap <F12> :bd<CR>
 
 function! Preserve(command)
@@ -543,7 +555,7 @@ nnoremap <leader>r :call Preserve("%!ramda-destruct")<CR>
 autocmd BufWrite * :set nobomb
 autocmd BufWrite * :set ff=unix
 " }}}
-" File Type Plugins {{{
+" File Type Settings {{{
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 " autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
@@ -573,12 +585,6 @@ autocmd BufRead,BufNewFile *.json set filetype=json
 " support for stylus syntax highlighting
 autocmd BufRead,BufNewFile *.styl set filetype=stylus
 
-" support for nginx config file syntax highlighting
-autocmd BufRead,BufNewFile /usr/local/etc/nginx/*.conf set filetype=nginx
-autocmd BufRead,BufNewFile /etc/nginx/*.conf set filetype=nginx
-autocmd BufRead,BufNewFile /etc/nginx/sites-available/* set filetype=nginx
-autocmd BufRead,BufNewFile /etc/nginx/sites-enabled/* set filetype=nginx
-
 " support for markdown syntax highlighting
 autocmd BufRead,BufNewFile *.md set filetype=markdown
 
@@ -587,7 +593,7 @@ autocmd BufRead,BufNewFile *.php set keywordprg=pman
 " }}}
 " Plugin Configuration {{{
 
-"NERD Tree plugin
+" NERD Tree plugin
 nnoremap <F1> :NERDTreeToggle<CR>
 
 " load session if present
@@ -747,7 +753,6 @@ let g:easy_align_delimiters['d'] = {
 \ }
 
 " easy motion
-
 hi link EasyMotionTarget2First Constant
 hi link EasyMotionTarget2Second Constant
 
@@ -759,7 +764,6 @@ let g:flow#omnifunc = 0
 let g:generateJSDocFuncDocKeyMap = '<C-F>'
 
 " vim-buffertabline
-
 let g:buftabline_show = 1
 
 nnoremap <leader>b :bprev<CR>
