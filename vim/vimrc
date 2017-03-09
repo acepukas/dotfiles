@@ -1,10 +1,10 @@
-" Notes {
-" vim: set foldmarker={,} foldlevel=0 foldmethod=marker:
-" }
-" No Compatible {
+" Fold Settings {{{
+" vim:foldmarker={{{,}}}:foldmethod=marker
+" }}}
+" No Compatible {{{
 set nocompatible
-"}
-" vim-plug Config {
+" }}}
+" vim-plug Config {{{
 call plug#begin($HOME . '/.vim/plugged')
 
 " Basic config
@@ -79,8 +79,8 @@ Plug 'flowtype/vim-flow'
 " Plug 'acepukas/vim-handlebars-conf'
 
 call plug#end()
-" }
-" Terminal {
+" }}}
+" Terminal {{{
 
 if !(has('win32') || has('win64') || has('gui_running'))
 
@@ -128,8 +128,8 @@ if !(has('win32') || has('win64') || has('gui_running'))
   endif
 
 endif
-"}
-" Character Encoding {
+" }}}
+" Character Encoding {{{
 if has("multi_byte")
     if &termencoding == ""
         let &termencoding = &encoding
@@ -138,8 +138,8 @@ if has("multi_byte")
     setglobal fileencoding=utf-8 bomb
     set fileencodings=ucs-bom,utf-8,latin1
 endif
-" }
-" Initial Commands for setting up vim {
+" }}}
+" Initial Commands for setting up vim {{{
 
 " clearing all auto commands in case vimrc sourced again
 " All auto commands must come after this statement
@@ -214,8 +214,8 @@ set nojoinspaces
 " Split windows below and right instead of above and left
 set splitbelow splitright
 
-" }
-" UI Setup {
+" }}}
+" UI Setup {{{
 
 set mouse=a
 
@@ -279,15 +279,15 @@ set wildignore+=*.swp,*~,._*
 
 set wildignore+=types_*taghl,tags
 
-" zenburn {
+" zenburn {{{
 " colorscheme configuration
 " let g:zenburn_enable_TagHighlight=1
 " let g:zenburn_disable_Label_underline=1
 " let g:zenburn_alternate_Error=1
 " colorscheme zenburn
-" }
+" }}}
 
-" gruvbox {
+" gruvbox {{{
 " colorscheme configuration
 let g:gruvbox_underline = 0
 let g:gruvbox_invert_selection = 0
@@ -312,24 +312,24 @@ hi! link javascriptDocParamType GruvboxGreen
 hi! link javascriptDocNamedParamType GruvboxGreen
 hi! link javascriptDocTags GruvboxGreen
 hi! link javascriptDocNotation GruvboxGreen
-" }
+" }}}
 
-" solarized {
+" solarized {{{
 " set background=dark
 " colorscheme solarized
-" }
+" }}}
 
-" base16-ocean {
+" base16-ocean {{{
 " set background=dark
 " colorscheme base16-ocean
-" }
+" }}}
 
-" gotham {
+" gotham {{{
 " colorscheme gotham
 " custom highlights for gotham
 " hi! link javascriptFuncName SpellLocal
 " hi! link javascriptAsyncFuncKeyword PreProc
-" }
+" }}}
 
 " hilight off in insert mode
 autocmd InsertEnter * :setlocal nohlsearch
@@ -367,16 +367,16 @@ elseif has("unix")
   noremap <leader>p pV`]=
 endif
 
-" }
-" Back Up Config {
+" }}}
+" Back Up Config {{{
 set nobackup
 set noswapfile
-" }
-" Session Management {
+" }}}
+" Session Management {{{
 "session management as projects
 set sessionoptions=buffers,folds,options,tabpages,winsize
-"}
-" Custom Commands "{
+" }}}
+" Custom Commands "{{{
 
 " I don't want help right now!
 " nnoremap <F1> <Esc>
@@ -534,13 +534,13 @@ endfunction
 
 nnoremap <leader>r :call Preserve("%!ramda-destruct")<CR>
 
-"}
-"BOM Management "{
-"making sure that no bom is prepended to files when written
+" }}}
+" BOM Management {{{
+" making sure that no bom is prepended to files when written
 autocmd BufWrite * :set nobomb
 autocmd BufWrite * :set ff=unix
-"}
-" File Type Plugins "{
+" }}}
+" File Type Plugins {{{
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 " autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
@@ -581,8 +581,8 @@ autocmd BufRead,BufNewFile *.md set filetype=markdown
 
 " php man page docs support
 autocmd BufRead,BufNewFile *.php set keywordprg=pman
-"}
-" Plugin Configuration "{
+" }}}
+" Plugin Configuration {{{
 
 "NERD Tree plugin
 nnoremap <F1> :NERDTreeToggle<CR>
@@ -778,8 +778,8 @@ nnoremap <silent> <leader>0 :exe "normal \<Plug>BufTabLine.Go(10)"<CR>
 let g:buftabline_indicators = 1
 let g:buftabline_separators = 1
 
-"}
-" lightline config "{
+" }}}
+" lightline config {{{
 
 " lightline needs status line visible
 set laststatus=2
@@ -892,4 +892,4 @@ function! TagbarStatusFunc(current, sort, fname, flags, ...) abort
   return lightline#statusline(0)
 endfunction
 
-"}
+" }}}
