@@ -65,6 +65,7 @@ Plug 'w0rp/ale'
 Plug 'othree/yajs.vim'
 Plug 'othree/es.next.syntax.vim'
 Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
+Plug 'shawncplus/phpcomplete.vim'
 Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'acepukas/gen-jsdoc-func-doc'
 Plug 'digitaltoad/vim-pug'
