@@ -448,7 +448,7 @@ fun! ClearWhiteSpace()
   :%s/\s\+$//
 endfun
 
-command ClearWhiteSpace :call ClearWhiteSpace()<CR>
+command ClearWhiteSpace :call ClearWhiteSpace()
 
 " do not enter visual mode
 nnoremap Q <Nop>
