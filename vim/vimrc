@@ -22,6 +22,7 @@ Plug 'Raimondi/delimitMate'
 Plug 'wellle/targets.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'DataWraith/auto_mkdir'
+Plug 'ap/vim-buftabline'
 
 " color schemes
 Plug 'acepukas/Zenburn'
@@ -473,9 +474,6 @@ fun! ToggleSemiColonComma()
     endif
 endfun
 
-" clear errors
-nnoremap <leader>0 :sign unplace *<CR>
-
 " calculate desired em value based
 " on px font and parent el px font.
 " only really useful for css/less/scss
@@ -756,6 +754,29 @@ let g:flow#omnifunc = 0
 
 " gen-jsdoc-func-doc
 let g:generateJSDocFuncDocKeyMap = '<C-F>'
+
+" vim-buffertabline
+
+let g:buftabline_show = 1
+
+nnoremap <leader>b :bprev<CR>
+nnoremap <leader>n :bnext<CR>
+
+let g:buftabline_numbers = 2
+
+nnoremap <silent> <leader>1 :exe "normal \<Plug>BufTabLine.Go(1)"<CR>
+nnoremap <silent> <leader>2 :exe "normal \<Plug>BufTabLine.Go(2)"<CR>
+nnoremap <silent> <leader>3 :exe "normal \<Plug>BufTabLine.Go(3)"<CR>
+nnoremap <silent> <leader>4 :exe "normal \<Plug>BufTabLine.Go(4)"<CR>
+nnoremap <silent> <leader>5 :exe "normal \<Plug>BufTabLine.Go(5)"<CR>
+nnoremap <silent> <leader>6 :exe "normal \<Plug>BufTabLine.Go(6)"<CR>
+nnoremap <silent> <leader>7 :exe "normal \<Plug>BufTabLine.Go(7)"<CR>
+nnoremap <silent> <leader>8 :exe "normal \<Plug>BufTabLine.Go(8)"<CR>
+nnoremap <silent> <leader>9 :exe "normal \<Plug>BufTabLine.Go(9)"<CR>
+nnoremap <silent> <leader>0 :exe "normal \<Plug>BufTabLine.Go(10)"<CR>
+
+let g:buftabline_indicators = 1
+let g:buftabline_separators = 1
 
 "}
 " lightline config "{
