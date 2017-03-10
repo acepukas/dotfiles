@@ -8,21 +8,24 @@ set nocompatible
 call plug#begin($HOME . '/.vim/plugged')
 
 " Basic config
-Plug 'vim-scripts/L9'
+Plug 'vim-scripts/L9'            " utilities for other plugins
 Plug 'tomtom/tcomment_vim'
-Plug 'geoffharcourt/vim-matchit'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-obsession'
-Plug 'Lokaltog/vim-easymotion'
-Plug 'junegunn/vim-easy-align'
-Plug 'Raimondi/delimitMate'
-Plug 'wellle/targets.vim'
-Plug 'itchyny/lightline.vim'
-Plug 'DataWraith/auto_mkdir'
-Plug 'ap/vim-buftabline'
+Plug 'geoffharcourt/vim-matchit' " support for tag navigation via %
+Plug 'tpope/vim-surround'        " surround text with s S like this to 'this'
+Plug 'tpope/vim-repeat'          " use the . command with more than vim builtins
+Plug 'tpope/vim-unimpaired'      " vim options toggleing and other cool stuff
+Plug 'tpope/vim-eunuch'          " issue common unix commands from vim
+Plug 'tpope/vim-obsession'       " session management
+Plug 'Lokaltog/vim-easymotion'   " quick way to navigate around buffers
+Plug 'junegunn/vim-easy-align'   " quick text alignment commands
+Plug 'Raimondi/delimitMate'      " auto close delimiters
+Plug 'wellle/targets.vim'        " more text objects
+Plug 'kana/vim-textobj-user'
+Plug 'Julian/vim-textobj-variable-segment'
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'itchyny/lightline.vim'     " customize your status line
+Plug 'DataWraith/auto_mkdir'     " make directories that don't exist in file path
+Plug 'ap/vim-buftabline'         " use tabline to display buffers
 
 " color schemes
 Plug 'acepukas/Zenburn'
@@ -32,12 +35,12 @@ Plug 'chriskempson/base16-vim'
 Plug 'whatyouhide/vim-gotham'
 
 " TMUX
-Plug 'edkolev/tmuxline.vim'
-Plug 'benmills/vimux'
-Plug 'christoomey/vim-tmux-navigator'
+Plug 'edkolev/tmuxline.vim'           " generate a status line theme for tmux
+Plug 'benmills/vimux'                 " issue commands to tmux pane from vim
+Plug 'christoomey/vim-tmux-navigator' " easily navigate tmux panes and vim
 
 " Major feature plugins
-Plug 'romainl/vim-qf'
+Plug 'romainl/vim-qf'                 " commands for quickfix windows
 Plug 'ervandew/supertab'
 Plug 'junegunn/fzf', { 'dir': $HOME . '/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -67,6 +70,7 @@ Plug 'othree/es.next.syntax.vim'
 Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
 Plug 'shawncplus/phpcomplete.vim'
 Plug 'StanAngeloff/php.vim'
+Plug 'captbaritone/better-indent-support-for-php-with-html'
 Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'acepukas/gen-jsdoc-func-doc'
 Plug 'digitaltoad/vim-pug'
@@ -685,7 +689,7 @@ nnoremap <leader>x :Buffers<CR>
 " case sensitive rg command
 nnoremap <leader>q :RGS 
 
-let g:rg_command = $RG_COMMAND_BASE . ' --column --line-number --no-heading --color "always" ' . $RG_GLOB . ' '
+let g:rg_command = $RG_COMMAND_BASE . ' --column --line-number --no-heading --color "always" '
 
 " Search recursive ignoring case
 command! -bang -nargs=* RG call fzf#vim#grep(g:rg_command . '--ignore-case --fixed-strings ' . shellescape(<q-args>), 1, <bang>0)
