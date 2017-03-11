@@ -452,7 +452,7 @@ fun! ClearWhiteSpace()
   :%s/\s\+$//
 endfun
 
-command ClearWhiteSpace :call ClearWhiteSpace()
+command! ClearWhiteSpace :call ClearWhiteSpace()
 
 " do not enter visual mode
 nnoremap Q <Nop>
@@ -730,10 +730,10 @@ function! EscapePCRE(str)
 endfunction
 
 " Search files for word under cursor
-nnoremap <unique> <leader>s "zyiw :exe ':RGSW ' . EscapePCRE(@z)<cr>
+nnoremap <leader>s "zyiw :exe ':RGSW ' . EscapePCRE(@z)<cr>
 
 " Search files for visually selected text
-vnoremap <unique> <leader>s "zy :exe ':RGS ' . EscapePCRE(@z)<cr>
+vnoremap <leader>s "zy :exe ':RGS ' . EscapePCRE(@z)<cr>
 
 " tagbar settings
 nnoremap <F7> :TagbarToggle<CR>
