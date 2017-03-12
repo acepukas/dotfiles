@@ -25,7 +25,6 @@ Plug 'Julian/vim-textobj-variable-segment'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'itchyny/lightline.vim'     " customize your status line
 Plug 'DataWraith/auto_mkdir'     " make directories that don't exist in file path
-Plug 'ap/vim-buftabline'         " use tabline to display buffers
 
 " color schemes
 Plug 'acepukas/Zenburn'
@@ -71,6 +70,7 @@ Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
 Plug 'shawncplus/phpcomplete.vim'
 Plug 'StanAngeloff/php.vim'
 Plug 'captbaritone/better-indent-support-for-php-with-html'
+Plug 'alvan/vim-php-manual'
 Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'acepukas/gen-jsdoc-func-doc'
 Plug 'digitaltoad/vim-pug'
@@ -84,6 +84,8 @@ Plug 'ap/vim-css-color'
 " Plug 'groenewege/vim-less'
 " Plug 'nono/vim-handlebars'
 " Plug 'acepukas/vim-handlebars-conf'
+
+Plug 'freitass/todo.txt-vim'
 
 call plug#end()
 " }}}
@@ -196,6 +198,9 @@ set autoread
 " allows for more commands by using <leader> in custom mappings
 let g:mapleader=" "
 let mapleader=g:mapleader
+
+let g:maplocalleader="-"
+let maplocalleader=g:maplocalleader
 
 " setting environment paths
 set path=.,./**,,
@@ -399,6 +404,9 @@ nnoremap <leader>w :w!<cr>
 nnoremap <leader>e :vsplit $MYVIMRC<cr>
 nnoremap <leader>v :so $MYVIMRC<cr>
 
+" fast editing of todo.txt file
+nnoremap <leader>t :e ~/Dropbox/todo/todo.txt<cr>
+
 " no highlight search
 nnoremap <silent> <bs> :noh<cr>
 
@@ -458,7 +466,7 @@ command! ClearWhiteSpace :call ClearWhiteSpace()
 nnoremap Q <Nop>
 
 " do not look shit up! ANNOYING!
-nnoremap K <Nop>
+" nnoremap K <Nop>
 vnoremap K <Nop>
 
 " center searched words
@@ -577,9 +585,6 @@ autocmd Filetype *
   \ endif
 endif
 
-autocmd BufRead,BufNewFile *.txt set filetype=txt
-autocmd FileType txt setl expandtab
-
 " support for cmake files
 au BufNewFile,BufRead CMakeLists.txt set filetype=cmake
 
@@ -591,9 +596,6 @@ autocmd BufRead,BufNewFile *.styl set filetype=stylus
 
 " support for markdown syntax highlighting
 autocmd BufRead,BufNewFile *.md set filetype=markdown
-
-" php man page docs support
-autocmd BufRead,BufNewFile *.php set keywordprg=pman
 " }}}
 " Plugin Configuration {{{
 
@@ -766,28 +768,6 @@ let g:flow#omnifunc = 0
 
 " gen-jsdoc-func-doc
 let g:generateJSDocFuncDocKeyMap = '<C-F>'
-
-" vim-buffertabline
-let g:buftabline_show = 1
-
-nnoremap <leader>b :bprev<CR>
-nnoremap <leader>n :bnext<CR>
-
-let g:buftabline_numbers = 2
-
-nnoremap <silent> <leader>1 :exe "normal \<Plug>BufTabLine.Go(1)"<CR>
-nnoremap <silent> <leader>2 :exe "normal \<Plug>BufTabLine.Go(2)"<CR>
-nnoremap <silent> <leader>3 :exe "normal \<Plug>BufTabLine.Go(3)"<CR>
-nnoremap <silent> <leader>4 :exe "normal \<Plug>BufTabLine.Go(4)"<CR>
-nnoremap <silent> <leader>5 :exe "normal \<Plug>BufTabLine.Go(5)"<CR>
-nnoremap <silent> <leader>6 :exe "normal \<Plug>BufTabLine.Go(6)"<CR>
-nnoremap <silent> <leader>7 :exe "normal \<Plug>BufTabLine.Go(7)"<CR>
-nnoremap <silent> <leader>8 :exe "normal \<Plug>BufTabLine.Go(8)"<CR>
-nnoremap <silent> <leader>9 :exe "normal \<Plug>BufTabLine.Go(9)"<CR>
-nnoremap <silent> <leader>0 :exe "normal \<Plug>BufTabLine.Go(10)"<CR>
-
-let g:buftabline_indicators = 1
-let g:buftabline_separators = 1
 
 " }}}
 " lightline config {{{
