@@ -370,7 +370,7 @@ set cc=80
 " clipboard
 if has("mac")
 elseif has("unix")
-  vnoremap <silent> <leader>y :w !xsel -i -b<CR>
+  vnoremap <silent> <leader>y y:e ~/.vimyank<CR>P:w<CR>:w !xsel -i -b<CR><CR>:bdelete!<CR>
   nnoremap <silent> <leader>y V:w !xsel -i -b<CR>
   nnoremap <silent> <leader>p :silent :r !xsel -o -b<CR>
 endif
@@ -691,51 +691,30 @@ nnoremap <leader>x :Buffers<CR>
 " case sensitive rg command
 nnoremap <leader>q :RGS 
 
-let g:rg_command = $RG_COMMAND_BASE . ' --column --line-number --no-heading --color "always" '
+let g:rg_command = $RG_COMMAND_BASE . ' --column --line-number --no-heading --color "always"'
+
+fun! BuildRgCommand(opts, qargs)
+  let l:list = [g:rg_command] + a:opts + ['--', shellescape(a:qargs)]
+  return join(l:list, ' ')
+endfun
 
 " Search recursive ignoring case
-command! -bang -nargs=* RG call fzf#vim#grep(g:rg_command . '--ignore-case --fixed-strings ' . shellescape(<q-args>), 1, <bang>0)
+command! -bang -nargs=* RG call fzf#vim#grep(BuildRgCommand(['--ignore-case', '--fixed-strings'], <q-args>), 1, <bang>0)
 
 " Search recursive case sensitive
-command! -bang -nargs=* RGS call fzf#vim#grep(g:rg_command . '--fixed-strings ' . shellescape(<q-args>), 1, <bang>0)
+command! -bang -nargs=* RGS call fzf#vim#grep(BuildRgCommand(['--fixed-strings'], <q-args>), 1, <bang>0)
 
 " Search recursive case sensitive as RegExp
-command! -bang -nargs=* RGX call fzf#vim#grep(g:rg_command . shellescape(<q-args>), 1, <bang>0)
+command! -bang -nargs=* RGX call fzf#vim#grep(BuildRgCommand([], <q-args>), 1, <bang>0)
 
 " Seach recursive case sensitive with word boundaries
-command! -bang -nargs=* RGSW call fzf#vim#grep(g:rg_command . '-w --fixed-strings ' . shellescape(<q-args>), 1, <bang>0)
-
-function! EscapePCRE(str)
-  let l:str = a:str
-  let l:subs = [
-    \{'char' : '\\', 'rep' : '\\\\'},
-    \{'char' : '\.', 'rep' : '\\.'},
-    \{'char' : '\^', 'rep' : '\\^'},
-    \{'char' : '\$', 'rep' : '\\$'},
-    \{'char' : '\*', 'rep' : '\\*'},
-    \{'char' : '+',  'rep' : '\\+'},
-    \{'char' : '?',  'rep' : '\\?'},
-    \{'char' : '(',  'rep' : '\\('},
-    \{'char' : ')',  'rep' : '\\)'},
-    \{'char' : '\[', 'rep' : '\\['},
-    \{'char' : '\]', 'rep' : '\\]'},
-    \{'char' : '{',  'rep' : '\\{'},
-    \{'char' : '\}', 'rep' : '\\}'},
-    \{'char' : '|',  'rep' : '\\|'},
-    \{'char' : '\\n','rep' : '\\\\n'}
-  \]
-  for sub in l:subs
-    let l:str = substitute(l:str, sub['char'], sub['rep'], 'g')
-  endfor
-  echom 'searched for ' . l:str
-  return l:str
-endfunction
+command! -bang -nargs=* RGSW call fzf#vim#grep(BuildRgCommand(['-w', '--fixed-strings'], <q-args>), 1, <bang>0)
 
 " Search files for word under cursor
-nnoremap <leader>s "zyiw :exe ':RGSW ' . EscapePCRE(@z)<cr>
+nnoremap <leader>s "zyiw :exe ':RGSW ' . @z<cr>
 
 " Search files for visually selected text
-vnoremap <leader>s "zy :exe ':RGS ' . EscapePCRE(@z)<cr>
+vnoremap <leader>s "zy :exe ':RGS ' . @z<cr>
 
 " tagbar settings
 nnoremap <F7> :TagbarToggle<CR>
