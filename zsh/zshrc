@@ -172,8 +172,9 @@ case "$HOSTNAME" in
     export ARCHFLAGS="-arch i386"
     ;;
   shangri-la)
-    export PATH="$HOME/.gem/ruby/2.4.0/bin:$PATH"
-    export ARCHFLAGS="-arch x86_64"
+    if [[ -a $HOME/.shangri-la.zshrc ]]; then
+      . $HOME/.shangri-la.zshrc
+    fi
     ;;
   Aarons-MacBook-Pro.local)
     if [[ -a $HOME/.mac.zshrc ]]; then
