@@ -117,7 +117,7 @@ export KEYTIMEOUT=1
 stty -ixon
 
 # RIPGREP config
-export RG_COMMAND_BASE='rg --ignore-file ~/.ignore --hidden --follow'
+export RG_COMMAND_BASE='rg --ignore-file ~/.ignore --hidden --follow --colors=path:fg:white --colors=line:fg:white --colors=match:fg:yellow'
 
 # FZF
 [ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh
