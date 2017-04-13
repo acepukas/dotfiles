@@ -122,6 +122,10 @@ export RG_COMMAND_BASE='rg --ignore-file ~/.ignore --hidden --follow --colors=pa
 # FZF
 [ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh
 export FZF_DEFAULT_COMMAND="$RG_COMMAND_BASE --files"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+_fzf_compgen_path() {
+  eval ${FZF_DEFAULT_COMMAND} "$1"
+}
 export FZF_DEFAULT_OPTS="-m --history $HOME/.fzf.history --bind alt-n:next-history,alt-p:previous-history,ctrl-n:down,ctrl-p:up"
 export PATH="$HOME/.fzf/bin:$PATH"
 
