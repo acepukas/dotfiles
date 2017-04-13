@@ -559,8 +559,6 @@ function! Preserve(command)
   call cursor(l, c)
 endfunction
 
-nnoremap <leader>r :call Preserve("%!ramda-destruct")<CR>
-
 " }}}
 " BOM Management {{{
 " making sure that no bom is prepended to files when written
@@ -623,6 +621,9 @@ let g:ale_sign_column_always = 1
 let g:ale_sign_error = '✘✘'
 let g:ale_sign_warning = '⚠⚠'
 let g:ale_statusline_format = ['✘ %d', '⚠ %d', '']
+
+nnoremap <silent> <leader>k :exe "normal \<Plug>(ale_previous_wrap)"<CR>
+nnoremap <silent> <leader>j :exe "normal \<Plug>(ale_next_wrap)"<CR>
 
 augroup AutoALE
   autocmd!
