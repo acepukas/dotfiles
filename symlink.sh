@@ -12,7 +12,6 @@ DOTFILES=$HOME/dotfiles
 typeset -A PATHS
 
 PATHS=(
-  ["$DOTFILES/bin/git_diff_wrapper"]="$HOME/bin/git_diff_wrapper"
   ["$DOTFILES/bin/todo.sh"]="$HOME/bin/todo.sh"
   ["$DOTFILES/dircolors/gruvbox"]="$HOME/.dir_colors"
   ["$DOTFILES/gdb/gdbinit"]="$HOME/.gdbinit"

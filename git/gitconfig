@@ -8,7 +8,9 @@
 	branch = auto
 	status = auto
 [diff]
-	external = git_diff_wrapper
+	tool = vimdiff
+[difftool]
+	prompt = false
 [pager]
 	diff = 
 [merge]
