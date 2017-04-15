@@ -105,6 +105,7 @@ export EDITOR='vim'
 alias zshconfig="vim $HOME/.zshrc"
 alias ohmyzsh="vim $HOME/.oh-my-zsh/oh-my-zsh.sh"
 alias tmux='tmux -2'
+alias gdv='git difftool'
 
 # OTHER
 
