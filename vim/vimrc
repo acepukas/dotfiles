@@ -73,7 +73,7 @@ Plug 'StanAngeloff/php.vim'
 Plug 'captbaritone/better-indent-support-for-php-with-html'
 Plug 'alvan/vim-php-manual'
 Plug 'othree/javascript-libraries-syntax.vim'
-Plug 'acepukas/gen-jsdoc-func-doc'
+Plug 'heavenshell/vim-jsdoc'
 Plug 'digitaltoad/vim-pug'
 Plug 'wavded/vim-stylus'
 Plug 'flowtype/vim-flow'
@@ -747,8 +747,11 @@ hi link EasyMotionTarget2Second Constant
 let g:flow#enable = 0
 let g:flow#omnifunc = 0
 
-" gen-jsdoc-func-doc
-let g:generateJSDocFuncDocKeyMap = '<C-F>'
+" vim-jsdoc
+nmap <silent> <C-f> :exe "normal \<Plug>(jsdoc)"<CR>
+let g:jsdoc_allow_input_prompt = 1
+let g:jsdoc_input_description = 1
+let g:jsdoc_enable_es6 = 1
 
 " }}}
 " lightline config {{{
