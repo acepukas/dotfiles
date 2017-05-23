@@ -212,6 +212,8 @@ prompt_status() {
   [[ -n "$symbols" ]] && prompt_segment black default "$symbols"
 }
 
+MODE_INDICATOR="%{$fg[red]%}NORMAL%{$reset_color%}"
+
 ## Main prompt
 build_prompt() {
   RETVAL=$?
@@ -227,5 +229,3 @@ build_prompt() {
 
 PROMPT='%{%f%b%k%}$(build_prompt)
 ❱ '
-local rpdt='%{%F{cyan}%}%*%{%f%b%k%}'
-RPROMPT="%{%f%b%k%}${rpdt}"
