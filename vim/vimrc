@@ -25,6 +25,7 @@ Plug 'Julian/vim-textobj-variable-segment'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'itchyny/lightline.vim'     " customize your status line
 Plug 'DataWraith/auto_mkdir'     " make directories that don't exist in file path
+Plug 'bagrat/vim-workspace'
 
 " color schemes
 Plug 'acepukas/Zenburn'
@@ -65,14 +66,12 @@ Plug 'vhdirk/vim-cmake'
 " web dev plugins
 "
 Plug 'w0rp/ale'
-Plug 'othree/yajs.vim'
-Plug 'othree/es.next.syntax.vim'
+Plug 'pangloss/vim-javascript'
 Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
 Plug 'shawncplus/phpcomplete.vim'
 Plug 'StanAngeloff/php.vim'
 Plug 'captbaritone/better-indent-support-for-php-with-html'
 Plug 'alvan/vim-php-manual'
-Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'heavenshell/vim-jsdoc'
 Plug 'digitaltoad/vim-pug'
 Plug 'wavded/vim-stylus'
@@ -82,11 +81,14 @@ Plug 'rstacruz/sparkup', { 'rtp': 'vim' }
 Plug 'othree/html5-syntax.vim'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'ap/vim-css-color'
+Plug 'posva/vim-vue'
 " Plug 'groenewege/vim-less'
 " Plug 'nono/vim-handlebars'
 " Plug 'acepukas/vim-handlebars-conf'
 
 Plug 'freitass/todo.txt-vim'
+
+Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
 " }}}
@@ -304,9 +306,9 @@ set wildignore+=types_*taghl,tags
 let g:gruvbox_underline = 0
 let g:gruvbox_invert_selection = 0
 let g:gruvbox_italicize_comments = 0
-let g:gruvbox_contrast_dark = 'soft'
-let g:gruvbox_number_column = 'bg1'
-" let g:gruvbox_sign_column = 'bg2'
+let g:gruvbox_contrast_dark = 'medium'
+" let g:gruvbox_number_column = 'bg1'
+" let g:gruvbox_sign_column = 'bg0'
 set background=dark
 colorscheme gruvbox
 
@@ -315,15 +317,23 @@ hi! link ALEErrorSign GruvboxRedSign
 hi! link ALEWarningSign GruvboxYellowSign
 
 " custom highlighting for javascript
-hi! link javascriptObjectLabel GruvboxBlue
-hi! link javascriptFuncArg GruvboxYellow
-hi! link javascriptArrowFunc GruvboxRed
+" overrides settings from pangloss/vim-javascript
+hi! link jsObjectKey          GruvboxBlue
+hi! link jsStorageClass       GruvboxRed
+hi! link jsGlobalNodeObjects  GruvboxAqua
+hi! link jsGlobalObjects      GruvboxYellow
+hi! link jsFunction           GruvboxAqua
+hi! link jsFuncArgs           GruvboxYellow
+hi! link jsDestructuringBlock GruvboxYellow
+hi! link jsArrowFunction      GruvboxRed
+hi! link jsObjectBraces       GruvboxFg3
+hi! link jsTemplateBraces     GruvboxAqua
+hi! link jsBrackets           GruvboxGreen
+hi! link jsUndefined          GruvboxPurple
+hi! link jsNull               GruvboxPurple
+hi! link jsSuper              GruvboxOrange
+hi! link jsClassMethodType    GruvboxOrange
 
-hi! link javascriptDocParamName GruvboxGreen
-hi! link javascriptDocParamType GruvboxGreen
-hi! link javascriptDocNamedParamType GruvboxGreen
-hi! link javascriptDocTags GruvboxGreen
-hi! link javascriptDocNotation GruvboxGreen
 " }}}
 
 " solarized {{{
@@ -560,6 +570,10 @@ function! Preserve(command)
   call cursor(l, c)
 endfunction
 
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
 " }}}
 " BOM Management {{{
 " making sure that no bom is prepended to files when written
@@ -615,7 +629,7 @@ let g:ale_javascript_eslint_use_global = 1
 let g:ale_linters = {
       \ 'javascript': ['eslint'],
       \ 'json': ['jsonlint'],
-      \ 'pug': ['pug-lint']
+      \ 'pug': ['puglint']
       \ }
 
 let g:ale_sign_column_always = 1
@@ -647,9 +661,6 @@ let tern#is_show_argument_hints_enabled = 'true'
 let g:my_tern_path = expand('<sfile>:h') . '/.vim/plugged/tern_for_vim/node_modules/tern/bin/tern'
 let g:tern#command = ["node", g:my_tern_path, '--no-port-file', '--persistent']
 let g:tern_request_timeout = 3
-
-" javascript-libraries-syntax
-let g:used_javascript_libs = 'jquery,ramda'
 
 " YCM
 let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>'] 
@@ -747,11 +758,34 @@ hi link EasyMotionTarget2Second Constant
 let g:flow#enable = 0
 let g:flow#omnifunc = 0
 
+" pangloss/vim-javascript
+let g:javascript_plugin_jsdoc = 1
+
 " vim-jsdoc
 nmap <silent> <C-f> :exe "normal \<Plug>(jsdoc)"<CR>
 let g:jsdoc_allow_input_prompt = 1
 let g:jsdoc_input_description = 1
 let g:jsdoc_enable_es6 = 1
+
+" }}}
+" vim-workspace Configuration {{{
+
+let g:workspace_powerline_separators = 1
+let g:workspace_tab_icon = "\uf00a"
+let g:workspace_left_trunc_icon = "\uf0a8"
+let g:workspace_right_trunc_icon = "\uf0a9"
+
+fun! g:WorkspaceSetCustomColors()
+
+  hi! WorkspaceBufferCurrent ctermfg=235 ctermbg=246 guifg=#282828 guibg=#a89984
+  hi! WorkspaceBufferActive  ctermfg=246 ctermbg=239 guifg=#a89984 guibg=#504945
+  hi! WorkspaceBufferHidden  ctermfg=243 ctermbg=237 guifg=#7c6f64 guibg=#3c3836
+  hi! WorkspaceBufferTrunc   ctermfg=243 ctermbg=237 guifg=#7c6f64 guibg=#3c3836
+  hi! WorkspaceTabCurrent    ctermbg=214 ctermfg=236 guibg=#fabd2f guifg=#32302f
+  hi! WorkspaceTabHidden     ctermfg=214 ctermbg=237 guifg=#fabd2f guibg=#3c3836
+  hi! WorkspaceFill          ctermfg=237 ctermbg=237 guifg=#3c3836 guibg=#3c3836
+
+endfun
 
 " }}}
 " lightline config {{{
@@ -760,6 +794,9 @@ let g:jsdoc_enable_es6 = 1
 set laststatus=2
 
 let g:lightline = {
+      \ 'enable': {
+      \   'tabline': 0
+      \ },
       \ 'colorscheme': 'gruvbox',
       \ 'mode_map': { 'c': 'NORMAL' },
       \ 'active': {
@@ -827,11 +864,11 @@ function! MyFugitive()
 endfunction
 
 function! MyFileformat()
-  return winwidth(0) > 70 ? &fileformat : ''
+  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
 endfunction
 
 function! MyFiletype()
-  return winwidth(0) > 70 ? (strlen(&filetype) ? '⭢⭣' . &filetype : 'no ft') : ''
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
 endfunction
 
 function! MyFileencoding()
