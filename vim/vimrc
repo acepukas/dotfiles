@@ -609,6 +609,9 @@ autocmd BufRead,BufNewFile *.styl set filetype=stylus
 
 " support for markdown syntax highlighting
 autocmd BufRead,BufNewFile *.md set filetype=markdown
+
+" vim-vue workaround for randomly stopping syntax highlighting
+autocmd FileType vue syntax sync fromstart
 " }}}
 " Plugin Configuration {{{
 
