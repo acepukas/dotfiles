@@ -67,7 +67,7 @@ case "$HOSTNAME" in
     plugins+=(nvm)
     ;;
   shangri-la)
-    plugins+=(nvm)
+    plugins+=(nvm httpie)
     ;;
   Aarons-MacBook-Pro.local)
     plugins+=(brew)
