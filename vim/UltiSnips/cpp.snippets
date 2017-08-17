@@ -1,3 +1,5 @@
+priority 1
+
 snippet inc "cpp style include statement" b
 #include <${1:iostream}>${0}
 endsnippet
@@ -20,21 +22,27 @@ for(${1:auto} ${2:it} = ${3:container}.${2/^.*?(c)?(r)?$/(?1:c(?2:r):(?2:r))/}be
 }
 endsnippet
 
-snippet cl "class" b
+snippet forrange "range for loop"
+for(${1:auto}${2:&} : ${3:iterable}) {
+	${VISUAL}${0}
+}
+endsnippet
+
+snippet class "class" b
 class ${1:ClassName} {
 
 	public:
 
-		${2:explicit }$1 (${3});
-		${4:virtual }~$1 ();
+		${2:explicit }$1(${3});
+		virtual ~$1();
 
-	private:
+	${4:protected}:
 
 		${5:/* data */}${VISUAL}${0}
 };
 endsnippet
 
-snippet st "Struct" b
+snippet struct "Struct" b
 struct ${1:StructName} {
 	${2:/* data */}${VISUAL}${0}
 };
@@ -52,4 +60,12 @@ if (${1:/* condition */}) {
 } else {
 	${3:/* else */}
 }
+endsnippet
+
+snippet log "cout based log"
+std::cout << ${VISUAL}${0} << std::endl;
+endsnippet
+
+snippet logvar "log a variable to cout"
+std::cout << "${1:VAR_NAME}: " << $1 << std::endl;${VISUAL}${0}
 endsnippet
