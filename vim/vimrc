@@ -489,7 +489,7 @@ nnoremap k gk
 nnoremap j gj
 
 " recall last buffer
-nnoremap <leader><tab> :b!#<CR>
+nnoremap <leader>l :b!#<CR>
 
 " Toggle semicolon, comma or neither at
 " end of line without moving cursor
@@ -632,7 +632,8 @@ let g:ale_javascript_eslint_use_global = 1
 let g:ale_linters = {
       \ 'javascript': ['eslint'],
       \ 'json': ['jsonlint'],
-      \ 'pug': ['puglint']
+      \ 'pug': ['puglint'],
+      \ 'cpp': []
       \ }
 
 let g:ale_sign_column_always = 1
@@ -702,7 +703,7 @@ let g:qf_mapping_ack_style = 1
 
 " FZF
 nnoremap <C-P> :FZF<CR>
-nnoremap <leader>x :Buffers<CR>
+nnoremap <leader><tab> :Buffers<CR>
 
 " case sensitive rg command
 nnoremap <leader>q :RGS 
