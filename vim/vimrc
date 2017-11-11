@@ -826,8 +826,8 @@ let g:lightline = {
       \ 'component_type': {
       \   'ale': 'error'
       \ },
-      \ 'separator': { 'left': '⮀', 'right': '⮂' },
-      \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
+      \ 'separator': { 'left': '', 'right': '' },
+      \ 'subseparator': { 'left': '', 'right': '' }
       \ }
 
 function! MyModified()
@@ -835,7 +835,7 @@ function! MyModified()
 endfunction
 
 function! MyReadonly()
-  return &ft !~? 'Tagbar\|help\|vimfiler\|gundo' && &readonly ? '⭤' : ''
+  return &ft !~? 'Tagbar\|help\|vimfiler\|gundo' && &readonly ? '' : ''
 endfunction
 
 function! MyFilename()
@@ -850,7 +850,7 @@ function! MyFilename()
   let fpath = substitute(fpath,curdir,"","g")
 
   return fname =~ '__Gundo\|NERD_tree' ? '' :
-        \ fname == '__Tagbar__' ? g:lightline.fname :
+        \ fname == '__Tagbar__.1' ? g:lightline.fname :
         \ (&ft == 'vimfiler' ? vimfiler#get_status_string() : 
         \  &ft == 'unite' ? unite#get_status_string() : 
         \  &ft == 'vimshell' ? vimshell#get_status_string() :
@@ -862,7 +862,7 @@ endfunction
 function! MyFugitive()
   if &ft !~? 'Tagbar\|vimfiler\|Gundo\|NERD' && exists("*fugitive#head")
     let _ = fugitive#head()
-    return strlen(_) ? '⭠ '._ : ''
+    return strlen(_) ? ' '._ : ''
   endif
   return ''
 endfunction
@@ -885,7 +885,7 @@ function! MyMode()
         \ fname =~ 'NERD_tree' ? 'NERDTree' :
         \ fname == '__Gundo__' ? 'Gundo' :
         \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
-        \ fname == '__Tagbar__' ? 'Tagbar' :
+        \ fname == '__Tagbar__.1' ? 'Tagbar' :
         \ winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
