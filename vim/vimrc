@@ -1,9 +1,6 @@
 " Fold Settings {{{
 " vim:foldmarker={{{,}}}:foldmethod=marker
 " }}}
-" No Compatible {{{
-set nocompatible
-" }}}
 " vim-plug Config {{{
 call plug#begin($HOME . '/.vim/plugged')
 
