@@ -162,7 +162,9 @@ set exrc
 " being used within per dir .vimrc files
 set secure
 
-syntax on
+if !exists("g:syntax_on")
+  syntax enable
+endif
 set synmaxcol=512
 
 " prevents cursor from jumping to start of line on buffer switch for example
