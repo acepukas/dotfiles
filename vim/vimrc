@@ -162,6 +162,12 @@ set exrc
 " being used within per dir .vimrc files
 set secure
 
+" setting gui opts here  before enabling syntax hilighting
+if has('gui_running')
+  " gvim specific stuff
+  set guioptions=acM
+endif
+
 if !exists("g:syntax_on")
   syntax enable
 endif
@@ -358,10 +364,6 @@ augroup END
 set nosmd
 
 if has('gui_running')
-  " gvim specific stuff
-  set guioptions=acM
-  :syntax on
-
   if has("gui_win32") " NT Windows
     augroup win_gui
       autocmd!
