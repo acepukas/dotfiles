@@ -625,9 +625,3 @@ augroup filetypes
 
 augroup END
 " }}}
-" Plugin Configuration {{{
-source $HOME/.vim/rc/plugin_config.vim
-" }}}
-" lightline config {{{
-source $HOME/.vim/rc/lightline_config.vim
-" }}}
