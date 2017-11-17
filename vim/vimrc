@@ -162,7 +162,7 @@ set exrc
 " being used within per dir .vimrc files
 set secure
 
-" setting gui opts here  before enabling syntax hilighting
+" setting gui opts here  before enabling syntax highlighting
 if has('gui_running')
   " gvim specific stuff
   set guioptions=acM
@@ -313,26 +313,26 @@ set background=dark
 colorscheme gruvbox
 
 " Better highlighting for ale errors
-hi! link ALEErrorSign GruvboxRedSign
-hi! link ALEWarningSign GruvboxYellowSign
+highlight! link ALEErrorSign GruvboxRedSign
+highlight! link ALEWarningSign GruvboxYellowSign
 
 " custom highlighting for javascript
 " overrides settings from pangloss/vim-javascript
-hi! link jsObjectKey          GruvboxBlue
-hi! link jsStorageClass       GruvboxRed
-hi! link jsGlobalNodeObjects  GruvboxAqua
-hi! link jsGlobalObjects      GruvboxYellow
-hi! link jsFunction           GruvboxAqua
-hi! link jsFuncArgs           GruvboxYellow
-hi! link jsDestructuringBlock GruvboxYellow
-hi! link jsArrowFunction      GruvboxRed
-hi! link jsObjectBraces       GruvboxFg3
-hi! link jsTemplateBraces     GruvboxAqua
-hi! link jsBrackets           GruvboxGreen
-hi! link jsUndefined          GruvboxPurple
-hi! link jsNull               GruvboxPurple
-hi! link jsSuper              GruvboxOrange
-hi! link jsClassMethodType    GruvboxOrange
+highlight! link jsObjectKey          GruvboxBlue
+highlight! link jsStorageClass       GruvboxRed
+highlight! link jsGlobalNodeObjects  GruvboxAqua
+highlight! link jsGlobalObjects      GruvboxYellow
+highlight! link jsFunction           GruvboxAqua
+highlight! link jsFuncArgs           GruvboxYellow
+highlight! link jsDestructuringBlock GruvboxYellow
+highlight! link jsArrowFunction      GruvboxRed
+highlight! link jsObjectBraces       GruvboxFg3
+highlight! link jsTemplateBraces     GruvboxAqua
+highlight! link jsBrackets           GruvboxGreen
+highlight! link jsUndefined          GruvboxPurple
+highlight! link jsNull               GruvboxPurple
+highlight! link jsSuper              GruvboxOrange
+highlight! link jsClassMethodType    GruvboxOrange
 
 " }}}
 
@@ -349,12 +349,12 @@ hi! link jsClassMethodType    GruvboxOrange
 " gotham {{{
 " colorscheme gotham
 " custom highlights for gotham
-" hi! link javascriptFuncName SpellLocal
-" hi! link javascriptAsyncFuncKeyword PreProc
+" highlight! link javascriptFuncName SpellLocal
+" highlight! link javascriptAsyncFuncKeyword PreProc
 " }}}
 
-" hilight off in insert mode
-augroup search_hilight
+" highlight off in insert mode
+augroup search_highlight
   autocmd!
   autocmd InsertEnter * :setlocal nohlsearch
   autocmd InsertLeave * :setlocal hlsearch
