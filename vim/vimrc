@@ -386,7 +386,6 @@ endif
 
 " }}}
 " Back Up Config {{{
-set nobackup
 set noswapfile
 " }}}
 " Session Management {{{
