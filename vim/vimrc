@@ -442,7 +442,7 @@ inoremap <C-L> @@@<ESC>hhkywjl?@@@<CR>P/@@@<CR>3s
 " against within a regex, preventing characters with special
 " meaning from interfering with the search
 
-fun! EscapeVimRegex(str)
+fun! EscapeVimRegex(str) abort
   let l:str = a:str
   let l:subs = [
     \{'char' : '\\',  'rep' : '\\\\'},
@@ -467,7 +467,7 @@ vnoremap <leader>r "sy:%s:<C-R>=EscapeVimRegex(@s)<CR>::g<Left><Left>
 " count occurrences of visually selected text
 vnoremap <leader>c "sy:%s:<C-R>=EscapeVimRegex(@s)<CR>::n<CR>
 
-fun! ClearWhiteSpace()
+fun! ClearWhiteSpace() abort
   :%s/	/  /ge
   :%s///ge
   :%s/\s\+$//
@@ -497,7 +497,7 @@ nnoremap <leader>l :b!#<CR>
 " end of line without moving cursor
 nnoremap <leader>; :call ToggleSemiColonComma()<cr>
 
-fun! ToggleSemiColonComma()
+fun! ToggleSemiColonComma() abort
     let l:last = getline(line("."))[-1:]
     if l:last =~ ","
         execute "normal! mz$x`z"
@@ -521,7 +521,7 @@ endfun
 " expected output would be something like:
 "   font-size: 1.125em; /* == (18px / 16px) */
 
-fun! PxToEm(sz,psz)
+fun! PxToEm(sz,psz) abort
 python << EOF
 import vim
 
@@ -557,7 +557,7 @@ vnoremap <leader>d "zy:g/"/d
 " delete/close buffer
 nnoremap <F12> :bd<CR>
 
-function! Preserve(command)
+function! Preserve(command) abort
   " Preparation: save last search, and cursor position.
   let _s=@/
   let l = line(".")
