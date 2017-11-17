@@ -233,20 +233,18 @@ set so=7
 
 " Text formatting
 set expandtab
-set sts=2
-set sw=2
+set softtabstop=2
+set shiftwidth=2
 set shiftround
 set copyindent
-set tw=0
+set textwidth=0
 set tabstop=2
 set showmatch
 " set smarttab
 set backspace=2
-set ffs=unix,dos,mac
+set fileformats=unix,dos,mac
 
 " Searching (REGEX)
-" set ignorecase
-" set smartcase
 set incsearch
 set hlsearch " highlighting
 
@@ -399,7 +397,6 @@ set sessionoptions=buffers,folds,options,tabpages,winsize
 " Custom Commands "{{{
 
 " I don't want help right now!
-" nnoremap <F1> <Esc>
 vnoremap <F1> <Esc>
 inoremap <F1> <Esc>
 
@@ -432,7 +429,7 @@ nnoremap gV `[v`]
 " change to directory of current file for buffer only, not entire vim instance.
 nnoremap <leader>cd :cd %:p:h<cr> :echo expand("%:p:h")<cr>
 
-iab xdate <c-r>=strftime("%Y-%m-%d")<cr>
+iabbrev xdate <c-r>=strftime("%Y-%m-%d")<cr>
 
 " piece-wise copy items from line above
 inoremap <C-L> @@@<ESC>hhkywjl?@@@<CR>P/@@@<CR>3s
@@ -441,7 +438,7 @@ inoremap <C-L> @@@<ESC>hhkywjl?@@@<CR>P/@@@<CR>3s
 " against within a regex, preventing characters with special
 " meaning from interfering with the search
 
-fun! EscapeVimRegex(str) abort
+function! EscapeVimRegex(str) abort
   let l:str = a:str
   let l:subs = [
     \{'char' : '\\',  'rep' : '\\\\'},
@@ -458,7 +455,7 @@ fun! EscapeVimRegex(str) abort
     let l:str = substitute(l:str, sub['char'], sub['rep'], 'g')
   endfor
   return l:str
-endfun
+endfunction
 
 " string substitution for currently visually selected text
 vnoremap <leader>r "sy:%s:<C-R>=EscapeVimRegex(@s)<CR>::g<Left><Left>
@@ -466,11 +463,11 @@ vnoremap <leader>r "sy:%s:<C-R>=EscapeVimRegex(@s)<CR>::g<Left><Left>
 " count occurrences of visually selected text
 vnoremap <leader>c "sy:%s:<C-R>=EscapeVimRegex(@s)<CR>::n<CR>
 
-fun! ClearWhiteSpace() abort
+function! ClearWhiteSpace() abort
   :%s/	/  /ge
   :%s///ge
   :%s/\s\+$//
-endfun
+endfunction
 
 command! ClearWhiteSpace :call ClearWhiteSpace()
 
@@ -496,7 +493,7 @@ nnoremap <leader>l :b!#<CR>
 " end of line without moving cursor
 nnoremap <leader>; :call ToggleSemiColonComma()<cr>
 
-fun! ToggleSemiColonComma() abort
+function! ToggleSemiColonComma() abort
     let l:last = getline(line("."))[-1:]
     if l:last =~ ","
         execute "normal! mz$x`z"
@@ -505,7 +502,7 @@ fun! ToggleSemiColonComma() abort
     elseif l:last !~ "(,|;)"
         execute "normal! mzA;`z"
     endif
-endfun
+endfunction
 
 " Calculate desired em value based on px font and parent el px font. So first
 " argument to PxToEm would be the desired font size in pixels (px). Second
@@ -520,7 +517,7 @@ endfun
 " expected output would be something like:
 "   font-size: 1.125em; /* == (18px / 16px) */
 
-fun! PxToEm(sz,psz) abort
+function! PxToEm(sz,psz) abort
 python << EOF
 import vim
 
@@ -545,7 +542,7 @@ except Exception, e:
   print e
 
 EOF
-endfun
+endfunction
 
 command! -nargs=+ PxToEm :call PxToEm(<f-args>)
 nnoremap <leader>f :PxToEm 
