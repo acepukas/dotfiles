@@ -155,10 +155,6 @@ endif
 " }}}
 " Initial Commands for setting up vim {{{
 
-" clearing all auto commands in case vimrc sourced again
-" All auto commands must come after this statement
-autocmd!
-
 " allow per directory .vimrc files
 set exrc
 
@@ -214,7 +210,7 @@ set tags=tags;/
 
 " Delete comment character when joining commented lines
 if v:version > 703 || v:version == 703 && has("patch541")
-  set formatoptions+=j     
+  set formatoptions+=j
 endif
 
 " Use only 1 space after "." when joining lines instead of 2
@@ -236,8 +232,6 @@ set expandtab
 set sts=2
 set sw=2
 set shiftround
-" set smartindent
-set autoindent
 set copyindent
 set tw=0
 set tabstop=2
@@ -356,8 +350,11 @@ hi! link jsClassMethodType    GruvboxOrange
 " }}}
 
 " hilight off in insert mode
-autocmd InsertEnter * :setlocal nohlsearch
-autocmd InsertLeave * :setlocal hlsearch
+augroup search_hilight
+  autocmd!
+  autocmd InsertEnter * :setlocal nohlsearch
+  autocmd InsertLeave * :setlocal hlsearch
+augroup END
 
 " do not display mode in output statusline
 set nosmd
@@ -368,7 +365,10 @@ if has('gui_running')
   :syntax on
 
   if has("gui_win32") " NT Windows
-    autocmd GUIEnter * :simalt ~x
+    augroup win_gui
+      autocmd!
+      autocmd GUIEnter * :simalt ~x
+    augroup END
     set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h14
   elseif has("mac")
     set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h16
@@ -576,55 +576,73 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 " }}}
 " BOM Management {{{
 " making sure that no bom is prepended to files when written
-autocmd BufWrite * :set nobomb
-autocmd BufWrite * :set ff=unix
+augroup bomb
+  autocmd!
+  autocmd BufWrite * :set nobomb
+  autocmd BufWrite * :set ff=unix
+augroup END
 " }}}
 " File Type Settings {{{
-autocmd FileType python set omnifunc=pythoncomplete#Complete
-" autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType handlebars set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType xhtml set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-autocmd FileType c set omnifunc=ccomplete#Complete
 
-if has("autocmd") && exists("+omnifunc")
-autocmd Filetype *
-  \ if &omnifunc == "" |
-  \ setlocal omnifunc=syntaxcomplete#Complete |
-  \ endif
+if exists("+omnifunc")
+
+  augroup omnifunc
+    autocmd!
+
+    autocmd FileType python set omnifunc=pythoncomplete#Complete
+    " autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+    autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+    autocmd FileType handlebars set omnifunc=htmlcomplete#CompleteTags
+    autocmd FileType xhtml set omnifunc=htmlcomplete#CompleteTags
+    autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+    autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+    autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+    autocmd FileType c set omnifunc=ccomplete#Complete
+
+
+    autocmd Filetype *
+      \ if &omnifunc == "" |
+      \ setlocal omnifunc=syntaxcomplete#Complete |
+      \ endif
+
+  augroup END
+
 endif
 
-" support for cmake files
-au BufNewFile,BufRead CMakeLists.txt set filetype=cmake
+augroup filetypes
+  autocmd!
 
-" support for json syntax highlighting
-autocmd BufRead,BufNewFile *.json set filetype=json
+  " support for cmake files
+  autocmd BufNewFile,BufRead CMakeLists.txt set filetype=cmake
 
-" support for stylus syntax highlighting
-autocmd BufRead,BufNewFile *.styl set filetype=stylus
+  " support for json syntax highlighting
+  autocmd BufRead,BufNewFile *.json set filetype=json
 
-" support for markdown syntax highlighting
-autocmd BufRead,BufNewFile *.md set filetype=markdown
+  " support for stylus syntax highlighting
+  autocmd BufRead,BufNewFile *.styl set filetype=stylus
 
-" vim-vue workaround for randomly stopping syntax highlighting
-autocmd FileType vue syntax sync fromstart
+  " support for markdown syntax highlighting
+  autocmd BufRead,BufNewFile *.md set filetype=markdown
+
+  " vim-vue workaround for randomly stopping syntax highlighting
+  autocmd FileType vue syntax sync fromstart
+
+augroup END
 " }}}
 " Plugin Configuration {{{
 
-" NERD Tree plugin
+" NERDTree: scrooloose/nerdtree
 nnoremap <F1> :NERDTreeToggle<CR>
 
+" Obsession: tpope/vim-obsession
 " load session if present
 nnoremap <F2> :source Session.vim<CR>
 
-" GUNDO
+" GUNDO: sjl/gundo.vim
 nnoremap <F5> :GundoToggle<CR>
 let g:gundo_preview_bottom = 1
 
-" ale syntax checking config
+" ALE: w0rp/ale
 let g:ale_javascript_eslint_executable = 'eslint_d'
 let g:ale_javascript_eslint_use_global = 1
 
@@ -652,20 +670,20 @@ function! s:updateLightLine() abort
   call lightline#update()
 endfunction
 
-" git gutter
+" GitGutter: airblade/vim-gitgutter
 let g:gitgutter_sign_added = ' +'
 let g:gitgutter_sign_modified = ' ~'
 let g:gitgutter_sign_removed = ' −'
 let g:gitgutter_sign_removed_first_line = ' ‾'
 let g:gitgutter_sign_modified_removed = ' ≃'
 
-" tern.js
+" TernJS: marijnh/tern_for_vim
 let tern#is_show_argument_hints_enabled = 'true'
 let g:my_tern_path = expand('<sfile>:h') . '/.vim/plugged/tern_for_vim/node_modules/tern/bin/tern'
 let g:tern#command = ["node", g:my_tern_path, '--no-port-file', '--persistent']
 let g:tern_request_timeout = 3
 
-" YCM
+" YCM: Valloric/YouCompleteMe
 let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>'] 
 let g:ycm_key_list_previous_completion = ['<C-S-TAB>', '<Up>'] 
 
@@ -683,10 +701,10 @@ let g:ycm_filetype_blacklist = {
   \ 'vim': 1
   \}
 
-" SuperTab
+" SuperTab: ervandew/supertab
 let g:SuperTabDefaultCompletionType = '<TAB>'
 
-" ultisnips
+" UltiSnips: SirVer/ultisnips
 let g:UltiSnipsEditSplit='vertical'
 let g:UltiSnipsSnippetsDir=$HOME . '/.vim/UltiSnips'
 let g:UltiSnipsSnippetDirectories=['UltiSnips']
@@ -696,11 +714,11 @@ let g:UltiSnipsJumpForwardTrigger='<c-j>'
 let g:UltiSnipsJumpBackwardTrigger='<c-k>'
 let g:UltiSnipsListSnippets='<c-b>'
 
-" vim-qf
+" VimQf: romainl/vim-qf
 nnoremap <silent> <C-Q> :exe "normal \<Plug>QfSwitch"<CR>
 let g:qf_mapping_ack_style = 1
 
-" FZF
+" FZFVIM: junegunn/fzf.vim
 nnoremap <C-P> :FZF<CR>
 nnoremap <leader><tab> :Buffers<CR>
 
@@ -746,15 +764,15 @@ let g:fzf_action = {
   \ 'ctrl-x': 'split',
   \ 'ctrl-v': 'vsplit' }
 
-" tagbar settings
+" TagBar: majutsushi/tagbar
 nnoremap <F7> :TagbarToggle<CR>
 let g:tagbar_width = 50
 
-" TagHighlight settings
+" Tag Highlight: vim-scripts/TagHighlight
 " let g:TagHighlightSettings = { }
 " let g:TagHighlightSettings['ExtensionLanguageOverrides'] = {'inl': 'c'}
 
-" vim-easy-align
+" Vim Easy Align: junegunn/vim-easy-align
 vnoremap <silent> <Enter> :EasyAlign<CR>
 
 if !exists('g:easy_align_delimiters')
@@ -767,24 +785,25 @@ let g:easy_align_delimiters['d'] = {
 \ 'left_margin': 0, 'right_margin': 0
 \ }
 
-" easy motion
+" Easy Motion: Lokaltog/vim-easymotion
 hi link EasyMotionTarget2First Constant
 hi link EasyMotionTarget2Second Constant
 
-" vim-flow - disabling system wide. Enable with dir level .vimrc if needed
+" Vim Flow: flowtype/vim-flow
+" disabling system wide. Enable with dir level .vimrc if needed
 let g:flow#enable = 0
 let g:flow#omnifunc = 0
 
-" pangloss/vim-javascript
+" Vim JavaScript: pangloss/vim-javascript
 let g:javascript_plugin_jsdoc = 1
 
-" vim-jsdoc
+" Vim JsDoc: heavenshell/vim-jsdoc
 nmap <silent> <C-f> :exe "normal \<Plug>(jsdoc)"<CR>
 let g:jsdoc_allow_input_prompt = 1
 let g:jsdoc_input_description = 1
 let g:jsdoc_enable_es6 = 1
 
-" vim-go
+" Vim Go: fatih/vim-go
 let g:go_disable_autoinstall = 0
 
 " format with goimports instead of gofmt
