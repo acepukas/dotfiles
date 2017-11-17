@@ -1,3 +1,13 @@
+if exists("g:loaded_lightline_config") || &cp
+  finish
+endif
+let g:loaded_lightline_config=1
+
+" save line continuation setting and restore it after script is loaded
+" This is so that line continuation is supported
+let s:cpo_save = &cpo
+set cpo&vim
+
 " lightline needs status line visible
 set laststatus=2
 
@@ -112,3 +122,5 @@ function! TagbarStatusFunc(current, sort, fname, flags, ...) abort
   return lightline#statusline(0)
 endfunction
 
+" restore previous line continuation settings
+let &cpo = s:cpo_save

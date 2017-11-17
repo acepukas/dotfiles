@@ -1,3 +1,13 @@
+if exists("g:loaded_plugin_config") || &cp
+  finish
+endif
+let g:loaded_plugin_config=1
+
+" save line continuation setting and restore it after script is loaded
+" This is so that line continuation is supported
+let s:cpo_save = &cpo
+set cpo&vim
+
 " NERDTree: scrooloose/nerdtree
 nnoremap <F1> :NERDTreeToggle<CR>
 
@@ -211,3 +221,5 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
 \ }
 
+" restore previous line continuation settings
+let &cpo = s:cpo_save
