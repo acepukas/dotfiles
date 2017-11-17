@@ -165,10 +165,6 @@ set secure
 syntax on
 set synmaxcol=512
 
-filetype on
-filetype plugin on
-filetype indent on
-
 " prevents cursor from jumping to start of line on buffer switch for example
 set nostartofline
 
