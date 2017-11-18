@@ -155,11 +155,10 @@ endif
 " allow per directory .vimrc files
 set exrc
 
-" secure prevents certain functions from
-" being used within per dir .vimrc files
+" secure prevents certain functions from being used within per dir .vimrc files
 set secure
 
-" setting gui opts here  before enabling syntax highlighting
+" setting gui opts here before enabling syntax highlighting
 if has('gui_running')
   " gvim specific stuff
   set guioptions=acM
@@ -168,12 +167,13 @@ endif
 if !exists("g:syntax_on")
   syntax enable
 endif
+
 set synmaxcol=512
 
 " prevents cursor from jumping to start of line on buffer switch for example
 set nostartofline
 
-" delfault is 4000 which is too slow
+" default is 4000 which is too slow
 set updatetime=250
 
 " allow for fast return to NORMAL mode via ESC
@@ -237,7 +237,6 @@ set copyindent
 set textwidth=0
 set tabstop=2
 set showmatch
-" set smarttab
 set backspace=2
 set fileformats=unix,dos,mac
 
@@ -250,6 +249,7 @@ set backspace=indent,eol,start
 
 " always show invisible chars
 set list
+
 " use the same symbols as TextMate for tabstops and EOLs
 set listchars+=tab:▸\  " tabs
 set listchars+=trail:.
@@ -259,7 +259,10 @@ set listchars+=precedes:«
 set listchars+=nbsp:⣿
 set showbreak=↪\  " for wrapped lines
 
+" display line number column
 set number
+
+" use relative line numbers
 set relativenumber
 
 " allow for wild menu feature
@@ -406,7 +409,7 @@ nnoremap <Down>  :noh<CR>
 " fast saving
 nnoremap <leader>w :w!<cr>
 
-"fast editing of vimrc file
+" fast editing of vimrc file
 nnoremap <leader>e :vsplit $MYVIMRC<cr>
 nnoremap <leader>v :so $MYVIMRC<cr>
 
@@ -562,6 +565,7 @@ function! Preserve(command) abort
   call cursor(l, c)
 endfunction
 
+" display syntax information about element under cursor
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
