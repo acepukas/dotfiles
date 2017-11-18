@@ -291,7 +291,7 @@ set wildignore+=*.swp,*~,._*
 
 set wildignore+=types_*taghl,tags
 
-" zenburn {{{
+" zenburn colorscheme {{{
 " colorscheme configuration
 " let g:zenburn_enable_TagHighlight=1
 " let g:zenburn_disable_Label_underline=1
@@ -299,8 +299,38 @@ set wildignore+=types_*taghl,tags
 " colorscheme zenburn
 " }}}
 
-" gruvbox {{{
-" colorscheme configuration
+" gruvbox colorscheme {{{
+function! GruvboxCustom() abort
+
+  " Better highlighting for ale errors
+  highlight! link ALEErrorSign GruvboxRedSign
+  highlight! link ALEWarningSign GruvboxYellowSign
+
+  " custom highlighting for javascript
+  " overrides settings from pangloss/vim-javascript
+  highlight! link jsObjectKey          GruvboxBlue
+  highlight! link jsStorageClass       GruvboxRed
+  highlight! link jsGlobalNodeObjects  GruvboxAqua
+  highlight! link jsGlobalObjects      GruvboxYellow
+  highlight! link jsFunction           GruvboxAqua
+  highlight! link jsFuncArgs           GruvboxYellow
+  highlight! link jsDestructuringBlock GruvboxYellow
+  highlight! link jsArrowFunction      GruvboxRed
+  highlight! link jsObjectBraces       GruvboxFg3
+  highlight! link jsTemplateBraces     GruvboxAqua
+  highlight! link jsBrackets           GruvboxGreen
+  highlight! link jsUndefined          GruvboxPurple
+  highlight! link jsNull               GruvboxPurple
+  highlight! link jsSuper              GruvboxOrange
+  highlight! link jsClassMethodType    GruvboxOrange
+
+endfunction
+
+augroup gruvbox_custom
+  autocmd!
+  autocmd ColorScheme * call GruvboxCustom()
+augroup END
+
 let g:gruvbox_underline = 0
 let g:gruvbox_invert_selection = 0
 let g:gruvbox_italicize_comments = 0
@@ -310,45 +340,32 @@ let g:gruvbox_contrast_dark = 'medium'
 set background=dark
 colorscheme gruvbox
 
-" Better highlighting for ale errors
-highlight! link ALEErrorSign GruvboxRedSign
-highlight! link ALEWarningSign GruvboxYellowSign
-
-" custom highlighting for javascript
-" overrides settings from pangloss/vim-javascript
-highlight! link jsObjectKey          GruvboxBlue
-highlight! link jsStorageClass       GruvboxRed
-highlight! link jsGlobalNodeObjects  GruvboxAqua
-highlight! link jsGlobalObjects      GruvboxYellow
-highlight! link jsFunction           GruvboxAqua
-highlight! link jsFuncArgs           GruvboxYellow
-highlight! link jsDestructuringBlock GruvboxYellow
-highlight! link jsArrowFunction      GruvboxRed
-highlight! link jsObjectBraces       GruvboxFg3
-highlight! link jsTemplateBraces     GruvboxAqua
-highlight! link jsBrackets           GruvboxGreen
-highlight! link jsUndefined          GruvboxPurple
-highlight! link jsNull               GruvboxPurple
-highlight! link jsSuper              GruvboxOrange
-highlight! link jsClassMethodType    GruvboxOrange
-
 " }}}
 
-" solarized {{{
+" solarized colorscheme {{{
 " set background=dark
 " colorscheme solarized
 " }}}
 
-" base16-ocean {{{
+" base16-ocean colorscheme {{{
 " set background=dark
 " colorscheme base16-ocean
 " }}}
 
-" gotham {{{
+" gotham colorscheme {{{
+
+" function! GothamCustom() abort
+"   highlight! link javascriptFuncName SpellLocal
+"   highlight! link javascriptAsyncFuncKeyword PreProc
+" endfunction
+"
+" augroup gotham_custom
+"   autocmd!
+"   autocmd ColorScheme * call GothamCustom()
+" augroup END
+"
 " colorscheme gotham
-" custom highlights for gotham
-" highlight! link javascriptFuncName SpellLocal
-" highlight! link javascriptAsyncFuncKeyword PreProc
+
 " }}}
 
 " highlight off in insert mode
