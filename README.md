@@ -89,8 +89,8 @@ Ubuntu: run the `dotfiles/tmux/tmux-setup.sh` script. It will install the latest
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ```
 
-### The Silver Searcher (ag)
+### Ripgrep (rg)
 
-Ubuntu: `apt-get install silversearcher-ag`
+Arch: `pacman -S ripgrep`
 
-OS X: `brew install the_silver_searcher`
+OS X: `brew install ripgrep`
