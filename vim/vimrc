@@ -2,12 +2,14 @@
 " vim:foldmarker={{{,}}}:foldmethod=marker
 " }}}
 " vim-plug Config {{{
+
+packadd! matchit
+
 call plug#begin($HOME . '/.vim/plugged')
 
 " Basic config
 Plug 'vim-scripts/L9'            " utilities for other plugins
 Plug 'tomtom/tcomment_vim'
-Plug 'geoffharcourt/vim-matchit' " support for tag navigation via %
 Plug 'tpope/vim-surround'        " surround text with s S like this to 'this'
 Plug 'tpope/vim-repeat'          " use the . command with more than vim builtins
 Plug 'tpope/vim-unimpaired'      " vim options toggleing and other cool stuff
@@ -191,8 +193,7 @@ set undolevels=1000
 set undoreload=10000
 
 set title
-set visualbell
-set noerrorbells
+set belloff=all
 
 " read file when changed externally
 set autoread
@@ -226,7 +227,7 @@ set splitbelow splitright
 set mouse=a
 
 " line context
-set so=7
+set scrolloff=7
 
 " Text formatting
 set expandtab
@@ -237,7 +238,6 @@ set copyindent
 set textwidth=0
 set tabstop=2
 set showmatch
-set backspace=2
 set fileformats=unix,dos,mac
 
 " Searching (REGEX)
@@ -398,7 +398,7 @@ set cc=80
 " clipboard
 if has("mac")
 elseif has("unix")
-  vnoremap <silent> <leader>y y:e ~/.vimyank<CR>P:w<CR>:w !xsel -i -b<CR><CR>:bdelete!<CR>
+  xnoremap <silent> <leader>y y:e ~/.vimyank<CR>P:w<CR>:w !xsel -i -b<CR><CR>:bdelete!<CR>
   nnoremap <silent> <leader>y V:w !xsel -i -b<CR>
   nnoremap <silent> <leader>p :silent :r !xsel -o -b<CR>
 endif
@@ -437,8 +437,8 @@ nnoremap <leader>t :e ~/Dropbox/todo/todo.txt<cr>
 nnoremap <silent> <bs> :noh<cr>
 
 " prevent leaving visual mode when shifting left or right
-vnoremap > >gv
-vnoremap < <gv
+xnoremap > >gv
+xnoremap < <gv
 
 " normal mode command will reselect most recently pasted text
 nnoremap gV `[v`]
@@ -475,10 +475,10 @@ function! EscapeVimRegex(str) abort
 endfunction
 
 " string substitution for currently visually selected text
-vnoremap <leader>r "sy:%s:<C-R>=EscapeVimRegex(@s)<CR>::g<Left><Left>
+xnoremap <leader>r "sy:%s:<C-R>=EscapeVimRegex(@s)<CR>::g<Left><Left>
 
 " count occurrences of visually selected text
-vnoremap <leader>c "sy:%s:<C-R>=EscapeVimRegex(@s)<CR>::n<CR>
+xnoremap <leader>c "sy:%s:<C-R>=EscapeVimRegex(@s)<CR>::n<CR>
 
 function! ClearWhiteSpace() abort
   :%s/	/  /ge
@@ -565,7 +565,7 @@ command! -nargs=+ PxToEm :call PxToEm(<f-args>)
 nnoremap <leader>f :PxToEm 
 
 " quick short cut for deleting all lines with selected text
-vnoremap <leader>d "zy:g/"/d
+xnoremap <leader>d "zy:g/"/d
 
 " delete/close buffer
 nnoremap <F12> :bd<CR>
