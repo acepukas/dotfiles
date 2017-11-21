@@ -1,0 +1,6 @@
+snippet negmw "Negroni style middleware" b
+func ${1:name}(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
+	${0}
+	next(w, r)
+}
+endsnippet
