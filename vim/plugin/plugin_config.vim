@@ -54,12 +54,6 @@ let g:gitgutter_sign_removed = ' −'
 let g:gitgutter_sign_removed_first_line = ' ‾'
 let g:gitgutter_sign_modified_removed = ' ≃'
 
-" TernJS: marijnh/tern_for_vim
-let tern#is_show_argument_hints_enabled = 'true'
-let g:my_tern_path = expand('<sfile>:h') . '/.vim/plugged/tern_for_vim/node_modules/tern/bin/tern'
-let g:tern#command = ["node", g:my_tern_path, '--no-port-file', '--persistent']
-let g:tern_request_timeout = 3
-
 " YCM: Valloric/YouCompleteMe
 let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>'] 
 let g:ycm_key_list_previous_completion = ['<C-S-TAB>', '<Up>'] 
