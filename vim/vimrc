@@ -324,6 +324,12 @@ function! GruvboxCustom() abort
   highlight! link jsSuper              GruvboxOrange
   highlight! link jsClassMethodType    GruvboxOrange
 
+  " custom go highlighting based off of go-vim syntax highlighting
+  highlight! link goReceiverType    GruvboxAqua
+  highlight! link goTypeName        GruvboxAqua
+  highlight! link goTypeConstructor GruvboxAqua
+  highlight! link goField           GruvboxFg3
+
 endfunction
 
 augroup gruvbox_custom

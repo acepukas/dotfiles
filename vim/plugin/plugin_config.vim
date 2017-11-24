@@ -27,7 +27,8 @@ let g:ale_linters = {
       \ 'javascript': ['eslint'],
       \ 'json': ['jsonlint'],
       \ 'pug': ['puglint'],
-      \ 'cpp': []
+      \ 'cpp': [],
+      \ 'go': ['gometalinter']
       \ }
 
 let g:ale_sign_column_always = 1
@@ -175,6 +176,8 @@ let g:jsdoc_input_description = 1
 let g:jsdoc_enable_es6 = 1
 
 " Vim Go: fatih/vim-go
+
+" prevent automatic installation of all vim-go dependencies
 let g:go_disable_autoinstall = 0
 
 " format with goimports instead of gofmt
@@ -186,6 +189,14 @@ let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
+let g:go_highlight_types = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_fields = 1
+
+" camel case for JSON tags
+let g:go_addtags_transform = "camelcase"
+
+let g:go_fold_enable = ['import', 'package_comment']
 
 let g:tagbar_type_go = {
     \ 'ctagstype' : 'go',
