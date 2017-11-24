@@ -19,7 +19,7 @@ let g:lightline = {
       \ 'mode_map': { 'c': 'NORMAL' },
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ],
-      \   'right': [ [ 'ale', 'lineinfo' ],
+      \   'right': [ [ 'lineinfo' ],
       \              [ 'percent' ],
       \              [ 'obsession', 'fileformat', 'fileencoding', 'filetype' ] ]
       \ },
@@ -34,15 +34,34 @@ let g:lightline = {
       \   'mode': 'MyMode',
       \   'obsession': 'MyObsession'
       \ },
-      \ 'component_expand': {
-      \   'ale': 'ALEGetStatusLine'
-      \ },
-      \ 'component_type': {
-      \   'ale': 'error'
-      \ },
       \ 'separator': { 'left': '', 'right': '' },
       \ 'subseparator': { 'left': '', 'right': '' }
       \ }
+
+" lightline-ale ale integration
+
+let g:lightline.active.right[0] =
+      \ ['linter_errors', 'linter_warnings', 'linter_ok'] +
+      \ g:lightline.active.right[0]
+
+let g:lightline.component_expand = {
+  \ 'linter_warnings': 'lightline#ale#warnings',
+  \ 'linter_errors': 'lightline#ale#errors',
+  \ 'linter_ok': 'lightline#ale#ok'
+  \ }
+
+let g:lightline.component_type = {
+  \ 'linter_warnings': 'warning',
+  \ 'linter_errors': 'error'
+  \ }
+
+let g:lightline#ale#indicator_warnings = '⚠'
+
+let g:lightline#ale#indicator_errors = '✘'
+
+let g:lightline#ale#indicator_ok = '✔'
+
+" lightline component functions
 
 function! MyModified()
   return &ft =~ 'Tagbar\|help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'

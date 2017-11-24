@@ -39,15 +39,6 @@ let g:ale_statusline_format = ['✘ %d', '⚠ %d', '']
 nnoremap <silent> [r :exe "normal \<Plug>(ale_previous_wrap)"<CR>
 nnoremap <silent> ]r :exe "normal \<Plug>(ale_next_wrap)"<CR>
 
-augroup AutoALE
-  autocmd!
-  autocmd User ALELint call s:updateLightLine()
-augroup END
-
-function! s:updateLightLine() abort
-  call lightline#update()
-endfunction
-
 " GitGutter: airblade/vim-gitgutter
 let g:gitgutter_sign_added = ' +'
 let g:gitgutter_sign_modified = ' ~'

@@ -23,6 +23,7 @@ Plug 'kana/vim-textobj-user'
 Plug 'Julian/vim-textobj-variable-segment'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'itchyny/lightline.vim'     " customize your status line
+Plug 'maximbaz/lightline-ale'
 Plug 'DataWraith/auto_mkdir'     " make directories that don't exist in file path
 Plug 'ConradIrwin/vim-bracketed-paste'
 
