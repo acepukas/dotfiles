@@ -27,6 +27,8 @@ PATHS=(
   ["$DOTFILES/vim"]="$HOME/.vim"
   ["$DOTFILES/zsh/zshrc"]="$HOME/.zshrc"
   ["$DOTFILES/zsh/oh-my-zsh/themes/agnosterc.zsh-theme"]="$HOME/.oh-my-zsh/custom/themes/agnosterc.zsh-theme"
+  ["$DOTFILES/js/.tern-config"]="$HOME/.tern-config"
+  ["$DOTFILES/js/.eslintrc.json"]="$HOME/.eslintrc.json"
 )
 
 COMMAND=$1

@@ -1,0 +1,67 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "es6":     true,
+    "browser": true,
+    "node":    true
+  },
+  "plugins": [
+    "babel",
+    "vue"
+  ],
+  "settings": {
+    "ecmascript": 6
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "extends": ["vue", "eslint:recommended"],
+  "rules": {
+    "strict":                       [2, "global"],
+    "no-empty":                     2,
+    "no-extra-parens":              2,
+    "valid-jsdoc":                  2,
+    "no-unused-vars":               [2, {"vars": "all", "args": "none"}],
+    "guard-for-in":                 2,
+    "radix":                        2,
+    "wrap-iife":                    2,
+    "curly":                        [2, "multi-line"],
+    "indent":                       [2, 2, {"SwitchCase": 1, "VariableDeclarator": 2}],
+    "quotes":                       [2, "single", "avoid-escape"],
+    "key-spacing":                  [2, {"align": "value"}],
+    "brace-style":                  2,
+    "comma-style":                  2,
+    "comma-dangle":                 2,
+    "semi":                         [2, "always"],
+    "consistent-this":              [2, "self"],
+    "consistent-return":            2,
+    "default-case":                 2,
+    "no-trailing-spaces":           2,
+    "dot-notation":                 2,
+    "dot-location":                 [2, "property"],
+    "eqeqeq":                       [2, "smart"],
+    "no-caller":                    2,
+    "no-eval":                      2,
+    "no-extend-native":             2,
+    "no-extra-bind":                2,
+    "no-floating-decimal":          2,
+    "no-labels":                    2,
+    "no-lone-blocks":               2,
+    "no-loop-func":                 2,
+    "no-proto":                     2,
+    "no-with":                      2,
+    "no-shadow-restricted-names":   2,
+    "no-shadow":                    2,
+    "no-use-before-define":         2,
+    "arrow-spacing":                2,
+    "prefer-spread":                2,
+    "babel/generator-star-spacing": [0, "before"],
+    "require-yield":                0,
+    "no-duplicate-imports":         2,
+    "no-useless-constructor":       2,
+    "no-var":                       2,
+    "prefer-const":                 2,
+    "prefer-rest-params":           2
+  }
+}
