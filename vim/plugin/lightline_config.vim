@@ -55,7 +55,7 @@ let g:lightline.component_type = {
   \ 'linter_errors': 'error'
   \ }
 
-let g:lightline#ale#indicator_warnings = '⚠'
+let g:lightline#ale#indicator_warnings = ''
 
 let g:lightline#ale#indicator_errors = '✘'
 

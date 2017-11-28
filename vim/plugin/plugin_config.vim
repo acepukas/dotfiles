@@ -33,8 +33,8 @@ let g:ale_linters = {
 
 let g:ale_sign_column_always = 1
 let g:ale_sign_error = '✘✘'
-let g:ale_sign_warning = '⚠⚠'
-let g:ale_statusline_format = ['✘ %d', '⚠ %d', '']
+let g:ale_sign_warning = ''
+let g:ale_statusline_format = ['✘ %d', ' %d', '']
 
 nnoremap <silent> [r :exe "normal \<Plug>(ale_previous_wrap)"<CR>
 nnoremap <silent> ]r :exe "normal \<Plug>(ale_next_wrap)"<CR>
