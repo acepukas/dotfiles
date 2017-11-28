@@ -4,3 +4,9 @@ func ${1:name}(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 	next(w, r)
 }
 endsnippet
+
+snippet errchain "Chain an error message" b
+if err != nil {
+	return fmt.Errorf("${1:ERROR MESSAGE}: %v", err)
+}${0}
+endsnippet
