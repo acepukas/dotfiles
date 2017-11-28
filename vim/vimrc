@@ -21,6 +21,7 @@ Plug 'Raimondi/delimitMate'      " auto close delimiters
 Plug 'wellle/targets.vim'        " more text objects
 Plug 'kana/vim-textobj-user'
 Plug 'Julian/vim-textobj-variable-segment'
+Plug 'whatyouhide/vim-textobj-xmlattr'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'itchyny/lightline.vim'     " customize your status line
 Plug 'maximbaz/lightline-ale'
