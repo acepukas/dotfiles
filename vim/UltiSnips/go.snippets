@@ -10,3 +10,17 @@ if err != nil {
 	return fmt.Errorf("${1:ERROR MESSAGE}: %v", err)
 }${0}
 endsnippet
+
+snippet res "New response builder" b
+newResponse().
+	${1:Status(http.Status${2:STATUS}).}
+	${3:Payload(${4:PAYLOAD}).}
+	Respond(w, r)
+endsnippet
+
+snippet errres "New error response builder" b
+newResponse().
+	${1:Status(http.Status${2:STATUS}).}
+	Error${3:Str}(${4:ERROR}).
+	Respond(w, r)
+endsnippet
