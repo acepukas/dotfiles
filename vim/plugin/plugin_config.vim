@@ -23,6 +23,39 @@ let g:gundo_preview_bottom = 1
 let g:ale_javascript_eslint_executable = 'eslint_d'
 let g:ale_javascript_eslint_use_global = 1
 
+let g:gometalinter_options = [
+  \ ['exclude', 'error return value not checked.*(Close|Log|Print).*\(errcheck\)$'],
+  \ ['exclude', '.*_test\.go:.*error return value not checked.*\(errcheck\)$'],
+  \ ['exclude', 'duplicate of.*_test.go.*\(dupl\)$'],
+  \ ['disable', 'aligncheck'],
+  \ ['disable', 'gotype'],
+  \ ['disable', 'gas'],
+  \ ['cyclo-over', '20'],
+  \ 'tests',
+  \ ['deadline', '20s']
+  \ ]
+
+fun! s:BuildGoMetalinterOptionsStr() abort
+  let l:optStrs = []
+  for opt in g:gometalinter_options
+    if type(opt) == type([])
+      let l:optStr = '--' . opt[0]
+      if opt[1] =~ '\s'
+        let l:optStr = l:optStr . "='" . opt[1] . "'"
+      else
+        let l:optStr = l:optStr . '=' . opt[1]
+      endif
+      let l:optStrs = add(l:optStrs, l:optStr)
+    elseif type(opt) == type('')
+      let l:optStrs = add(l:optStrs, '--' . opt)
+    endif
+  endfor
+  return join(l:optStrs, ' ')
+endf
+
+
+let g:ale_go_gometalinter_options = s:BuildGoMetalinterOptionsStr()
+
 let g:ale_linters = {
       \ 'javascript': ['eslint'],
       \ 'json': ['jsonlint'],
