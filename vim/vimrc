@@ -426,10 +426,10 @@ vnoremap <F1> <Esc>
 inoremap <F1> <Esc>
 
 " kill the arrow keys
-nnoremap <Left>  :noh<CR>
-nnoremap <Right> :noh<CR>
-nnoremap <Up>    :noh<CR>
-nnoremap <Down>  :noh<CR>
+nnoremap <Left>  :nohlsearch<CR>
+nnoremap <Right> :nohlsearch<CR>
+nnoremap <Up>    :nohlsearch<CR>
+nnoremap <Down>  :nohlsearch<CR>
 
 " fast saving
 nnoremap <leader>w :w!<cr>

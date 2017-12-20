@@ -169,7 +169,7 @@ let g:tagbar_width = 50
 " let g:TagHighlightSettings['ExtensionLanguageOverrides'] = {'inl': 'c'}
 
 " Vim Easy Align: junegunn/vim-easy-align
-vnoremap <silent> <Enter> :EasyAlign<CR>
+xnoremap <silent> <Enter> :EasyAlign<CR>
 
 if !exists('g:easy_align_delimiters')
   let g:easy_align_delimiters = {}
