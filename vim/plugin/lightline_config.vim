@@ -19,8 +19,7 @@ let g:lightline = {
       \ 'mode_map': { 'c': 'NORMAL' },
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ],
-      \   'right': [ [ 'lineinfo' ],
-      \              [ 'percent' ],
+      \   'right': [ [ 'percent', 'lineinfo' ],
       \              [ 'obsession', 'fileformat', 'fileencoding', 'filetype' ] ]
       \ },
       \ 'component_function': {
@@ -40,9 +39,9 @@ let g:lightline = {
 
 " lightline-ale ale integration
 
-let g:lightline.active.right[0] =
-      \ ['linter_errors', 'linter_warnings', 'linter_ok'] +
-      \ g:lightline.active.right[0]
+let g:lightline.active.right =
+      \ [['linter_errors', 'linter_warnings', 'linter_ok']] +
+      \ g:lightline.active.right
 
 let g:lightline.component_expand = {
   \ 'linter_warnings': 'lightline#ale#warnings',
