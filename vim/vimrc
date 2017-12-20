@@ -443,7 +443,10 @@ nnoremap <leader>v :so $MYVIMRC<cr>
 nnoremap <leader>t :e ~/Dropbox/todo/todo.txt<cr>
 
 " no highlight search
-nnoremap <silent> <bs> :noh<cr>
+" update diff windows
+" start syntax highlighting from beginning
+" redraw
+nnoremap <silent> <backspace> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr>:redraw!<cr>
 
 " prevent leaving visual mode when shifting left or right
 xnoremap > >gv
@@ -504,16 +507,21 @@ nnoremap Q <Nop>
 " nnoremap K <Nop>
 vnoremap K <Nop>
 
-" center searched words
-nnoremap N Nzz
-nnoremap n nzz
+" make n search forward always and N search backward always no matter what
+" direction searching takes place in. zz forces centering on each search term.
+nnoremap <expr> n  'Nn'[v:searchforward] . 'zz'
+nnoremap <expr> N  'nN'[v:searchforward] . 'zz'
 
 " navigate wrapped text more easily
 nnoremap k gk
 nnoremap j gj
 
+" C-n and C-p now complete commands in command mode like up and down arrow
+cnoremap <c-n>  <down>
+cnoremap <c-p>  <up>
+
 " recall last buffer
-nnoremap <leader>l :b!#<CR>
+nnoremap <leader>l <C-^>
 
 " Toggle semicolon, comma or neither at
 " end of line without moving cursor
