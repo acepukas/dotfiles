@@ -404,11 +404,12 @@ endif
 set cc=80
 
 " clipboard
-if has("mac")
-elseif has("unix")
-  xnoremap <silent> <leader>y y:e ~/.vimyank<CR>P:w<CR>:w !xsel -i -b<CR><CR>:bdelete!<CR>
-  nnoremap <silent> <leader>y V:w !xsel -i -b<CR>
-  nnoremap <silent> <leader>p :silent :r !xsel -o -b<CR>
+if has("clipboard")
+  if has("mac")
+    set clipboard=unnamed
+  elseif has("unix")
+    set clipboard^=unnamedplus
+  endif
 endif
 
 " }}}
