@@ -19,8 +19,8 @@ newResponse().
 endsnippet
 
 snippet errres "New error response builder" b
-newResponse().
+env.NewResponse().
 	${1:Status(http.Status${2:STATUS}).}
-	Error${3:Str}(${4:ERROR}).
+	Error${3:f}(${4:ERROR}).
 	Respond(w, r)
 endsnippet
