@@ -141,10 +141,10 @@ command! -bang -nargs=* RGX call fzf#vim#grep(BuildRgCommand([], <q-args>), 1, <
 command! -bang -nargs=* RGSW call fzf#vim#grep(BuildRgCommand(['-w', '--fixed-strings'], <q-args>), 1, <bang>0)
 
 " Search files for word under cursor
-nnoremap <leader>s "zyiw :exe ':RGSW ' . @z<cr>
+nnoremap <leader>s "zyiw :let cmd = 'RGSW ' . @z <bar> call histadd("cmd", cmd) <bar> execute cmd<cr>
 
 " Search files for visually selected text
-vnoremap <leader>s "zy :exe ':RGS ' . @z<cr>
+xnoremap <leader>s "zy :let cmd = 'RGS ' . @z <bar> call histadd("cmd", cmd) <bar> execute cmd <cr>
 
 " Populate quickfix window with selected fzf pane contents
 
