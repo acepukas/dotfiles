@@ -336,7 +336,7 @@ endfunction
 
 augroup gruvbox_custom
   autocmd!
-  autocmd ColorScheme * call GruvboxCustom()
+  autocmd ColorScheme gruvbox call GruvboxCustom()
 augroup END
 
 let g:gruvbox_underline = 0
@@ -369,7 +369,7 @@ colorscheme gruvbox
 "
 " augroup gotham_custom
 "   autocmd!
-"   autocmd ColorScheme * call GothamCustom()
+"   autocmd ColorScheme gotham call GothamCustom()
 " augroup END
 "
 " colorscheme gotham
