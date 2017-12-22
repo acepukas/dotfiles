@@ -9,7 +9,7 @@ call plug#begin($HOME . '/.vim/plugged')
 
 " Basic config
 Plug 'vim-scripts/L9'            " utilities for other plugins
-Plug 'tomtom/tcomment_vim'
+Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-surround'        " surround text with s S like this to 'this'
 Plug 'tpope/vim-repeat'          " use the . command with more than vim builtins
 Plug 'tpope/vim-unimpaired'      " vim options toggleing and other cool stuff

@@ -252,3 +252,27 @@ let g:tagbar_type_go = {
 
 " restore previous line continuation settings
 let &cpo = s:cpo_save
+
+" NERDCommenter: scrooloose/nerdcommenter
+let g:NERDSpaceDelims = 1
+
+" handle vue component file commenting
+let g:NERD_ft = ''
+function! NERDCommenter_before()
+  if &ft == 'vue'
+    let g:NERD_ft = 'vue'
+    let stack = synstack(line('.'), col('.'))
+    if len(stack) > 0
+      let syn = synIDattr((stack)[0], 'name')
+      if len(syn) > 0
+        exe 'setf ' . substitute(tolower(syn), '^vue_', '', '')
+      endif
+    endif
+  endif
+endfunction
+function! NERDCommenter_after()
+  if g:NERD_ft == 'vue'
+    setf vue
+    let g:NERD_ft = ''
+  endif
+endfunction
