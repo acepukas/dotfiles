@@ -1,4 +1,6 @@
-VERSION=2.2
+#!/usr/bin/env bash
+
+VERSION=2.6
 if [[ $1 = local ]]; then
   echo 'Build "libevent-dev" and "libncurses-dev".' >&2
 else
