@@ -73,6 +73,9 @@ case "$HOSTNAME" in
     plugins+=(brew)
     plugins+=(osx)
     ;;
+  GALACTUS)
+    plugins+=(nvm)
+    ;;
   *)
     ;;
 esac
