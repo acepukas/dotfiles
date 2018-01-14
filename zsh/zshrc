@@ -73,9 +73,6 @@ case "$HOSTNAME" in
     plugins+=(brew)
     plugins+=(osx)
     ;;
-  GALACTUS)
-    plugins+=(nvm)
-    ;;
   *)
     ;;
 esac
@@ -134,7 +131,6 @@ export FZF_DEFAULT_OPTS="
   -m --history $HOME/.fzf.history --bind ctrl-a:select-all,alt-n:next-history,alt-p:previous-history,ctrl-n:down,ctrl-p:up
   --color hl:14,prompt:14,marker:02,pointer:04,info:14
 "
-export PATH="$HOME/.fzf/bin:$PATH"
 
 # colored man pages
 man() {
