@@ -24,3 +24,11 @@ env.NewResponse().
 	Error${3:f}(${4:ERROR}).
 	Respond(w, r)
 endsnippet
+
+snippet prln "Print textual line" b
+fmt.Println("${1}")${0}
+endsnippet
+
+snippet prvar "output variable" b
+fmt.Printf("${1:VAR_NAME}: %${2:d}\n", $1)${0}
+endsnippet
