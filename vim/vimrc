@@ -610,7 +610,7 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 augroup bomb
   autocmd!
   autocmd BufWrite * :set nobomb
-  " autocmd BufWrite * :set fileformat=unix
+  autocmd BufWrite * :set fileformat=unix
 augroup END
 " }}}
 " File Type Settings {{{
