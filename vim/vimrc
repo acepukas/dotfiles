@@ -187,9 +187,12 @@ set ttimeoutlen=0
 " save 1000 lines of history
 set history=1000
 
-" persistent undo
-set undofile
-set undodir=$HOME/.vimundo
+" Persist undo history between Vim sessions. Create dir if not exists.
+if has('persistent_undo')
+  set undofile
+  set undodir=$HOME/.vimundo
+  if !isdirectory(&undodir) | call mkdir(&undodir, 'p', 0700) | endif
+endif
 
 set undolevels=1000
 set undoreload=10000
