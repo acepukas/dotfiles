@@ -118,6 +118,10 @@ let g:UltiSnipsJumpForwardTrigger='<c-j>'
 let g:UltiSnipsJumpBackwardTrigger='<c-k>'
 let g:UltiSnipsListSnippets='<c-b>'
 
+let g:snips_author = 'Aaron Cepukas'
+let g:snips_email = 'acepukas@gmail.com'
+let g:snips_github = 'https://github.com/acepukas'
+
 " VimQf: romainl/vim-qf
 nnoremap <silent> <C-Q> :exe "normal \<Plug>QfSwitch"<CR>
 let g:qf_mapping_ack_style = 1
