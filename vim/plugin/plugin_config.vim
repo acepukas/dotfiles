@@ -80,8 +80,8 @@ let g:gitgutter_sign_removed_first_line = ' ‾'
 let g:gitgutter_sign_modified_removed = ' ≃'
 
 " YCM: Valloric/YouCompleteMe
-let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>'] 
-let g:ycm_key_list_previous_completion = ['<C-S-TAB>', '<Up>'] 
+let g:ycm_key_list_select_completion = ['<C-j>', '<C-n>', '<Down>'] 
+let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>'] 
 
 " let g:ycm_filepath_completion_use_working_dir = 1
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
@@ -98,7 +98,8 @@ let g:ycm_filetype_blacklist = {
   \}
 
 " SuperTab: ervandew/supertab
-let g:SuperTabDefaultCompletionType = '<TAB>'
+let g:SuperTabDefaultCompletionType = '<C-n>'
+let g:SuperTabCrMapping = 0
 
 " UltiSnips: SirVer/ultisnips
 let g:UltiSnipsEditSplit='vertical'
