@@ -523,9 +523,6 @@ nnoremap j gj
 cnoremap <c-n>  <down>
 cnoremap <c-p>  <up>
 
-" recall last buffer
-nnoremap <leader>l <C-^>
-
 " Toggle semicolon, comma or neither at
 " end of line without moving cursor
 nnoremap <leader>; :call ToggleSemiColonComma()<cr>
