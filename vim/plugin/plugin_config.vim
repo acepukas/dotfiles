@@ -202,7 +202,7 @@ let g:flow#omnifunc = 0
 let g:javascript_plugin_jsdoc = 1
 
 " Vim JsDoc: heavenshell/vim-jsdoc
-nmap <silent> <C-f> :exe "normal \<Plug>(jsdoc)"<CR>
+nmap <silent> <leader>j :exe "normal \<Plug>(jsdoc)"<CR>
 let g:jsdoc_allow_input_prompt = 1
 let g:jsdoc_input_description = 1
 let g:jsdoc_enable_es6 = 1
