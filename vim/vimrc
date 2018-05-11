@@ -489,11 +489,17 @@ function! EscapeVimRegex(str) abort
   return l:str
 endfunction
 
+" replace word under cursor
+nnoremap <leader>r :%s:\<<C-R><C-W>\>::g<Left><Left>
+
 " string substitution for currently visually selected text
 xnoremap <leader>r "sy:%s:<C-R>=EscapeVimRegex(@s)<CR>::g<Left><Left>
 
 " count occurrences of visually selected text
 xnoremap <leader>c "sy:%s:<C-R>=EscapeVimRegex(@s)<CR>::n<CR>
+
+" highlight word under cursor but don't jump to next word.
+nnoremap <leader>s :let @/='\<<C-R><C-W>\>'<CR>:set hls<CR>
 
 function! ClearWhiteSpace() abort
   :%s/	/  /ge
