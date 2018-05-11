@@ -519,6 +519,10 @@ nnoremap <expr> N  'nN'[v:searchforward] . 'zz'
 nnoremap k gk
 nnoremap j gj
 
+" add previous position to jump list of jumping to diff line by more than 1
+nnoremap <expr> k (v:count > 1 ? "m'" . v:count : '') . 'gk'
+nnoremap <expr> j (v:count > 1 ? "m'" . v:count : '') . 'gj'
+
 " C-n and C-p now complete commands in command mode like up and down arrow
 cnoremap <c-n>  <down>
 cnoremap <c-p>  <up>
