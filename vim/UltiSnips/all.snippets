@@ -18,10 +18,6 @@ snippet dir "console.dir" b
 console.dir($0, {colors: true});
 endsnippet
 
-snippet TODO "C style TODO note comment"
-// TODO: ${1:TASK}
-endsnippet
-
 snippet FIXME "C style FIXME note comment"
 // FIXME: ${1:TASK}
 endsnippet
@@ -30,4 +26,11 @@ snippet /* "C style block comment"
 /*
  * ${1:STUFF}
  */
+endsnippet
+
+snippet diso "ISO format datetime"
+`!p from datetime import datetime, timezone
+local_time = datetime.now(timezone.utc).astimezone()
+if not snip.c:
+	snip.rv = local_time.isoformat()`
 endsnippet
