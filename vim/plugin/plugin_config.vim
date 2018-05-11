@@ -262,8 +262,9 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
 \ }
 
-" restore previous line continuation settings
-let &cpo = s:cpo_save
+augroup GOHTMLTMPL
+  au BufRead,BufNewFile *.tmpl set filetype=gohtmltmpl.html
+augroup END
 
 " NERDCommenter: scrooloose/nerdcommenter
 let g:NERDSpaceDelims = 1
