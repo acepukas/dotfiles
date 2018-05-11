@@ -68,7 +68,8 @@ let g:ale_linters = {
       \ 'json': ['jsonlint'],
       \ 'pug': ['puglint'],
       \ 'cpp': [],
-      \ 'go': ['gometalinter']
+      \ 'go': ['gometalinter'],
+      \ 'haskell': ['ghc-mod', 'hlint']
       \ }
 
 let g:ale_sign_column_always = 1
@@ -289,3 +290,13 @@ function! NERDCommenter_after()
     let g:NERD_ft = ''
   endif
 endfunction
+
+" restore previous line continuation settings
+let &cpo = s:cpo_save
+
+" ElmVim: ElmCast/elm-vim
+let g:elm_setup_keybindings = 0
+
+let g:ycm_semantic_triggers = {
+      \ 'elm' : ['.'],
+      \ }

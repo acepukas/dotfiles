@@ -85,9 +85,14 @@ Plug 'othree/html5-syntax.vim'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'ap/vim-css-color'
 Plug 'posva/vim-vue'
+Plug 'ElmCast/elm-vim'
 " Plug 'groenewege/vim-less'
 " Plug 'nono/vim-handlebars'
 " Plug 'acepukas/vim-handlebars-conf'
+
+" Haskell Plugins
+Plug 'neovimhaskell/haskell-vim'
+Plug 'alx741/vim-hindent'
 
 Plug 'freitass/todo.txt-vim'
 
