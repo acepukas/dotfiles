@@ -11,6 +11,13 @@ set cpo&vim
 " NERDTree: scrooloose/nerdtree
 nnoremap <F1> :NERDTreeToggle<CR>
 
+" AutoPairs: jiangmiao/auto-pairs
+let g:AutoPairsMultilineClose = 0
+
+let g:AutoPairsMapCh = 0
+let g:AutoPairsCenterLine = 0
+let g:AutoPairsShortcutToggle = '<F6>'
+
 " Obsession: tpope/vim-obsession
 " load session if present
 nnoremap <F2> :source Session.vim<CR>
