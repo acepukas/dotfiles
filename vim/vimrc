@@ -29,11 +29,7 @@ Plug 'DataWraith/auto_mkdir'     " make directories that don't exist in file pat
 Plug 'ConradIrwin/vim-bracketed-paste'
 
 " color schemes
-Plug 'acepukas/Zenburn'
 Plug 'morhetz/gruvbox'
-Plug 'altercation/vim-colors-solarized'
-Plug 'chriskempson/base16-vim'
-Plug 'whatyouhide/vim-gotham'
 
 " TMUX
 Plug 'edkolev/tmuxline.vim'           " generate a status line theme for tmux
@@ -301,14 +297,6 @@ set wildignore+=*.swp,*~,._*
 
 set wildignore+=types_*taghl,tags
 
-" zenburn colorscheme {{{
-" colorscheme configuration
-" let g:zenburn_enable_TagHighlight=1
-" let g:zenburn_disable_Label_underline=1
-" let g:zenburn_alternate_Error=1
-" colorscheme zenburn
-" }}}
-
 " gruvbox colorscheme {{{
 function! GruvboxCustom() abort
 
@@ -358,32 +346,6 @@ colorscheme gruvbox
 
 " }}}
 
-" solarized colorscheme {{{
-" set background=dark
-" colorscheme solarized
-" }}}
-
-" base16-ocean colorscheme {{{
-" set background=dark
-" colorscheme base16-ocean
-" }}}
-
-" gotham colorscheme {{{
-
-" function! GothamCustom() abort
-"   highlight! link javascriptFuncName SpellLocal
-"   highlight! link javascriptAsyncFuncKeyword PreProc
-" endfunction
-"
-" augroup gotham_custom
-"   autocmd!
-"   autocmd ColorScheme gotham call GothamCustom()
-" augroup END
-"
-" colorscheme gotham
-
-" }}}
-
 " highlight off in insert mode
 augroup search_highlight
   autocmd!
@@ -419,6 +381,10 @@ if has("clipboard")
     set clipboard^=unnamedplus
   endif
 endif
+
+" terminal ansi colors
+
+let g:terminal_ansi_colors = ['#282828', '#cc241d', '#98971a', '#d79921', '#458588', '#b16286', '#689d6a', '#a89984', '#928374', '#fb4934', '#b8bb26', '#fabd2f', '#83a598', '#d3869b', '#8ec07c', '#ebdbb2']
 
 " }}}
 " Back Up Config {{{
