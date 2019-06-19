@@ -20,7 +20,7 @@ let g:AutoPairsShortcutToggle = '<F6>'
 
 " Obsession: tpope/vim-obsession
 " load session if present
-nnoremap <F2> :source Session.vim<CR>
+nnoremap <F3> :source Session.vim<CR>
 
 " GUNDO: sjl/gundo.vim
 nnoremap <F5> :GundoToggle<CR>
@@ -63,11 +63,13 @@ endf
 
 let g:ale_go_gometalinter_options = s:BuildGoMetalinterOptionsStr()
 
+let g:ale_c_build_dir='build'
+
 let g:ale_linters = {
       \ 'javascript': ['eslint'],
       \ 'json': ['jsonlint'],
       \ 'pug': ['puglint'],
-      \ 'cpp': [],
+      \ 'cpp': ['clang'],
       \ 'go': ['gometalinter'],
       \ 'haskell': ['ghc-mod', 'hlint']
       \ }
@@ -95,6 +97,10 @@ let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
 
+" turn off YCM error reporting
+let g:ycm_show_diagnostics_ui = 0
+let g:ycm_max_diagnostics_to_display = 0
+
 let g:ycm_add_preview_to_completeopt = 0
 let g:ycm_confirm_extra_conf = 0
 set completeopt-=preview
@@ -104,6 +110,10 @@ let g:ycm_global_ycm_extra_conf = $HOME . '/.vim/.ycm_extra_conf.py'
 let g:ycm_filetype_blacklist = {
   \ 'vim': 1
   \}
+
+let g:ycm_semantic_triggers = {
+      \ 'elm' : ['.'],
+      \ }
 
 " SuperTab: ervandew/supertab
 let g:SuperTabDefaultCompletionType = '<C-n>'
@@ -128,7 +138,7 @@ nnoremap <silent> <C-Q> :exe "normal \<Plug>QfSwitch"<CR>
 let g:qf_mapping_ack_style = 1
 
 " FZFVIM: junegunn/fzf.vim
-nnoremap <C-P> :FZF<CR>
+nnoremap <silent> <C-P> :Files<CR>
 nnoremap <leader><tab> :Buffers<CR>
 
 " case sensitive rg command
@@ -140,6 +150,54 @@ fun! BuildRgCommand(opts, qargs)
   let l:list = [g:rg_command] + a:opts + ['--', shellescape(a:qargs)]
   return join(l:list, ' ')
 endfun
+
+command! -nargs=? -complete=file Files call Fzf_dev(<q-args>)
+
+" Files + dev icons
+function! Fzf_dev(qargs)
+
+  let l:fzf_files_options = '--expect=ctrl-t,ctrl-v,ctrl-x --preview "bat --theme=gruvbox --style=numbers,changes --color always {2..-1} | head -'.&lines.'" --multi --bind=ctrl-a:select-all,ctrl-d:deselect-all --ansi'
+
+  function! s:files(dir)
+    let l:cmd = g:rg_command . ' --files'
+    if a:dir != ''
+      let l:cmd .= ' ' . shellescape(a:dir)
+    endif
+    return s:prepend_icon(systemlist(l:cmd))
+  endfunction
+
+  function! s:prepend_icon(candidates)
+    let l:result = []
+
+    for l:candidate in a:candidates
+      let l:filename = fnamemodify(l:candidate, ':p:t')
+      let l:icon = WebDevIconsGetFileTypeSymbol(l:filename, isdirectory(l:filename))
+      call add(l:result, printf('%s %s', l:icon, l:candidate))
+    endfor
+
+    return l:result
+  endfunction
+
+  function! s:edit_file(lines)
+    if len(a:lines) < 2 | return | endif
+
+    let l:cmd = get({'ctrl-x': 'split',
+                 \ 'ctrl-v': 'vertical split',
+                 \ 'ctrl-t': 'tabe'}, a:lines[0], 'e')
+    for l:item in a:lines[1:]
+      let l:pos = stridx(l:item, ' ')
+      let l:file_path = l:item[pos+1:-1]
+      execute 'silent '. l:cmd . ' ' . l:file_path
+    endfor
+  endfunction
+
+  call fzf#run(fzf#wrap('with-preview', {
+        \ 'source': <sid>files(a:qargs),
+        \ 'sink*': function('s:edit_file'),
+        \ 'options': '-m ' . l:fzf_files_options,
+        \ 'down': '40%' }, 0))
+
+endfunction
 
 " Search recursive ignoring case
 command! -bang -nargs=* RG call fzf#vim#grep(BuildRgCommand(['--ignore-case', '--fixed-strings'], <q-args>), 1, <bang>0)
@@ -174,7 +232,7 @@ let g:fzf_action = {
   \ 'ctrl-v': 'vsplit' }
 
 " TagBar: majutsushi/tagbar
-nnoremap <F7> :TagbarToggle<CR>
+nnoremap <F2> :TagbarToggle<CR>
 let g:tagbar_width = 50
 
 " Tag Highlight: vim-scripts/TagHighlight
@@ -297,6 +355,7 @@ let &cpo = s:cpo_save
 " ElmVim: ElmCast/elm-vim
 let g:elm_setup_keybindings = 0
 
-let g:ycm_semantic_triggers = {
-      \ 'elm' : ['.'],
-      \ }
+" color_coded
+hi! link Member GruvboxAquaBold
+hi! link Variable GruvboxFg3
+hi! link EnumConstant GruvboxBlue
