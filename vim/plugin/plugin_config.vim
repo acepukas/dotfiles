@@ -121,8 +121,8 @@ let g:SuperTabCrMapping = 0
 
 " UltiSnips: SirVer/ultisnips
 let g:UltiSnipsEditSplit='vertical'
-let g:UltiSnipsSnippetsDir=$HOME . '/.vim/UltiSnips'
-let g:UltiSnipsSnippetDirectories=['UltiSnips']
+let g:UltiSnipsSnippetsDir=$HOME . '/.vim/my_snippets'
+let g:UltiSnipsSnippetDirectories=['UltiSnips', 'my_snippets']
 
 let g:UltiSnipsExpandTrigger='<c-z>'
 let g:UltiSnipsJumpForwardTrigger='<c-j>'
