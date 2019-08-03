@@ -1,3 +1,7 @@
+" Fold Settings {{{
+" vim:foldmarker={{{,}}}:foldmethod=marker
+" }}}
+" plugin setup {{{
 if exists("g:loaded_plugin_config") || &cp
   finish
 endif
@@ -7,26 +11,26 @@ let g:loaded_plugin_config=1
 " This is so that line continuation is supported
 let s:cpo_save = &cpo
 set cpo&vim
-
-" NERDTree: scrooloose/nerdtree
+" }}}
+" NERDTree: scrooloose/nerdtree {{{
 nnoremap <F1> :NERDTreeToggle<CR>
-
-" AutoPairs: jiangmiao/auto-pairs
+" }}}
+" AutoPairs: jiangmiao/auto-pairs {{{
 let g:AutoPairsMultilineClose = 0
 
 let g:AutoPairsMapCh = 0
 let g:AutoPairsCenterLine = 0
 let g:AutoPairsShortcutToggle = '<F6>'
-
-" Obsession: tpope/vim-obsession
+" }}}
+" Obsession: tpope/vim-obsession {{{
 " load session if present
 nnoremap <F3> :source Session.vim<CR>
-
-" GUNDO: sjl/gundo.vim
+" }}}
+" GUNDO: sjl/gundo.vim {{{
 nnoremap <F5> :GundoToggle<CR>
 let g:gundo_preview_bottom = 1
-
-" ALE: w0rp/ale
+" }}}
+" ALE: w0rp/ale {{{
 let g:ale_javascript_eslint_executable = 'eslint_d'
 let g:ale_javascript_eslint_use_global = 1
 
@@ -63,6 +67,14 @@ endf
 
 let g:ale_go_gometalinter_options = s:BuildGoMetalinterOptionsStr()
 
+let g:ale_pattern_options = {
+\   '\.go$': {
+\       'ale_linters': [],
+\       'ale_fixers': [],
+\       'ale_enabled': 0
+\   },
+\}
+
 let g:ale_c_build_dir='build'
 
 let g:ale_linters = {
@@ -70,7 +82,7 @@ let g:ale_linters = {
       \ 'json': ['jsonlint'],
       \ 'pug': ['puglint'],
       \ 'cpp': ['clang'],
-      \ 'go': ['gometalinter'],
+      \ 'go': [],
       \ 'haskell': ['ghc-mod', 'hlint']
       \ }
 
@@ -79,47 +91,17 @@ let g:ale_sign_error = '✘✘'
 let g:ale_sign_warning = ''
 let g:ale_statusline_format = ['✘ %d', ' %d', '']
 
-nnoremap <silent> [r :exe "normal \<Plug>(ale_previous_wrap)"<CR>
-nnoremap <silent> ]r :exe "normal \<Plug>(ale_next_wrap)"<CR>
-
-" GitGutter: airblade/vim-gitgutter
+" nnoremap <silent> [r :exe "normal \<Plug>(ale_previous_wrap)"<CR>
+" nnoremap <silent> ]r :exe "normal \<Plug>(ale_next_wrap)"<CR>
+" }}}
+" GitGutter: airblade/vim-gitgutter {{{
 let g:gitgutter_sign_added = ' +'
 let g:gitgutter_sign_modified = ' ~'
 let g:gitgutter_sign_removed = ' −'
 let g:gitgutter_sign_removed_first_line = ' ‾'
 let g:gitgutter_sign_modified_removed = ' ≃'
-
-" YCM: Valloric/YouCompleteMe
-let g:ycm_key_list_select_completion = ['<C-j>', '<C-n>', '<Down>'] 
-let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>'] 
-
-" let g:ycm_filepath_completion_use_working_dir = 1
-let g:ycm_collect_identifiers_from_comments_and_strings = 1
-let g:ycm_collect_identifiers_from_tags_files = 1
-
-" turn off YCM error reporting
-let g:ycm_show_diagnostics_ui = 0
-let g:ycm_max_diagnostics_to_display = 0
-
-let g:ycm_add_preview_to_completeopt = 0
-let g:ycm_confirm_extra_conf = 0
-set completeopt-=preview
-
-let g:ycm_global_ycm_extra_conf = $HOME . '/.vim/.ycm_extra_conf.py'
-
-let g:ycm_filetype_blacklist = {
-  \ 'vim': 1
-  \}
-
-let g:ycm_semantic_triggers = {
-      \ 'elm' : ['.'],
-      \ }
-
-" SuperTab: ervandew/supertab
-let g:SuperTabDefaultCompletionType = '<C-n>'
-let g:SuperTabCrMapping = 0
-
-" UltiSnips: SirVer/ultisnips
+" }}}
+" UltiSnips: SirVer/ultisnips {{{
 let g:UltiSnipsEditSplit='vertical'
 let g:UltiSnipsSnippetsDir=$HOME . '/.vim/my_snippets'
 let g:UltiSnipsSnippetDirectories=['UltiSnips', 'my_snippets']
@@ -132,12 +114,12 @@ let g:UltiSnipsListSnippets='<c-b>'
 let g:snips_author = 'Aaron Cepukas'
 let g:snips_email = 'acepukas@gmail.com'
 let g:snips_github = 'https://github.com/acepukas'
-
-" VimQf: romainl/vim-qf
+" }}}
+" VimQf: romainl/vim-qf {{{
 nnoremap <silent> <C-Q> :exe "normal \<Plug>QfSwitch"<CR>
 let g:qf_mapping_ack_style = 1
-
-" FZFVIM: junegunn/fzf.vim
+" }}}
+" FZFVIM: junegunn/fzf.vim {{{
 nnoremap <silent> <C-P> :Files<CR>
 nnoremap <leader><tab> :Buffers<CR>
 
@@ -231,15 +213,24 @@ let g:fzf_action = {
   \ 'ctrl-x': 'split',
   \ 'ctrl-v': 'vsplit' }
 
-" TagBar: majutsushi/tagbar
-nnoremap <F2> :TagbarToggle<CR>
-let g:tagbar_width = 50
+" Customize fzf colors to match your color scheme
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
 
-" Tag Highlight: vim-scripts/TagHighlight
-" let g:TagHighlightSettings = { }
-" let g:TagHighlightSettings['ExtensionLanguageOverrides'] = {'inl': 'c'}
-
-" Vim Easy Align: junegunn/vim-easy-align
+" }}}
+" Vim Easy Align: junegunn/vim-easy-align {{{
 xnoremap <silent> <Enter> :EasyAlign<CR>
 
 if !exists('g:easy_align_delimiters')
@@ -251,26 +242,29 @@ let g:easy_align_delimiters['d'] = {
 \ 'pattern': ' \(\S\+\s*[;=]\)\@=',
 \ 'left_margin': 0, 'right_margin': 0
 \ }
-
-" Easy Motion: Lokaltog/vim-easymotion
+" }}}
+" Easy Motion: Lokaltog/vim-easymotion {{{
 hi link EasyMotionTarget2First Constant
 hi link EasyMotionTarget2Second Constant
-
-" Vim Flow: flowtype/vim-flow
-" disabling system wide. Enable with dir level .vimrc if needed
-let g:flow#enable = 0
-let g:flow#omnifunc = 0
-
-" Vim JavaScript: pangloss/vim-javascript
+" }}}
+" Vim JavaScript: pangloss/vim-javascript {{{
 let g:javascript_plugin_jsdoc = 1
-
-" Vim JsDoc: heavenshell/vim-jsdoc
+" }}}
+" Vim JsDoc: heavenshell/vim-jsdoc {{{
 nmap <silent> <leader>j :exe "normal \<Plug>(jsdoc)"<CR>
 let g:jsdoc_allow_input_prompt = 1
 let g:jsdoc_input_description = 1
 let g:jsdoc_enable_es6 = 1
+" }}}
+" Vim Go: fatih/vim-go {{{
 
-" Vim Go: fatih/vim-go
+" disable vim-go :GoDef short-cut (gd)
+" Will be handled by Lang Server
+let g:go_def_mapping_enabled = 0
+
+let g:go_doc_keywordprg_enabled = 0
+
+let g:go_metalinter_autosave = 0
 
 " prevent automatic installation of all vim-go dependencies
 let g:go_disable_autoinstall = 0
@@ -324,8 +318,8 @@ let g:tagbar_type_go = {
 augroup GOHTMLTMPL
   au BufRead,BufNewFile *.tmpl set filetype=gohtmltmpl.html
 augroup END
-
-" NERDCommenter: scrooloose/nerdcommenter
+" }}}
+" NERDCommenter: scrooloose/nerdcommenter {{{
 let g:NERDSpaceDelims = 1
 
 " handle vue component file commenting
@@ -351,11 +345,161 @@ endfunction
 
 " restore previous line continuation settings
 let &cpo = s:cpo_save
+" }}}
+" coc.nvim: neoclide/coc.nvim {{{
 
-" ElmVim: ElmCast/elm-vim
-let g:elm_setup_keybindings = 0
+" if hidden is not set, TextEdit might fail.
+set hidden
 
-" color_coded
-hi! link Member GruvboxAquaBold
-hi! link Variable GruvboxFg3
-hi! link EnumConstant GruvboxBlue
+" Better display for messages
+set cmdheight=2
+
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+
+" always show signcolumns
+set signcolumn=yes
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Use `[c` and `]c` to navigate diagnostics
+nmap <silent> [r <Plug>(coc-diagnostic-prev)
+nmap <silent> ]r <Plug>(coc-diagnostic-next)
+
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
+" Remap for format selected region
+xmap <leader>=  <Plug>(coc-format-selected)
+nmap <leader>=  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap for do codeAction of current line
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Fix autofix problem of current line
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
+
+" Use `:Fold` to fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" use `:OR` for organize import of current buffer
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Using CocList
+" Show all diagnostics
+nnoremap <silent> <leader><space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions
+nnoremap <silent> <leader><space>e  :<C-u>CocList extensions<cr>
+" Show commands
+nnoremap <silent> <leader><space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document
+nnoremap <silent> <leader><space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols
+nnoremap <silent> <leader><space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent> <leader><space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent> <leader><space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list
+nnoremap <silent> <leader><space>p  :<C-u>CocListResume<CR>
+" }}}
+" vim.vista: liuchengxu/vista.vim {{{
+
+let g:vista_default_executive = 'coc'
+let g:vista_close_on_jump = 1
+
+nnoremap <F2> :Vista<CR>
+nnoremap <leader>p :Vista finder<CR>
+
+let g:vista#renderer#icons = {
+\    'subroutine': '',
+\    'method': '⎔',
+\    'func': '🝡',
+\    'variables': '𝞌',
+\    'namespace': '',
+\    'field': '𝄩',
+\    'interface': '◇',
+\    'type': '',
+\    'packages': '',
+\    'property': '',
+\    'implementation': '◈',
+\    'default': '',
+\    'augroup': '',
+\    'macro': '',
+\    'enumerator': '',
+\    'const': '',
+\    'macros': '',
+\    'map': '',
+\    'fields': '𝄩',
+\    'functions': '🝡',
+\    'enum': '',
+\    'function': '🝡',
+\    'target': '🞋',
+\    'typedef': '⚒',
+\    'variable': '𝞌',
+\    'modules': '',
+\    'constant': '',
+\    'struct': '',
+\    'types': '',
+\    'module': '',
+\    'typeParameter': '⚙',
+\    'package': '',
+\    'class': '',
+\    'member': '',
+\    'var': '𝞌',
+\    'union': '⚭'
+\    }
+" }}}

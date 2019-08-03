@@ -18,7 +18,7 @@ let g:lightline = {
       \ 'colorscheme': 'gruvbox',
       \ 'mode_map': { 'c': 'NORMAL' },
       \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ],
+      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename', 'method' ] ],
       \   'right': [ [ 'percent', 'lineinfo' ],
       \              [ 'obsession', 'fileformat', 'fileencoding', 'filetype' ] ]
       \ },
@@ -31,22 +31,23 @@ let g:lightline = {
       \   'filetype': 'MyFiletype',
       \   'fileencoding': 'MyFileencoding',
       \   'mode': 'MyMode',
-      \   'obsession': 'MyObsession'
+      \   'obsession': 'MyObsession',
+      \   'method': 'NearestMethodOrFunction'
       \ },
       \ 'separator': { 'left': '', 'right': '' },
       \ 'subseparator': { 'left': '', 'right': '' }
       \ }
 
-" lightline-ale ale integration
+" lightline-ale ale and coc.nvim integration
 
 let g:lightline.active.right =
       \ [['linter_errors', 'linter_warnings', 'linter_ok']] +
       \ g:lightline.active.right
 
 let g:lightline.component_expand = {
-  \ 'linter_warnings': 'lightline#ale#warnings',
-  \ 'linter_errors': 'lightline#ale#errors',
-  \ 'linter_ok': 'lightline#ale#ok'
+  \ 'linter_errors': 'StatusErrors',
+  \ 'linter_warnings': 'StatusWarnings',
+  \ 'linter_ok': 'StatusOK'
   \ }
 
 let g:lightline.component_type = {
@@ -61,6 +62,73 @@ let g:lightline#ale#indicator_errors = '✘'
 let g:lightline#ale#indicator_ok = '✔'
 
 " lightline component functions
+
+function! s:is_tmp_file() abort
+  if !empty(&buftype) | return 1 | endif
+  if index(['startify', 'gitcommit'], &filetype) > -1 | return 1 | endif
+  if expand('%:p') =~# '^/tmp' | return 1 | endif
+endfunction
+
+function! StatusOK() abort
+  if s:is_tmp_file() | return '' | endif
+  if get(g:, 'coc_enabled', 0)
+    let info = get(b:, 'coc_diagnostic_info', {})
+    if !empty(info) && empty(info['error']) && empty(info['warning'])
+      return g:lightline#ale#indicator_ok
+    else
+      return ''
+    endif
+  elseif get(b:, 'ale_enabled', 0)
+    return lightline#ale#ok()
+  endif
+  return ''
+endfunction
+
+function! StatusErrors() abort
+  if s:is_tmp_file() | return '' | endif
+  if get(g:, 'coc_enabled', 0)
+    let info = get(b:, 'coc_diagnostic_info', {})
+    if empty(info) | return '' | endif
+    if empty(info['error']) | return '' | endif
+    let msgs = []
+    if get(info, 'error', 0)
+      call add(msgs, g:lightline#ale#indicator_errors . ' ' . info['error'])
+    endif
+    return join(msgs, ' '). ' ' . get(g:, 'coc_status', '')
+  elseif get(b:, 'ale_enabled', 0)
+    return lightline#ale#errors()
+  endif
+  return ''
+endfunction
+
+function! StatusWarnings() abort
+  if s:is_tmp_file() | return '' | endif
+  if get(g:, 'coc_enabled', 0)
+    let info = get(b:, 'coc_diagnostic_info', {})
+    if empty(info) | return '' | endif
+    if empty(info['warning']) | return '' | endif
+    let msgs = []
+    if get(info, 'warning', 0)
+      call add(msgs, g:lightline#ale#indicator_warnings . ' ' . info['warning'])
+    endif
+    return join(msgs, ' '). ' ' . get(g:, 'coc_status', '')
+  elseif get(b:, 'ale_enabled', 0)
+    return lightline#ale#warnings()
+  endif
+  return ''
+endfunction
+
+autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
+
+function! NearestMethodOrFunction() abort
+  let l:fn = get(b:, 'vista_nearest_method_or_function', '')
+  if l:fn != ''
+    return '🝡 ' . l:fn
+  endif
+  return ''
+endfunction
+
+autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 
 function! MyModified()
   return &ft =~ 'Tagbar\|help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
@@ -118,6 +186,7 @@ function! MyMode()
         \ fname == '__Gundo__' ? 'Gundo' :
         \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
         \ fname == '__Tagbar__.1' ? 'Tagbar' :
+        \ fname == '__vista__' ? 'Vista' :
         \ winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 

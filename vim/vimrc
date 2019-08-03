@@ -1,9 +1,21 @@
 " Fold Settings {{{
 " vim:foldmarker={{{,}}}:foldmethod=marker
 " }}}
+
+" Additional Files:
+"
+" These are files that contain additional configuration for specific plugins.
+"
+" ~/.vim/plugin/plugin_config.vim
+" ~/.vim/plugin/lightline_config.vim
+
 " vim-plug Config {{{
 
+if !has('nvim')
 packadd! matchit
+endif
+
+packadd! termdebug
 
 call plug#begin($HOME . '/.vim/plugged')
 
@@ -17,7 +29,6 @@ Plug 'tpope/vim-eunuch'          " issue common unix commands from vim
 Plug 'tpope/vim-obsession'       " session management
 Plug 'Lokaltog/vim-easymotion'   " quick way to navigate around buffers
 Plug 'junegunn/vim-easy-align'   " quick text alignment commands
-Plug 'jiangmiao/auto-pairs'      " auto close delimiters
 Plug 'wellle/targets.vim'        " more text objects
 Plug 'kana/vim-textobj-user'
 Plug 'Julian/vim-textobj-variable-segment'
@@ -27,6 +38,7 @@ Plug 'itchyny/lightline.vim'     " customize your status line
 Plug 'maximbaz/lightline-ale'
 Plug 'DataWraith/auto_mkdir'     " make directories that don't exist in file path
 Plug 'ConradIrwin/vim-bracketed-paste'
+Plug 'AndrewRadev/splitjoin.vim'
 
 " color schemes
 Plug 'morhetz/gruvbox'
@@ -38,14 +50,12 @@ Plug 'christoomey/vim-tmux-navigator' " easily navigate tmux panes and vim
 
 " Major feature plugins
 Plug 'romainl/vim-qf'                 " commands for quickfix windows
-Plug 'ervandew/supertab'
 Plug 'junegunn/fzf', { 'dir': $HOME . '/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tommcdo/vim-fubitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --tern-completer' }
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'sjl/gundo.vim/'
@@ -53,12 +63,13 @@ Plug 'sjl/gundo.vim/'
 " C++ development plugins
 "
 " Plug 'acepukas/vim-cpp'
-Plug 'majutsushi/tagbar'
-Plug 'vim-scripts/TagHighlight'
-Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
-" Plug 'xolox/vim-easytags'
-Plug 'xolox/vim-misc'
+
+if !has('nvim')
+Plug 'jeaye/color_coded'
+endif
+
 Plug 'vhdirk/vim-cmake'
+Plug 'tikhomirov/vim-glsl'
 
 " Go plugins
 Plug 'fatih/vim-go'
@@ -74,21 +85,18 @@ Plug 'alvan/vim-php-manual'
 Plug 'heavenshell/vim-jsdoc'
 Plug 'digitaltoad/vim-pug'
 Plug 'wavded/vim-stylus'
-Plug 'flowtype/vim-flow'
 Plug 'gregsexton/MatchTag'
 Plug 'rstacruz/sparkup', { 'rtp': 'vim' }
 Plug 'othree/html5-syntax.vim'
 Plug 'hail2u/vim-css3-syntax'
-Plug 'ap/vim-css-color'
-Plug 'posva/vim-vue'
-Plug 'ElmCast/elm-vim'
-" Plug 'groenewege/vim-less'
-" Plug 'nono/vim-handlebars'
-" Plug 'acepukas/vim-handlebars-conf'
 
-" Haskell Plugins
-Plug 'neovimhaskell/haskell-vim'
-Plug 'alx741/vim-hindent'
+" TypeScript
+Plug 'leafgarland/typescript-vim'
+Plug 'ianks/vim-tsx'
+
+"Language Server Stuff
+Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+Plug 'liuchengxu/vista.vim'
 
 Plug 'freitass/todo.txt-vim'
 
@@ -275,7 +283,7 @@ set relativenumber
 set wildmenu
 
 " Disable output and VCS files
-set wildignore+=*.o,*.out,*.obj,.git,*.rbc,*.rbo,*.class,.svn,*.gem
+set wildignore+=*.o,*.out,.git,*.rbc,*.rbo,*.class,.svn,*.gem
 
 " Disable archive files
 set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
@@ -366,7 +374,7 @@ if has('gui_running')
   elseif has("mac")
     set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h16
   else
-    set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 20
+    set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 14
   endif
 endif
 
@@ -382,9 +390,24 @@ if has("clipboard")
   endif
 endif
 
-" terminal ansi colors
+" terminal ansi colors (gruvbox)
 
-let g:terminal_ansi_colors = ['#282828', '#cc241d', '#98971a', '#d79921', '#458588', '#b16286', '#689d6a', '#a89984', '#928374', '#fb4934', '#b8bb26', '#fabd2f', '#83a598', '#d3869b', '#8ec07c', '#ebdbb2']
+let g:terminal_color_0 = '#282828'
+let g:terminal_color_1 = '#cc241d'
+let g:terminal_color_2 = '#98971a'
+let g:terminal_color_3 = '#d79921'
+let g:terminal_color_4 = '#458588'
+let g:terminal_color_5 = '#b16286'
+let g:terminal_color_6 = '#689d6a'
+let g:terminal_color_7 = '#a89984'
+let g:terminal_color_8 = '#928374'
+let g:terminal_color_9 = '#fb4934'
+let g:terminal_color_10 = '#b8bb26'
+let g:terminal_color_11 = '#fabd2f'
+let g:terminal_color_12 = '#83a598'
+let g:terminal_color_13 = '#d3869b'
+let g:terminal_color_14 = '#8ec07c'
+let g:terminal_color_15 = '#ebdbb2'
 
 " }}}
 " Back Up Config {{{
@@ -580,10 +603,12 @@ function! Preserve(command) abort
   call cursor(l, c)
 endfunction
 
+function! SyntaxInfoFn() abort
+  echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"
+endfunction
+
 " display syntax information about element under cursor
-map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+command! -bang -nargs=0 SyntaxInfo :call SyntaxInfoFn()
 
 " }}}
 " BOM Management {{{
