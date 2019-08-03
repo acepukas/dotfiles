@@ -146,7 +146,7 @@ if [[ -a $GBPALETTE ]]; then
 fi
 
 # todo.txt
-if [[ -a $HOME/bin/todo.sh ]]; then
+if [[ -a /usr/bin/todo.sh ]]; then
   alias t='todo.sh'
   export TODOTXT_DEFAULT_ACTION=ls
   compdef -d todo.sh
