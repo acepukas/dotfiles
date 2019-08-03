@@ -1,36 +1,7 @@
-snippet negmw "Negroni style middleware" b
-func ${1:name}(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-	${0}
-	next(w, r)
-}
-endsnippet
-
 snippet errchain "Chain an error message" b
 if err != nil {
 	return fmt.Errorf("${1:ERROR MESSAGE}: %v", err)
 }${0}
-endsnippet
-
-snippet res "New response builder" b
-newResponse().
-	${1:Status(http.Status${2:STATUS}).}
-	${3:Payload(${4:PAYLOAD}).}
-	Respond(w, r)
-endsnippet
-
-snippet errres "New error response builder" b
-env.NewResponse().
-	${1:Status(http.Status${2:STATUS}).}
-	Error${3:f}(${4:ERROR}).
-	Respond(w, r)
-endsnippet
-
-snippet prln "Print textual line" b
-fmt.Println("${1}")${0}
-endsnippet
-
-snippet prvar "output variable" b
-fmt.Printf("${1:VAR_NAME}: %${2:d}\n", $1)${0}
 endsnippet
 
 snippet ford "double index, opposite directions" b
@@ -42,5 +13,13 @@ endsnippet
 snippet for-- "Decrementing for loop" b
 for ${1:i} := ${3:len(${2:list})-1}; $1 >= 0; $1-- {
 	${0}
+}
+endsnippet
+
+snippet handler "server handler function" b
+func (s *Server) ${1:funcName}() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		${0}
+	}
 }
 endsnippet
