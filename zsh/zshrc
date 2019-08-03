@@ -52,25 +52,21 @@ CASE_SENSITIVE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(vi-mode git history history-substring-search npm)
+plugins=(vi-mode git history history-substring-search)
 
 # conditional plugin loading based on host. Must be sourced before running
 # oh-my-zsh.sh
 case "$HOSTNAME" in
   mu)
-    plugins+=(nvm)
     ;;
   atlantis)
-    plugins+=(nvm)
     ;;
   hy-brasil)
-    plugins+=(nvm)
     ;;
   shangri-la)
-    plugins+=(nvm httpie)
+    plugins+=(ripgrep yarn zsh-autosuggestions zsh-syntax-highlighting)
     ;;
   Aarons-MacBook-Pro.local)
-    plugins+=(brew)
     plugins+=(osx)
     ;;
   *)
