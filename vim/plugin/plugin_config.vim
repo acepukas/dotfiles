@@ -379,7 +379,21 @@ inoremap <silent><expr> <c-space> coc#refresh()
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+inoremap <expr> <CR> InsertMapForEnter()
+function! InsertMapForEnter()
+  let l:nextChar = strcharpart(getline('.'),getpos('.')[2]-1,1)
+  if pumvisible()
+    return "\<C-y>"
+  elseif l:nextChar == '}' || l:nextChar == ')' || l:nextChar == ']'
+    return "\<CR>\<Esc>O"
+  elseif strcharpart(getline('.'),getpos('.')[2]-1,2) == '</'
+    return "\<CR>\<Esc>O"
+  else
+    return "\<C-g>u\<CR>"
+  endif
+endfunction
+
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
