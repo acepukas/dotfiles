@@ -131,11 +131,11 @@ endfunction
 autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 
 function! MyModified()
-  return &ft =~ 'Tagbar\|help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+  return &ft =~ 'Tagbar\|help\|vimfiler\|mundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
 endfunction
 
 function! MyReadonly()
-  return &ft !~? 'Tagbar\|help\|vimfiler\|gundo' && &readonly ? '' : ''
+  return &ft !~? 'Tagbar\|help\|vimfiler\|mundo' && &readonly ? '' : ''
 endfunction
 
 function! MyFilename()
@@ -149,7 +149,7 @@ function! MyFilename()
   let fpath = expand('%:p')
   let fpath = substitute(fpath,curdir,"","g")
 
-  return fname =~ '__Gundo\|NERD_tree' ? '' :
+  return fname =~ '__Mundo\|NERD_tree' ? '' :
         \ fname == '__Tagbar__.1' ? g:lightline.fname :
         \ (&ft == 'vimfiler' ? vimfiler#get_status_string() : 
         \  &ft == 'unite' ? unite#get_status_string() : 
@@ -160,7 +160,7 @@ function! MyFilename()
 endfunction
 
 function! MyFugitive()
-  if &ft !~? 'Tagbar\|vimfiler\|Gundo\|NERD' && exists("*fugitive#head")
+  if &ft !~? 'Tagbar\|vimfiler\|Mundo\|NERD' && exists("*fugitive#head")
     let _ = fugitive#head()
     return strlen(_) ? ' '._ : ''
   endif
@@ -183,8 +183,8 @@ function! MyMode()
   let fname = expand('%:t')
   return fname == 'ControlP' ? 'CtrlP' :
         \ fname =~ 'NERD_tree' ? 'NERDTree' :
-        \ fname == '__Gundo__' ? 'Gundo' :
-        \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
+        \ fname == '__Mundo__' ? 'Mundo' :
+        \ fname == '__Mundo_Preview__' ? 'Mundo Preview' :
         \ fname == '__Tagbar__.1' ? 'Tagbar' :
         \ fname == '__vista__' ? 'Vista' :
         \ winwidth(0) > 60 ? lightline#mode() : ''

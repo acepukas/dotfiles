@@ -26,9 +26,9 @@ let g:AutoPairsShortcutToggle = '<F6>'
 " load session if present
 nnoremap <F3> :source Session.vim<CR>
 " }}}
-" GUNDO: sjl/gundo.vim {{{
-nnoremap <F5> :GundoToggle<CR>
-let g:gundo_preview_bottom = 1
+" MUNDO: simnalamburt/vim-mundo {{{
+nnoremap <F5> :MundoToggle<CR>
+let g:mundo_preview_bottom = 1
 " }}}
 " ALE: w0rp/ale {{{
 let g:ale_javascript_eslint_executable = 'eslint_d'

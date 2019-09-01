@@ -58,7 +58,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-Plug 'sjl/gundo.vim/'
+Plug 'simnalamburt/vim-mundo'
 
 " C++ development plugins
 "
