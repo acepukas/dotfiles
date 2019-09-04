@@ -1,5 +1,5 @@
 " -----------------------------------------------------------------------------
-" Filename: autoload/lightline/colorscheme/gruvbox.vim
+" Filename: autoload/lightline/colorscheme/my_gruvbox.vim
 " Version: 0.1
 " Author: Aaron Cepukas
 " License: MIT License
@@ -55,6 +55,6 @@ if exists('g:lightline')
   let s:p.normal.error    = [ [ s:bg0, s:red ] ]
   let s:p.normal.warning  = [ [ s:bg0, s:yellow ] ]
 
-  let g:lightline#colorscheme#gruvbox#palette = lightline#colorscheme#flatten(s:p)
+  let g:lightline#colorscheme#my_gruvbox#palette = lightline#colorscheme#flatten(s:p)
 
 endif
