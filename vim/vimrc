@@ -91,7 +91,7 @@ Plug 'hail2u/vim-css3-syntax'
 
 " TypeScript
 Plug 'leafgarland/typescript-vim'
-Plug 'ianks/vim-tsx'
+Plug 'ianks/vim-jsx-typescript'
 
 "Language Server Stuff
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
