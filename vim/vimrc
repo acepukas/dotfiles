@@ -49,7 +49,6 @@ Plug 'benmills/vimux'                 " issue commands to tmux pane from vim
 Plug 'christoomey/vim-tmux-navigator' " easily navigate tmux panes and vim
 
 " Major feature plugins
-Plug 'romainl/vim-qf'                 " commands for quickfix windows
 Plug 'junegunn/fzf', { 'dir': $HOME . '/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-fugitive'

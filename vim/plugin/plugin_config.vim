@@ -115,10 +115,6 @@ let g:snips_author = 'Aaron Cepukas'
 let g:snips_email = 'acepukas@gmail.com'
 let g:snips_github = 'https://github.com/acepukas'
 " }}}
-" VimQf: romainl/vim-qf {{{
-nnoremap <silent> <C-Q> :exe "normal \<Plug>QfSwitch"<CR>
-let g:qf_mapping_ack_style = 1
-" }}}
 " FZFVIM: junegunn/fzf.vim {{{
 nnoremap <silent> <C-P> :Files<CR>
 nnoremap <leader><tab> :Buffers<CR>
