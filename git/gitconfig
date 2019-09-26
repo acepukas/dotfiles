@@ -8,9 +8,12 @@
 	branch = auto
 	status = auto
 [diff]
-	tool = vimdiff
+	tool = nvimdiff2
 [difftool]
 	prompt = false
+	trustExitCode = true
+[difftool "nvimdiff2"]
+	cmd = nvim -d $LOCAL $REMOTE
 [pager]
 	diff = 
 [merge]
