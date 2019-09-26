@@ -6,6 +6,7 @@ whotest[0]='test' || (echo 'Failure: arrays not supported in this version of bas
 mkdir -p $HOME/bin
 mkdir -p $HOME/.tmux
 mkdir -p $HOME/.oh-my-zsh/custom/themes
+mkdir -p $HOME/.config/nvim
 
 DOTFILES=$HOME/dotfiles
 
@@ -24,6 +25,7 @@ PATHS=(
   ["$DOTFILES/todo.txt/todo.actions.d"]="$HOME/.todo.actions.d"
   ["$DOTFILES/vim/vimrc"]="$HOME/.vimrc"
   ["$DOTFILES/vim"]="$HOME/.vim"
+  ["$HOME/.vimrc"]="$HOME/.config/nvim/init.vim"
   ["$DOTFILES/zsh/zshrc"]="$HOME/.zshrc"
   ["$DOTFILES/zsh/oh-my-zsh/themes/agnosterc.zsh-theme"]="$HOME/.oh-my-zsh/custom/themes/agnosterc.zsh-theme"
 )
