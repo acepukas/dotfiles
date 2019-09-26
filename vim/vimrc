@@ -41,7 +41,7 @@ Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'AndrewRadev/splitjoin.vim'
 
 " color schemes
-Plug 'morhetz/gruvbox'
+Plug 'sainnhe/gruvbox-material'
 
 " TMUX
 Plug 'edkolev/tmuxline.vim'           " generate a status line theme for tmux
@@ -308,48 +308,44 @@ set wildignore+=types_*taghl,tags
 function! GruvboxCustom() abort
 
   " Better highlighting for ale errors
-  highlight! link ALEErrorSign GruvboxRedSign
-  highlight! link ALEWarningSign GruvboxYellowSign
+  highlight! link ALEErrorSign Red
+  highlight! link ALEWarningSign Yellow
 
   " custom highlighting for javascript
   " overrides settings from pangloss/vim-javascript
-  highlight! link jsObjectKey          GruvboxBlue
-  highlight! link jsStorageClass       GruvboxRed
-  highlight! link jsGlobalNodeObjects  GruvboxAqua
-  highlight! link jsGlobalObjects      GruvboxYellow
-  highlight! link jsFunction           GruvboxAqua
-  highlight! link jsFuncArgs           GruvboxYellow
-  highlight! link jsDestructuringBlock GruvboxYellow
-  highlight! link jsArrowFunction      GruvboxRed
-  highlight! link jsObjectBraces       GruvboxFg3
-  highlight! link jsTemplateBraces     GruvboxAqua
-  highlight! link jsBrackets           GruvboxGreen
-  highlight! link jsUndefined          GruvboxPurple
-  highlight! link jsNull               GruvboxPurple
-  highlight! link jsSuper              GruvboxOrange
-  highlight! link jsClassMethodType    GruvboxOrange
+  highlight! link jsObjectKey          Blue
+  highlight! link jsStorageClass       Red
+  highlight! link jsGlobalNodeObjects  Aqua
+  highlight! link jsGlobalObjects      Yellow
+  highlight! link jsFunction           Aqua
+  highlight! link jsFuncArgs           Yellow
+  highlight! link jsDestructuringBlock Yellow
+  highlight! link jsArrowFunction      Red
+  highlight! link jsObjectBraces       White
+  highlight! link jsTemplateBraces     Aqua
+  highlight! link jsBrackets           Green
+  highlight! link jsUndefined          Purple
+  highlight! link jsNull               Purple
+  highlight! link jsSuper              Orange
+  highlight! link jsClassMethodType    Orange
 
   " custom go highlighting based off of go-vim syntax highlighting
-  highlight! link goReceiverType    GruvboxAqua
-  highlight! link goTypeName        GruvboxAqua
-  highlight! link goTypeConstructor GruvboxAqua
-  highlight! link goField           GruvboxFg3
+  highlight! link goReceiverType    Aqua
+  highlight! link goTypeName        Aqua
+  highlight! link goTypeConstructor Aqua
+  highlight! link goField           White
 
 endfunction
 
 augroup gruvbox_custom
   autocmd!
-  autocmd ColorScheme gruvbox call GruvboxCustom()
+  autocmd ColorScheme gruvbox-material call GruvboxCustom()
 augroup END
 
-let g:gruvbox_underline = 0
-let g:gruvbox_invert_selection = 0
-let g:gruvbox_italicize_comments = 0
-let g:gruvbox_contrast_dark = 'medium'
-" let g:gruvbox_number_column = 'bg1'
-" let g:gruvbox_sign_column = 'bg0'
+let g:gruvbox_material_disable_italic_comment = 1
+let g:gruvbox_material_lightline_disable_bold = 1
 set background=dark
-colorscheme gruvbox
+colorscheme gruvbox-material
 
 " }}}
 

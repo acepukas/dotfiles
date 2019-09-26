@@ -140,7 +140,7 @@ man() {
 }
 
 # gruvbox
-GBPALETTE=$HOME/.vim/plugged/gruvbox/gruvbox_256palette.sh
+GBPALETTE=$HOME/dotfiles/gruvbox_256palette.sh
 if [[ -a $GBPALETTE ]]; then
   sh $GBPALETTE
 fi
