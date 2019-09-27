@@ -53,6 +53,8 @@ Plug 'junegunn/fzf', { 'dir': $HOME . '/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tommcdo/vim-fubitive'
+
+let g:gitgutter_override_sign_column_highlight = 0
 Plug 'airblade/vim-gitgutter'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'SirVer/ultisnips'
@@ -307,7 +309,8 @@ set wildignore+=types_*taghl,tags
 " gruvbox colorscheme {{{
 function! GruvboxCustom() abort
 
-  highlight! NonText guifg=#665c54
+  highlight NonText guifg=#504945
+  highlight CocHighlightText guibg=#504945
 
   " Better highlighting for ale errors
   highlight! link ALEErrorSign Red
