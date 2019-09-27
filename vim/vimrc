@@ -307,6 +307,8 @@ set wildignore+=types_*taghl,tags
 " gruvbox colorscheme {{{
 function! GruvboxCustom() abort
 
+  highlight! NonText guifg=#665c54
+
   " Better highlighting for ale errors
   highlight! link ALEErrorSign Red
   highlight! link ALEWarningSign Yellow
