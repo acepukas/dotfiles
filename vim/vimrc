@@ -311,6 +311,8 @@ function! GruvboxCustom() abort
 
   highlight NonText guifg=#504945
   highlight CocHighlightText guibg=#504945
+  highlight Search cterm=NONE gui=NONE ctermfg=235 ctermbg=214 guifg=Black guibg=#e3a84e
+  highlight IncSearch cterm=NONE gui=NONE ctermfg=235 ctermbg=214 guifg=Black guibg=#e78a4e
 
   " Better highlighting for ale errors
   highlight! link ALEErrorSign Red
