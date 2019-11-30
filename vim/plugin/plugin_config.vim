@@ -260,6 +260,23 @@ let g:go_def_mapping_enabled = 0
 
 let g:go_doc_keywordprg_enabled = 0
 
+let g:go_metalinter_command = 'golangci-lint'
+let g:go_metalinter_enabled = [
+    \ 'govet',
+    \ 'errcheck',
+    \ 'staticcheck',
+    \ 'unused',
+    \ 'gosimple',
+    \ 'structcheck',
+    \ 'varcheck',
+    \ 'ineffassign',
+    \ 'deadcode',
+    \ 'typecheck',
+    \ 'misspell',
+    \ 'unconvert',
+    \ 'interfacer'
+    \ ]
+
 let g:go_metalinter_autosave = 0
 
 " prevent automatic installation of all vim-go dependencies
