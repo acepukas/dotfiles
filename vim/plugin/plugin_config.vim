@@ -343,6 +343,16 @@ endfunction
 let &cpo = s:cpo_save
 " }}}
 " coc.nvim: neoclide/coc.nvim {{{
+let g:coc_global_extensions = [
+  \ 'coc-eslint',
+  \ 'coc-prettier',
+  \ 'coc-pairs',
+  \ 'coc-ultisnips',
+  \ 'coc-tsserver',
+  \ 'coc-json',
+  \ 'coc-html',
+  \ 'coc-css'
+  \]
 
 " if hidden is not set, TextEdit might fail.
 set hidden
