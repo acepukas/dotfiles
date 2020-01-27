@@ -185,7 +185,6 @@ case "$HOSTNAME" in
     if [[ -a $HOME/.mac.zshrc ]]; then
       . $HOME/.mac.zshrc
     fi
-    DIRCOLORS="gdircolors"
     ;;
   *)
     ;;
