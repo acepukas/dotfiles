@@ -257,6 +257,7 @@ let g:jsdoc_enable_es6 = 1
 " disable vim-go :GoDef short-cut (gd)
 " Will be handled by Lang Server
 let g:go_def_mapping_enabled = 0
+let g:go_gopls_deep_completion = 0
 
 let g:go_doc_keywordprg_enabled = 0
 
