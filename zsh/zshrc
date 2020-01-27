@@ -66,7 +66,7 @@ case "$HOSTNAME" in
   shangri-la)
     plugins+=(ripgrep yarn zsh-autosuggestions zsh-syntax-highlighting)
     ;;
-  Aarons-MacBook-Pro.local)
+  Aarons-MBP)
     plugins+=(osx)
     ;;
   *)
@@ -98,8 +98,8 @@ export EDITOR='nvim'
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-alias zshconfig="vim $HOME/.zshrc"
-alias ohmyzsh="vim $HOME/.oh-my-zsh/oh-my-zsh.sh"
+alias zshconfig="nvim $HOME/.zshrc"
+alias ohmyzsh="nvim $HOME/.oh-my-zsh/oh-my-zsh.sh"
 alias tmux='tmux -2'
 alias gdv='git difftool'
 
@@ -164,6 +164,8 @@ function gulpc() {
   gulp "$@" --color | sed -r 's/\[90m/[93m/g'
 }
 
+DIRCOLORS="dircolors"
+
 # environment settings and scripts for specific hosts
 case "$HOSTNAME" in
   mu)
@@ -179,15 +181,16 @@ case "$HOSTNAME" in
       . $HOME/.shangri-la.zshrc
     fi
     ;;
-  Aarons-MacBook-Pro.local)
+  Aarons-MBP)
     if [[ -a $HOME/.mac.zshrc ]]; then
       . $HOME/.mac.zshrc
     fi
+    DIRCOLORS="gdircolors"
     ;;
   *)
     ;;
 esac
 
 # dircolors
-eval $(dircolors $HOME/.dir_colors)
+eval $($DIRCOLORS $HOME/.dir_colors)
 
