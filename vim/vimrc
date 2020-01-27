@@ -41,7 +41,7 @@ Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'AndrewRadev/splitjoin.vim'
 
 " color schemes
-Plug 'sainnhe/gruvbox-material'
+Plug 'gruvbox-material/vim', {'as': 'gruvbox-material'}
 
 " TMUX
 Plug 'edkolev/tmuxline.vim'           " generate a status line theme for tmux
@@ -338,10 +338,17 @@ function! GruvboxCustom() abort
   highlight! link jsClassMethodType    Orange
 
   " custom go highlighting based off of go-vim syntax highlighting
-  highlight! link goReceiverType    Aqua
-  highlight! link goTypeName        Aqua
-  highlight! link goTypeConstructor Aqua
-  highlight! link goField           White
+  highlight! link goReceiverType          Aqua
+  highlight! link goTypeName              Aqua
+  highlight! link goTypeConstructor       Aqua
+  highlight! link goField                 White
+  highlight! link goFormatSpecifier       Orange
+  highlight! link goBuiltins              Orange
+  highlight! link goPredefinedIdentifiers Purple
+  highlight! link goDeclType              Blue
+
+  " custom cpp highlighting
+  highlight LspCxxHlGroupMemberVariable guifg=#68948a
 
 endfunction
 
