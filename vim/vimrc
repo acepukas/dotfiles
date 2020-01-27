@@ -11,13 +11,15 @@
 
 " vim-plug Config {{{
 
+let $VIMUSERRUNTIME = fnamemodify($MYVIMRC, ':p:h')
+
 if !has('nvim')
 packadd! matchit
 endif
 
 packadd! termdebug
 
-call plug#begin($HOME . '/.vim/plugged')
+call plug#begin($VIMUSERRUNTIME . '/plugged')
 
 " Basic config
 Plug 'vim-scripts/L9'            " utilities for other plugins
