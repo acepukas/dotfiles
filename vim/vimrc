@@ -6,8 +6,8 @@
 "
 " These are files that contain additional configuration for specific plugins.
 "
-" ~/.vim/plugin/plugin_config.vim
-" ~/.vim/plugin/lightline_config.vim
+" ~/dotfiles/vim/plugin/plugin_config.vim
+" ~/dotfiles/vim/plugin/lightline_config.vim
 
 " vim-plug Config {{{
 
