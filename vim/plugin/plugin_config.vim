@@ -172,9 +172,31 @@ function! Fzf_dev(qargs)
   call fzf#run(fzf#wrap('with-preview', {
         \ 'source': <sid>files(a:qargs),
         \ 'sink*': function('s:edit_file'),
-        \ 'options': '-m ' . l:fzf_files_options,
-        \ 'down': '40%' }, 0))
+        \ 'options': '-m ' . l:fzf_files_options}, 0))
 
+endfunction
+
+let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+
+function! FloatingFZF()
+  let buf = nvim_create_buf(v:false, v:true)
+  call setbufvar(buf, '&signcolumn', 'no')
+
+  let height = float2nr(&lines * 0.8)
+  let width = float2nr(&columns * 0.9)
+  let horizontal = float2nr((&columns - width) / 2)
+  let vertical = float2nr((&lines - height) / 2)
+
+  let opts = {
+        \ 'relative': 'editor',
+        \ 'row': vertical,
+        \ 'col': horizontal,
+        \ 'width': width,
+        \ 'height': height,
+        \ 'style': 'minimal'
+        \ }
+
+  call nvim_open_win(buf, v:true, opts)
 endfunction
 
 " Search recursive ignoring case
