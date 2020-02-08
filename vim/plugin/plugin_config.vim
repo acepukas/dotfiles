@@ -124,6 +124,10 @@ nnoremap <leader>q :RGS
 
 let g:rg_command = $RG_COMMAND_BASE . ' --column --line-number --no-heading --color "always"'
 
+fun! Fzf_preview(opts) abort
+  return fzf#vim#with_preview(a:opts, 'right', 'ctrl-h')
+endfun
+
 command! -nargs=? -complete=file Files call Fzf_dev(<q-args>)
 
 " Files + dev icons
@@ -152,10 +156,10 @@ function! Fzf_dev(qargs)
     endfor
   endfunction
 
-  call fzf#run(fzf#wrap('with-preview', fzf#vim#with_preview({
+  call fzf#run(fzf#wrap('with-preview', Fzf_preview({
         \ 'source': <sid>files(a:qargs),
         \ 'sink*': function('s:edit_file'),
-        \ 'options': '-m ' . l:fzf_files_options}, 'right', 'ctrl-h'), 0))
+        \ 'options': '-m ' . l:fzf_files_options}), 0))
 
 endfunction
 
@@ -189,7 +193,7 @@ endfun
 
 fun! Fzf_grep(opts, qargs, bang) abort
   let l:rg = BuildRgCommand(a:opts, a:qargs)
-  let l:preview_opts = fzf#vim#with_preview({}, 'right', 'ctrl-h')
+  let l:preview_opts = Fzf_preview({})
   call fzf#vim#grep(l:rg, 1, l:preview_opts, a:bang)
 endfun
 
