@@ -13,6 +13,9 @@
 
 let $VIMUSERRUNTIME = fnamemodify($MYVIMRC, ':p:h')
 
+" loads environment variables needed for subshells
+let $BASH_ENV = $VIMUSERRUNTIME . "/bin/bash_env"
+
 if !has('nvim')
 packadd! matchit
 endif
@@ -404,22 +407,22 @@ endif
 
 " terminal ansi colors (gruvbox)
 
-let g:terminal_color_0 = '#282828'
-let g:terminal_color_1 = '#cc241d'
-let g:terminal_color_2 = '#98971a'
-let g:terminal_color_3 = '#d79921'
-let g:terminal_color_4 = '#458588'
-let g:terminal_color_5 = '#b16286'
-let g:terminal_color_6 = '#689d6a'
-let g:terminal_color_7 = '#a89984'
-let g:terminal_color_8 = '#928374'
-let g:terminal_color_9 = '#fb4934'
-let g:terminal_color_10 = '#b8bb26'
-let g:terminal_color_11 = '#fabd2f'
-let g:terminal_color_12 = '#83a598'
-let g:terminal_color_13 = '#d3869b'
-let g:terminal_color_14 = '#8ec07c'
-let g:terminal_color_15 = '#ebdbb2'
+let g:terminal_color_0 = '#282828' " black
+let g:terminal_color_1 = '#ea6967' " red
+let g:terminal_color_2 = '#a9b665' " green
+let g:terminal_color_3 = '#d8a657' " yellow
+let g:terminal_color_4 = '#7daea3' " blue
+let g:terminal_color_5 = '#d3869b' " purple
+let g:terminal_color_6 = '#89b482' " aqua
+let g:terminal_color_7 = '#a89984' " grey
+let g:terminal_color_8 = '#928374' " dark grey
+let g:terminal_color_9 = '#b85651' " dark red
+let g:terminal_color_10 = '#8f9a52' " dark green
+let g:terminal_color_11 = '#c18f41' " dark yellow
+let g:terminal_color_12 = '#68948a' " dark blue
+let g:terminal_color_13 = '#ab6c7d' " dark purple
+let g:terminal_color_14 = '#72966c' " dark aqua
+let g:terminal_color_15 = '#d4be98' " white
 
 " }}}
 " Back Up Config {{{

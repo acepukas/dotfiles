@@ -252,6 +252,8 @@ EXEC  1;30;32
 .properties 01;36
 .yaml       01;36
 .vcl        01;36 # Varnish
+.mod        01;36
+.sum        01;36
 
 ## Source code files (yellow)
 .c            01;33
@@ -267,6 +269,7 @@ EXEC  1;30;32
 .php          01;33
 .java         01;33
 .zcml         01;33 # Zope configuration language
+.go           01;33
 
 # template files
 .pug          01;96

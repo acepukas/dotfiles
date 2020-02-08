@@ -124,36 +124,19 @@ nnoremap <leader>q :RGS
 
 let g:rg_command = $RG_COMMAND_BASE . ' --column --line-number --no-heading --color "always"'
 
-fun! BuildRgCommand(opts, qargs)
-  let l:list = [g:rg_command] + a:opts + ['--', shellescape(a:qargs)]
-  return join(l:list, ' ')
-endfun
-
 command! -nargs=? -complete=file Files call Fzf_dev(<q-args>)
 
 " Files + dev icons
 function! Fzf_dev(qargs)
 
-  let l:fzf_files_options = '--expect=ctrl-t,ctrl-v,ctrl-x --preview "bat --theme=gruvbox --style=numbers,changes --color always {2..-1} | head -'.&lines.'" --multi --bind=ctrl-a:select-all,ctrl-d:deselect-all --ansi'
+  let l:fzf_files_options = '--expect=ctrl-t,ctrl-v,ctrl-x --multi --bind=ctrl-a:select-all,ctrl-d:deselect-all --ansi'
 
   function! s:files(dir)
-    let l:cmd = g:rg_command . ' --files'
+    let l:cmd = g:rg_command . ' --files --color never'
     if a:dir != ''
       let l:cmd .= ' ' . shellescape(a:dir)
     endif
-    return s:prepend_icon(systemlist(l:cmd))
-  endfunction
-
-  function! s:prepend_icon(candidates)
-    let l:result = []
-
-    for l:candidate in a:candidates
-      let l:filename = fnamemodify(l:candidate, ':p:t')
-      let l:icon = WebDevIconsGetFileTypeSymbol(l:filename, isdirectory(l:filename))
-      call add(l:result, printf('%s %s', l:icon, l:candidate))
-    endfor
-
-    return l:result
+    return systemlist(l:cmd)
   endfunction
 
   function! s:edit_file(lines)
@@ -169,10 +152,10 @@ function! Fzf_dev(qargs)
     endfor
   endfunction
 
-  call fzf#run(fzf#wrap('with-preview', {
+  call fzf#run(fzf#wrap('with-preview', fzf#vim#with_preview({
         \ 'source': <sid>files(a:qargs),
         \ 'sink*': function('s:edit_file'),
-        \ 'options': '-m ' . l:fzf_files_options}, 0))
+        \ 'options': '-m ' . l:fzf_files_options}, 'right', 'ctrl-h'), 0))
 
 endfunction
 
@@ -199,17 +182,28 @@ function! FloatingFZF()
   call nvim_open_win(buf, v:true, opts)
 endfunction
 
+fun! BuildRgCommand(opts, qargs)
+  let l:list = [g:rg_command] + a:opts + ['--', shellescape(a:qargs)]
+  return join(l:list, ' ')
+endfun
+
+fun! Fzf_grep(opts, qargs, bang) abort
+  let l:rg = BuildRgCommand(a:opts, a:qargs)
+  let l:preview_opts = fzf#vim#with_preview({}, 'right', 'ctrl-h')
+  call fzf#vim#grep(l:rg, 1, l:preview_opts, a:bang)
+endfun
+
 " Search recursive ignoring case
-command! -bang -nargs=* RG call fzf#vim#grep(BuildRgCommand(['--ignore-case', '--fixed-strings'], <q-args>), 1, <bang>0)
+command! -bang -nargs=* RG call Fzf_grep(['--ignore-case', '--fixed-strings'], <q-args>, <bang>0)
 
 " Search recursive case sensitive
-command! -bang -nargs=* RGS call fzf#vim#grep(BuildRgCommand(['--fixed-strings'], <q-args>), 1, <bang>0)
+command! -bang -nargs=* RGS call Fzf_grep(['--fixed-strings'], <q-args>, <bang>0)
 
 " Search recursive case sensitive as RegExp
-command! -bang -nargs=* RGX call fzf#vim#grep(BuildRgCommand([], <q-args>), 1, <bang>0)
+command! -bang -nargs=* RGX call Fzf_grep([], <q-args>, <bang>0)
 
 " Seach recursive case sensitive with word boundaries
-command! -bang -nargs=* RGSW call fzf#vim#grep(BuildRgCommand(['-w', '--fixed-strings'], <q-args>), 1, <bang>0)
+command! -bang -nargs=* RGSW call Fzf_grep(['-w', '--fixed-strings'], <q-args>, <bang>0)
 
 " Search files for word under cursor
 nnoremap <leader>* "zyiw :let cmd = 'RGSW ' . @z <bar> call histadd("cmd", cmd) <bar> execute cmd<cr>
