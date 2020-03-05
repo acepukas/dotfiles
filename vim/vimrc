@@ -312,8 +312,18 @@ set wildignore+=*.swp,*~,._*
 
 set wildignore+=types_*taghl,tags
 
+" nord colorscheme {{{
+augroup nord-theme-overrides
+  autocmd!
+  " Use 'nord7' as foreground color for go types.
+  autocmd ColorScheme nord highlight goType ctermfg=14 guifg=#8FBCBB
+  " Use 'nord11' as foreground color for go format specifiers.
+  autocmd ColorScheme nord highlight goFormatSpecifier ctermfg=11 guifg=#EBCB8B
+augroup END
+
 let g:nord_bold = 0
 colorscheme nord
+" }}}
 
 " highlight off in insert mode
 augroup search_highlight

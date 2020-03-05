@@ -139,12 +139,6 @@ man() {
   command man "$@"
 }
 
-# gruvbox
-GBPALETTE=$HOME/dotfiles/gruvbox_256palette.sh
-if [[ -a $GBPALETTE ]]; then
-  sh $GBPALETTE
-fi
-
 # todo.txt
 if [[ -a /usr/bin/todo.sh ]]; then
   alias t='todo.sh'
