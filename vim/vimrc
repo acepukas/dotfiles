@@ -46,7 +46,7 @@ Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'AndrewRadev/splitjoin.vim'
 
 " color schemes
-Plug 'gruvbox-material/vim', {'as': 'gruvbox-material'}
+Plug 'arcticicestudio/nord-vim'
 
 " TMUX
 Plug 'edkolev/tmuxline.vim'           " generate a status line theme for tmux
@@ -312,62 +312,8 @@ set wildignore+=*.swp,*~,._*
 
 set wildignore+=types_*taghl,tags
 
-" gruvbox colorscheme {{{
-function! GruvboxCustom() abort
-
-  highlight NonText guifg=#504945
-  highlight CocHighlightText guibg=#504945
-  highlight Search cterm=NONE gui=NONE ctermfg=235 ctermbg=214 guifg=Black guibg=#e3a84e
-  highlight IncSearch cterm=NONE gui=NONE ctermfg=235 ctermbg=214 guifg=Black guibg=#e78a4e
-
-  " Better highlighting for ale errors
-  highlight! link ALEErrorSign Red
-  highlight! link ALEWarningSign Yellow
-
-  " custom highlighting for javascript
-  " overrides settings from pangloss/vim-javascript
-  highlight! link jsObjectKey          Blue
-  highlight! link jsStorageClass       Red
-  highlight! link jsGlobalNodeObjects  Aqua
-  highlight! link jsGlobalObjects      Yellow
-  highlight! link jsFunction           Aqua
-  highlight! link jsFuncArgs           Yellow
-  highlight! link jsDestructuringBlock Yellow
-  highlight! link jsArrowFunction      Red
-  highlight! link jsObjectBraces       White
-  highlight! link jsTemplateBraces     Aqua
-  highlight! link jsBrackets           Green
-  highlight! link jsUndefined          Purple
-  highlight! link jsNull               Purple
-  highlight! link jsSuper              Orange
-  highlight! link jsClassMethodType    Orange
-
-  " custom go highlighting based off of go-vim syntax highlighting
-  highlight! link goReceiverType          Aqua
-  highlight! link goTypeName              Aqua
-  highlight! link goTypeConstructor       Aqua
-  highlight! link goField                 White
-  highlight! link goFormatSpecifier       Orange
-  highlight! link goBuiltins              Orange
-  highlight! link goPredefinedIdentifiers Purple
-  highlight! link goDeclType              Blue
-
-  " custom cpp highlighting
-  highlight LspCxxHlGroupMemberVariable guifg=#68948a
-
-endfunction
-
-augroup gruvbox_custom
-  autocmd!
-  autocmd ColorScheme gruvbox-material call GruvboxCustom()
-augroup END
-
-let g:gruvbox_material_disable_italic_comment = 1
-let g:gruvbox_material_lightline_disable_bold = 1
-set background=dark
-colorscheme gruvbox-material
-
-" }}}
+let g:nord_bold = 0
+colorscheme nord
 
 " highlight off in insert mode
 augroup search_highlight
@@ -405,24 +351,24 @@ if has("clipboard")
   endif
 endif
 
-" terminal ansi colors (gruvbox)
+" terminal ansi colors (nord)
 
-let g:terminal_color_0 = '#282828' " black
-let g:terminal_color_1 = '#ea6967' " red
-let g:terminal_color_2 = '#a9b665' " green
-let g:terminal_color_3 = '#d8a657' " yellow
-let g:terminal_color_4 = '#7daea3' " blue
-let g:terminal_color_5 = '#d3869b' " purple
-let g:terminal_color_6 = '#89b482' " aqua
-let g:terminal_color_7 = '#a89984' " grey
-let g:terminal_color_8 = '#928374' " dark grey
-let g:terminal_color_9 = '#b85651' " dark red
-let g:terminal_color_10 = '#8f9a52' " dark green
-let g:terminal_color_11 = '#c18f41' " dark yellow
-let g:terminal_color_12 = '#68948a' " dark blue
-let g:terminal_color_13 = '#ab6c7d' " dark purple
-let g:terminal_color_14 = '#72966c' " dark aqua
-let g:terminal_color_15 = '#d4be98' " white
+let g:terminal_color_0 = '#3b4252' " black
+let g:terminal_color_1 = '#bf616a' " red
+let g:terminal_color_2 = '#a3be8c' " green
+let g:terminal_color_3 = '#ebcb8b' " yellow
+let g:terminal_color_4 = '#81a1c1' " blue
+let g:terminal_color_5 = '#b48ead' " purple
+let g:terminal_color_6 = '#88c0d0' " aqua
+let g:terminal_color_7 = '#e5e9f0' " grey
+let g:terminal_color_8 = '#4c566a' " dark grey
+let g:terminal_color_9 = '#bf616a' " dark red
+let g:terminal_color_10 = '#a3be8c' " dark green
+let g:terminal_color_11 = '#ebcb8b' " dark yellow
+let g:terminal_color_12 = '#81a1c1' " dark blue
+let g:terminal_color_13 = '#b48ead' " dark purple
+let g:terminal_color_14 = '#8fbcbb' " dark aqua
+let g:terminal_color_15 = '#eceff4' " white
 
 " }}}
 " Back Up Config {{{
