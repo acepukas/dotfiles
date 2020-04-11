@@ -139,6 +139,12 @@ man() {
   command man "$@"
 }
 
+# gruvbox
+GBPALETTE=$HOME/dotfiles/gruvbox_256palette.sh
+if [[ -a $GBPALETTE ]]; then
+  sh $GBPALETTE
+fi
+
 # todo.txt
 if [[ -a /usr/bin/todo.sh ]]; then
   alias t='todo.sh'
@@ -187,3 +193,5 @@ esac
 # dircolors
 eval $($DIRCOLORS $HOME/.dir_colors)
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

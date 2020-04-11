@@ -15,7 +15,7 @@ let g:lightline = {
       \ 'enable': {
       \   'tabline': 1
       \ },
-      \ 'colorscheme': 'nord',
+      \ 'colorscheme': 'my_gruvbox',
       \ 'mode_map': { 'c': 'NORMAL' },
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename', 'method' ] ],

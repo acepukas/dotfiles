@@ -46,7 +46,7 @@ Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'AndrewRadev/splitjoin.vim'
 
 " color schemes
-Plug 'arcticicestudio/nord-vim'
+Plug 'morhetz/gruvbox'
 
 " TMUX
 Plug 'edkolev/tmuxline.vim'           " generate a status line theme for tmux
@@ -312,17 +312,14 @@ set wildignore+=*.swp,*~,._*
 
 set wildignore+=types_*taghl,tags
 
-" nord colorscheme {{{
-augroup nord-theme-overrides
+" gruvbox colorscheme {{{
+augroup color-scheme-overrides
   autocmd!
-  " Use 'nord7' as foreground color for go types.
-  autocmd ColorScheme nord highlight goType ctermfg=14 guifg=#8FBCBB
-  " Use 'nord11' as foreground color for go format specifiers.
-  autocmd ColorScheme nord highlight goFormatSpecifier ctermfg=11 guifg=#EBCB8B
+  autocmd ColorScheme gruvbox highlight! link goTypeName GruvboxAqua
+  autocmd ColorScheme gruvbox highlight! link goReceiverType GruvboxAqua
+  autocmd ColorScheme gruvbox highlight! link goTypeConstructor GruvboxAqua
 augroup END
-
-let g:nord_bold = 0
-colorscheme nord
+colorscheme gruvbox
 " }}}
 
 " highlight off in insert mode
