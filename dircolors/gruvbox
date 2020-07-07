@@ -251,6 +251,7 @@ EXEC  1;30;32
 .ini        01;36
 .properties 01;36
 .yaml       01;36
+.yml       01;36
 .vcl        01;36 # Varnish
 .mod        01;36
 .sum        01;36
