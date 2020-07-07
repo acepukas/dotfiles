@@ -358,24 +358,24 @@ if has("clipboard")
   endif
 endif
 
-" terminal ansi colors (nord)
+" terminal ansi colors (gruvbox)
 
-let g:terminal_color_0 = '#3b4252' " black
-let g:terminal_color_1 = '#bf616a' " red
-let g:terminal_color_2 = '#a3be8c' " green
-let g:terminal_color_3 = '#ebcb8b' " yellow
-let g:terminal_color_4 = '#81a1c1' " blue
-let g:terminal_color_5 = '#b48ead' " purple
-let g:terminal_color_6 = '#88c0d0' " aqua
-let g:terminal_color_7 = '#e5e9f0' " grey
-let g:terminal_color_8 = '#4c566a' " dark grey
-let g:terminal_color_9 = '#bf616a' " dark red
-let g:terminal_color_10 = '#a3be8c' " dark green
-let g:terminal_color_11 = '#ebcb8b' " dark yellow
-let g:terminal_color_12 = '#81a1c1' " dark blue
-let g:terminal_color_13 = '#b48ead' " dark purple
-let g:terminal_color_14 = '#8fbcbb' " dark aqua
-let g:terminal_color_15 = '#eceff4' " white
+let g:terminal_color_0 = '#282828' " black
+let g:terminal_color_1 = '#fb4934' " red
+let g:terminal_color_2 = '#b8bb26' " green
+let g:terminal_color_3 = '#fabd2f' " yellow
+let g:terminal_color_4 = '#83a598' " blue
+let g:terminal_color_5 = '#d3869b' " purple
+let g:terminal_color_6 = '#8ec07c' " aqua
+let g:terminal_color_7 = '#928374' " grey
+let g:terminal_color_8 = '#504945' " dark grey
+let g:terminal_color_9 = '#cc241d' " dark red
+let g:terminal_color_10 = '#98971a' " dark green
+let g:terminal_color_11 = '#d79921' " dark yellow
+let g:terminal_color_12 = '#458588' " dark blue
+let g:terminal_color_13 = '#b16286' " dark purple
+let g:terminal_color_14 = '#689d6a' " dark aqua
+let g:terminal_color_15 = '#ebdbb2' " white
 
 " }}}
 " Back Up Config {{{
