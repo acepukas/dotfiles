@@ -18,7 +18,7 @@ let g:lightline = {
       \ 'colorscheme': 'my_gruvbox',
       \ 'mode_map': { 'c': 'NORMAL' },
       \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename', 'method' ] ],
+      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ],
       \   'right': [ [ 'percent', 'lineinfo' ],
       \              [ 'obsession', 'fileformat', 'fileencoding', 'filetype' ] ]
       \ },
@@ -32,7 +32,6 @@ let g:lightline = {
       \   'fileencoding': 'MyFileencoding',
       \   'mode': 'MyMode',
       \   'obsession': 'MyObsession',
-      \   'method': 'NearestMethodOrFunction'
       \ },
       \ 'separator': { 'left': '', 'right': '' },
       \ 'subseparator': { 'left': '', 'right': '' }
@@ -120,16 +119,6 @@ endfunction
 
 autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
 
-function! NearestMethodOrFunction() abort
-  let l:fn = get(b:, 'vista_nearest_method_or_function', '')
-  if l:fn != ''
-    return '🝡 ' . l:fn
-  endif
-  return ''
-endfunction
-
-autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
-
 function! MyModified()
   return &ft =~ 'Tagbar\|help\|vimfiler\|mundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
 endfunction
@@ -186,7 +175,6 @@ function! MyMode()
         \ fname == '__Mundo__' ? 'Mundo' :
         \ fname == '__Mundo_Preview__' ? 'Mundo Preview' :
         \ fname == '__Tagbar__.1' ? 'Tagbar' :
-        \ fname == '__vista__' ? 'Vista' :
         \ winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 

@@ -102,7 +102,6 @@ Plug 'peitalin/vim-jsx-typescript'
 
 "Language Server Stuff
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
-Plug 'liuchengxu/vista.vim'
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 Plug 'freitass/todo.txt-vim'
