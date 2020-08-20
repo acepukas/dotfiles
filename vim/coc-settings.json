@@ -3,16 +3,28 @@
     "ccls": {
       "command": "ccls",
       "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
-      "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+      "rootPatterns": [
+        ".ccls",
+        "compile_commands.json",
+        ".vim/",
+        ".git/",
+        ".hg/"
+      ],
       "initializationOptions": {
         "cache": {
           "directory": "/tmp/ccls"
         },
-        "highlight": { "lsRanges" : true }
+        "highlight": { "lsRanges": true }
       }
     }
   },
-  "coc.preferences.formatOnSaveFiletypes": ["javascript", "typescript", "typescriptreact", "json", "javascriptreact"],
+  "coc.preferences.formatOnSaveFiletypes": [
+    "javascript",
+    "typescript",
+    "typescriptreact",
+    "json",
+    "javascriptreact"
+  ],
   "diagnostic.errorSign": "✘✘",
   "diagnostic.warningSign": "",
   "eslint.filetypes": [
@@ -23,5 +35,6 @@
   ],
   "go.goplsOptions": {
     "deepCompletion": false
-  }
+  },
+  "coc.source.ultisnips.priority": 90
 }
