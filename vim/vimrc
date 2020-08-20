@@ -91,8 +91,8 @@ Plug 'alvan/vim-php-manual'
 Plug 'heavenshell/vim-jsdoc'
 Plug 'digitaltoad/vim-pug'
 Plug 'wavded/vim-stylus'
+Plug 'mattn/emmet-vim'
 Plug 'gregsexton/MatchTag'
-Plug 'rstacruz/sparkup', { 'rtp': 'vim' }
 Plug 'othree/html5-syntax.vim'
 Plug 'hail2u/vim-css3-syntax'
 
@@ -194,10 +194,6 @@ set nostartofline
 
 " default is 4000 which is too slow
 set updatetime=250
-
-" allow for fast return to NORMAL mode via ESC
-set timeoutlen=250
-set ttimeoutlen=0
 
 " save 1000 lines of history
 set history=1000
