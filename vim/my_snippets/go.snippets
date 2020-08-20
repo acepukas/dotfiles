@@ -17,7 +17,7 @@ for ${1:i} := ${3:len(${2:list})-1}; $1 >= 0; $1-- {
 endsnippet
 
 snippet handler "server handler function" b
-func (s *Server) ${1:funcName}() http.HandlerFunc {
+func (${1:varName} ${2:recevier}) ${3:funcName}() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		${0}
 	}
