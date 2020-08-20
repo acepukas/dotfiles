@@ -460,7 +460,7 @@ xnoremap <leader>r "sy:%s:<C-R>=EscapeVimRegex(@s)<CR>::g<Left><Left>
 xnoremap <leader>c "sy:%s:<C-R>=EscapeVimRegex(@s)<CR>::n<CR>
 
 " highlight word under cursor but don't jump to next word.
-nnoremap <leader>s :let @/='\<<C-R><C-W>\>'<CR>:set hls<CR>
+nnoremap <leader>8 :let @/='\<<C-R><C-W>\>'<CR>:set hls<CR>
 
 function! ClearWhiteSpace() abort
   :%s/	/  /ge
