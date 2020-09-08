@@ -27,6 +27,7 @@
   ],
   "diagnostic.errorSign": "✘✘",
   "diagnostic.warningSign": "",
+  "diagnostic.displayByAle": true,
   "eslint.filetypes": [
     "javascript",
     "javascriptreact",

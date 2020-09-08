@@ -40,24 +40,29 @@ let g:lightline = {
 " lightline-ale ale and coc.nvim integration
 
 let g:lightline.active.right =
-      \ [['linter_errors', 'linter_warnings', 'linter_ok']] +
+      \ [['linter_checking', 'linter_errors', 'linter_warnings', 'linter_infos',  'linter_ok']] +
       \ g:lightline.active.right
 
 let g:lightline.component_expand = {
-  \ 'linter_errors': 'StatusErrors',
-  \ 'linter_warnings': 'StatusWarnings',
-  \ 'linter_ok': 'StatusOK'
+  \ 'linter_checking': 'lightline#ale#checking',
+  \ 'linter_infos': 'lightline#ale#infos',
+  \ 'linter_warnings': 'lightline#ale#warnings',
+  \ 'linter_errors': 'lightline#ale#errors',
+  \ 'linter_ok': 'lightline#ale#ok',
   \ }
 
 let g:lightline.component_type = {
+  \ 'linter_checking': 'right',
+  \ 'linter_infos': 'right',
   \ 'linter_warnings': 'warning',
-  \ 'linter_errors': 'error'
+  \ 'linter_errors': 'error',
+  \ 'linter_ok': 'right',
   \ }
 
+let g:lightline#ale#indicator_checking = ''
+let g:lightline#ale#indicator_infos = ''
 let g:lightline#ale#indicator_warnings = ''
-
 let g:lightline#ale#indicator_errors = '✘'
-
 let g:lightline#ale#indicator_ok = '✔'
 
 " lightline component functions
@@ -67,57 +72,6 @@ function! s:is_tmp_file() abort
   if index(['startify', 'gitcommit'], &filetype) > -1 | return 1 | endif
   if expand('%:p') =~# '^/tmp' | return 1 | endif
 endfunction
-
-function! StatusOK() abort
-  if s:is_tmp_file() | return '' | endif
-  if get(g:, 'coc_enabled', 0)
-    let info = get(b:, 'coc_diagnostic_info', {})
-    if !empty(info) && empty(info['error']) && empty(info['warning'])
-      return g:lightline#ale#indicator_ok
-    else
-      return ''
-    endif
-  elseif get(b:, 'ale_enabled', 0)
-    return lightline#ale#ok()
-  endif
-  return ''
-endfunction
-
-function! StatusErrors() abort
-  if s:is_tmp_file() | return '' | endif
-  if get(g:, 'coc_enabled', 0)
-    let info = get(b:, 'coc_diagnostic_info', {})
-    if empty(info) | return '' | endif
-    if empty(info['error']) | return '' | endif
-    let msgs = []
-    if get(info, 'error', 0)
-      call add(msgs, g:lightline#ale#indicator_errors . ' ' . info['error'])
-    endif
-    return join(msgs, ' '). ' ' . get(g:, 'coc_status', '')
-  elseif get(b:, 'ale_enabled', 0)
-    return lightline#ale#errors()
-  endif
-  return ''
-endfunction
-
-function! StatusWarnings() abort
-  if s:is_tmp_file() | return '' | endif
-  if get(g:, 'coc_enabled', 0)
-    let info = get(b:, 'coc_diagnostic_info', {})
-    if empty(info) | return '' | endif
-    if empty(info['warning']) | return '' | endif
-    let msgs = []
-    if get(info, 'warning', 0)
-      call add(msgs, g:lightline#ale#indicator_warnings . ' ' . info['warning'])
-    endif
-    return join(msgs, ' '). ' ' . get(g:, 'coc_status', '')
-  elseif get(b:, 'ale_enabled', 0)
-    return lightline#ale#warnings()
-  endif
-  return ''
-endfunction
-
-autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
 
 function! MyModified()
   return &ft =~ 'Tagbar\|help\|vimfiler\|mundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'

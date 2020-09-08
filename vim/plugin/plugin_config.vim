@@ -67,14 +67,6 @@ endf
 
 let g:ale_go_gometalinter_options = s:BuildGoMetalinterOptionsStr()
 
-let g:ale_pattern_options = {
-\   '\.go$': {
-\       'ale_linters': [],
-\       'ale_fixers': [],
-\       'ale_enabled': 0
-\   },
-\}
-
 let g:ale_c_build_dir='build'
 
 let g:ale_linters = {

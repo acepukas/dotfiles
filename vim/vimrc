@@ -81,6 +81,7 @@ Plug 'fatih/vim-go'
 
 " web dev plugins
 "
+let g:ale_disable_lsp = 1
 Plug 'w0rp/ale'
 Plug 'pangloss/vim-javascript'
 Plug 'shawncplus/phpcomplete.vim'
