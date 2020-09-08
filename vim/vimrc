@@ -103,9 +103,10 @@ Plug 'peitalin/vim-jsx-typescript'
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 
+" Productivity
 Plug 'freitass/todo.txt-vim'
-
 Plug 'ryanoasis/vim-devicons'
+Plug 'vimwiki/vimwiki'
 
 call plug#end()
 " }}}
@@ -390,9 +391,6 @@ nnoremap <Left>  :nohlsearch<CR>
 nnoremap <Right> :nohlsearch<CR>
 nnoremap <Up>    :nohlsearch<CR>
 nnoremap <Down>  :nohlsearch<CR>
-
-" fast saving
-nnoremap <leader>w :w!<cr>
 
 " fast editing of vimrc file
 nnoremap <leader>e :vsplit $MYVIMRC<cr>
