@@ -427,12 +427,20 @@ inoremap <silent><expr> <c-space> coc#refresh()
 
 inoremap <expr> <CR> InsertMapForEnter()
 function! InsertMapForEnter()
-  let l:nextChar = strcharpart(getline('.'),getpos('.')[2]-1,1)
+  let l:line = getline('.')
+  let l:pos = getpos('.')
+  let l:col = l:pos[2]
+  let l:nextChar = strcharpart(l:line,l:col-1,1)
+  let l:prevChar = strcharpart(l:line,l:col-2,1)
   if pumvisible()
     return "\<C-y>"
-  elseif l:nextChar == '}' || l:nextChar == ')' || l:nextChar == ']'
+  elseif l:prevChar == '{' && l:nextChar == '}'
     return "\<CR>\<Esc>O"
-  elseif strcharpart(getline('.'),getpos('.')[2]-1,2) == '</'
+  elseif l:prevChar == '(' && l:nextChar == ')'
+    return "\<CR>\<Esc>O"
+  elseif l:prevChar == '[' && l:nextChar == ']'
+    return "\<CR>\<Esc>O"
+  elseif strcharpart(l:line,l:col-1,2) == '</'
     return "\<CR>\<Esc>O"
   else
     return "\<C-g>u\<CR>"
