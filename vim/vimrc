@@ -32,7 +32,6 @@ Plug 'tpope/vim-repeat'          " use the . command with more than vim builtins
 Plug 'tpope/vim-unimpaired'      " vim options toggleing and other cool stuff
 Plug 'tpope/vim-eunuch'          " issue common unix commands from vim
 Plug 'tpope/vim-obsession'       " session management
-Plug 'Lokaltog/vim-easymotion'   " quick way to navigate around buffers
 Plug 'junegunn/vim-easy-align'   " quick text alignment commands
 Plug 'wellle/targets.vim'        " more text objects
 Plug 'kana/vim-textobj-user'
