@@ -259,10 +259,6 @@ let g:easy_align_delimiters['d'] = {
 \ 'left_margin': 0, 'right_margin': 0
 \ }
 " }}}
-" Easy Motion: Lokaltog/vim-easymotion {{{
-hi link EasyMotionTarget2First Constant
-hi link EasyMotionTarget2Second Constant
-" }}}
 " Vim JavaScript: pangloss/vim-javascript {{{
 let g:javascript_plugin_jsdoc = 1
 " }}}
