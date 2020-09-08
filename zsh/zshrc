@@ -115,13 +115,14 @@ stty -ixon
 
 # RIPGREP config
 export RG_COMMAND_BASE='rg --ignore-file ~/.ignore --hidden --follow --colors=path:fg:white --colors=line:fg:white --colors=match:fg:yellow'
+export FD_COMMAND_BASE='fd --ignore-file ~/.ignore --hidden --follow'
 
 # FZF
 [ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh
-export FZF_DEFAULT_COMMAND="$RG_COMMAND_BASE --files"
+export FZF_DEFAULT_COMMAND="$FD_COMMAND_BASE -t f"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 _fzf_compgen_path() {
-  eval ${FZF_DEFAULT_COMMAND} "$1"
+  eval ${FD_COMMAND_BASE} --exclude ".git" . "$1"
 }
 export FZF_DEFAULT_OPTS="
   -m --history $HOME/.fzf.history --bind ctrl-a:select-all,alt-n:next-history,alt-p:previous-history,ctrl-n:down,ctrl-p:up
