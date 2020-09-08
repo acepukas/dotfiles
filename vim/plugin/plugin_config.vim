@@ -83,6 +83,7 @@ let g:ale_linters = {
       \ 'pug': ['puglint'],
       \ 'cpp': ['clang'],
       \ 'go': [],
+      \ 'html': [],
       \ 'haskell': ['ghc-mod', 'hlint']
       \ }
 
@@ -387,6 +388,10 @@ let g:coc_global_extensions = [
   \ 'coc-html',
   \ 'coc-css'
   \]
+
+let g:coc_filetype_map = {
+      \ 'gohtmltmpl.html': 'html'
+      \ }
 
 " if hidden is not set, TextEdit might fail.
 set hidden
