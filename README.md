@@ -51,15 +51,9 @@ via wget:
 sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 ```
 
-### VIM: Compiled from source
+### NeoVim
 
-Refer to this [guide](https://github.com/Valloric/YouCompleteMe/wiki/Building-Vim-from-source)
-
-Note: If environment is OS X, just install MacVim with homebrew:
-
-```sh
-brew install macvim
-```
+Arch: `pacman -S neovim`
 
 ### NVM
 
@@ -94,3 +88,7 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 Arch: `pacman -S ripgrep`
 
 OS X: `brew install ripgrep`
+
+### fd
+
+Arch: `pacman -S fd`
