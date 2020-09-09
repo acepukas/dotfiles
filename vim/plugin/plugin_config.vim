@@ -203,10 +203,10 @@ command! -bang -nargs=* RGX call Fzf_grep([], <q-args>, <bang>0)
 command! -bang -nargs=* RGSW call Fzf_grep(['-w', '--fixed-strings'], <q-args>, <bang>0)
 
 " Search files for word under cursor
-nnoremap <leader>* "zyiw :let cmd = 'RGSW ' . @z <bar> call histadd("cmd", cmd) <bar> execute cmd<cr>
+nnoremap <silent> <leader>* "zyiw :let cmd = 'RGSW ' . @z <bar> call histadd("cmd", cmd) <bar> execute cmd<cr>
 
 " Search files for visually selected text
-xnoremap <leader>* "zy :let cmd = 'RGS ' . @z <bar> call histadd("cmd", cmd) <bar> execute cmd <cr>
+xnoremap <silent> <leader>* "zy :let cmd = 'RGS ' . @z <bar> call histadd("cmd", cmd) <bar> execute cmd <cr>
 
 " Populate quickfix window with selected fzf pane contents
 
