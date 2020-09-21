@@ -54,7 +54,6 @@ Plug 'christoomey/vim-tmux-navigator' " easily navigate tmux panes and vim
 
 " Major feature plugins
 Plug 'junegunn/fzf', { 'dir': $HOME . '/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tommcdo/vim-fubitive'
 

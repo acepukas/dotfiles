@@ -108,86 +108,37 @@ let g:snips_author = 'Aaron Cepukas'
 let g:snips_email = 'acepukas@gmail.com'
 let g:snips_github = 'https://github.com/acepukas'
 " }}}
-" FZFVIM: junegunn/fzf.vim {{{
-nnoremap <silent> <C-P> :Files<CR>
-nnoremap <leader><tab> :Buffers<CR>
+" coc-fzf-preview: yuki-ycino/fzf-preview.vim {{{
+
+" support true color preview
+augroup fzf_preview
+  autocmd!
+  autocmd User fzf_preview#initialized call s:fzf_preview_settings()
+augroup END
+
+function! s:fzf_preview_settings() abort
+  let g:fzf_preview_command = 'COLORTERM=truecolor ' . g:fzf_preview_command
+  let g:fzf_preview_grep_preview_cmd = 'COLORTERM=truecolor ' . g:fzf_preview_grep_preview_cmd
+endfunction
+
+" default directory file command
+let g:fzf_preview_directory_files_command = $FZF_DEFAULT_COMMAND
+let g:fzf_preview_grep_cmd = $RG_COMMAND_BASE . ' --column --line-number --no-heading --color "always"'
+
+nnoremap <silent> <C-P> :CocCommand fzf-preview.DirectoryFiles<CR>
+nnoremap <leader><tab> :CocCommand fzf-preview.Buffers<CR>
 
 " case sensitive rg command
 nnoremap <leader>q :RGS 
 
-let g:rg_command = $RG_COMMAND_BASE . ' --column --line-number --no-heading --color "always"'
-
-fun! Fzf_preview(opts) abort
-  return fzf#vim#with_preview(a:opts, 'right', 'ctrl-h')
-endfun
-
-command! -nargs=? -complete=file Files call Fzf_dev(<q-args>)
-
-" Files + dev icons
-function! Fzf_dev(qargs)
-
-  let l:fzf_files_options = '--expect=ctrl-t,ctrl-v,ctrl-x --multi --bind=ctrl-a:select-all,ctrl-d:deselect-all --ansi'
-
-  function! s:files(dir)
-    let l:cmd = g:rg_command . ' --files --color never'
-    if a:dir != ''
-      let l:cmd .= ' ' . shellescape(a:dir)
-    endif
-    return systemlist(l:cmd)
-  endfunction
-
-  function! s:edit_file(lines)
-    if len(a:lines) < 2 | return | endif
-
-    let l:cmd = get({'ctrl-x': 'split',
-                 \ 'ctrl-v': 'vertical split',
-                 \ 'ctrl-t': 'tabe'}, a:lines[0], 'e')
-    for l:item in a:lines[1:]
-      let l:pos = stridx(l:item, ' ')
-      let l:file_path = l:item[pos+1:-1]
-      execute 'silent '. l:cmd . ' ' . l:file_path
-    endfor
-  endfunction
-
-  call fzf#run(fzf#wrap('with-preview', Fzf_preview({
-        \ 'source': <sid>files(a:qargs),
-        \ 'sink*': function('s:edit_file'),
-        \ 'options': '-m ' . l:fzf_files_options}), 0))
-
-endfunction
-
-let g:fzf_layout = { 'window': 'call FloatingFZF()' }
-
-function! FloatingFZF()
-  let buf = nvim_create_buf(v:false, v:true)
-  call setbufvar(buf, '&signcolumn', 'no')
-
-  let height = float2nr(&lines * 0.8)
-  let width = float2nr(&columns * 0.9)
-  let horizontal = float2nr((&columns - width) / 2)
-  let vertical = float2nr((&lines - height) / 2)
-
-  let opts = {
-        \ 'relative': 'editor',
-        \ 'row': vertical,
-        \ 'col': horizontal,
-        \ 'width': width,
-        \ 'height': height,
-        \ 'style': 'minimal'
-        \ }
-
-  call nvim_open_win(buf, v:true, opts)
-endfunction
-
 fun! BuildRgCommand(opts, qargs)
-  let l:list = [g:rg_command] + a:opts + ['--', shellescape(a:qargs)]
+  let l:list = [] + a:opts + ['--', shellescape(a:qargs)]
   return join(l:list, ' ')
 endfun
 
 fun! Fzf_grep(opts, qargs, bang) abort
   let l:rg = BuildRgCommand(a:opts, a:qargs)
-  let l:preview_opts = Fzf_preview({})
-  call fzf#vim#grep(l:rg, 1, l:preview_opts, a:bang)
+  execute ':CocCommand fzf-preview.ProjectGrep ' . l:rg
 endfun
 
 " Search recursive ignoring case
@@ -207,36 +158,6 @@ nnoremap <silent> <leader>* "zyiw :let cmd = 'RGSW ' . @z <bar> call histadd("cm
 
 " Search files for visually selected text
 xnoremap <silent> <leader>* "zy :let cmd = 'RGS ' . @z <bar> call histadd("cmd", cmd) <bar> execute cmd <cr>
-
-" Populate quickfix window with selected fzf pane contents
-
-function! s:build_quickfix_list(lines)
-  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
-  copen
-  cc
-endfunction
-
-let g:fzf_action = {
-  \ 'ctrl-q': function('s:build_quickfix_list'),
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-x': 'split',
-  \ 'ctrl-v': 'vsplit' }
-
-" Customize fzf colors to match your color scheme
-let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'border':  ['fg', 'Ignore'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
 
 " }}}
 " Vim Easy Align: junegunn/vim-easy-align {{{
