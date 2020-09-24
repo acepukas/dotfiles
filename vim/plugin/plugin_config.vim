@@ -124,6 +124,11 @@ endfunction
 " default directory file command
 let g:fzf_preview_directory_files_command = $FZF_DEFAULT_COMMAND
 let g:fzf_preview_grep_cmd = $RG_COMMAND_BASE . ' --column --line-number --no-heading --color "always"'
+let g:fzf_preview_use_dev_icons = 1
+let g:fzf_preview_command = 'bat --color=always --plain --tabs 2 {-1}'
+let g:fzf_preview_default_fzf_options = { '--preview-window': 'wrap' }
+let $VIMUSERRUNTIME = fnamemodify($MYVIMRC, ':p:h')
+let g:fzf_preview_grep_preview_cmd = $VIMUSERRUNTIME . '/bin/preview_fzf_grep'
 
 nnoremap <silent> <C-P> :CocCommand fzf-preview.DirectoryFiles<CR>
 nnoremap <leader><tab> :CocCommand fzf-preview.Buffers<CR>
@@ -131,33 +136,30 @@ nnoremap <leader><tab> :CocCommand fzf-preview.Buffers<CR>
 " case sensitive rg command
 nnoremap <leader>q :RGS 
 
-fun! BuildRgCommand(opts, qargs)
-  let l:list = [] + a:opts + ['--', shellescape(a:qargs)]
-  return join(l:list, ' ')
-endfun
-
 fun! Fzf_grep(opts, qargs, bang) abort
-  let l:rg = BuildRgCommand(a:opts, a:qargs)
-  execute ':CocCommand fzf-preview.ProjectGrep ' . l:rg
+  let l:list = [':CocCommand', 'fzf-preview.ProjectGrep']
+  let l:list = extend(l:list, a:opts)
+  let l:list = extend(l:list, ['--', '"' . a:qargs . '"'])
+  execute join(l:list, ' ')
 endfun
 
-" Search recursive ignoring case
-command! -bang -nargs=* RG call Fzf_grep(['--ignore-case', '--fixed-strings'], <q-args>, <bang>0)
+" Search recursive ignoring case with fixed strings (not regex)
+command! -bang -nargs=* RG call Fzf_grep(['-i', '-F'], <q-args>, <bang>0)
 
 " Search recursive case sensitive
-command! -bang -nargs=* RGS call Fzf_grep(['--fixed-strings'], <q-args>, <bang>0)
+command! -bang -nargs=* RGS call Fzf_grep(['-F'], <q-args>, <bang>0)
 
 " Search recursive case sensitive as RegExp
 command! -bang -nargs=* RGX call Fzf_grep([], <q-args>, <bang>0)
 
 " Seach recursive case sensitive with word boundaries
-command! -bang -nargs=* RGSW call Fzf_grep(['-w', '--fixed-strings'], <q-args>, <bang>0)
+command! -bang -nargs=* RGSW call Fzf_grep(['-w', '-F'], <q-args>, <bang>0)
 
 " Search files for word under cursor
 nnoremap <silent> <leader>* "zyiw :let cmd = 'RGSW ' . @z <bar> call histadd("cmd", cmd) <bar> execute cmd<cr>
 
 " Search files for visually selected text
-xnoremap <silent> <leader>* "zy :let cmd = 'RGS ' . @z <bar> call histadd("cmd", cmd) <bar> execute cmd <cr>
+xnoremap <silent> <leader>* "zy :let cmd = 'RGS ' . @z <bar> call histadd("cmd", cmd) <bar> execute cmd<cr>
 
 " }}}
 " Vim Easy Align: junegunn/vim-easy-align {{{
