@@ -121,7 +121,7 @@ export FD_COMMAND_BASE='fd --ignore-file ~/.ignore --hidden --follow'
 [ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh
 export FZF_DEFAULT_COMMAND="$FD_COMMAND_BASE -t f"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_PREVIEW_PREVIEW_BAT_THEME='gruvbox'
+export FZF_PREVIEW_PREVIEW_BAT_THEME='gruvbox-material'
 _fzf_compgen_path() {
   eval ${FD_COMMAND_BASE} --exclude ".git" . "$1"
 }
