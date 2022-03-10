@@ -39,7 +39,7 @@ Plug('nvim-telescope/telescope-fzf-native.nvim', {['do'] = 'make' })
 
 Plug('rrethy/vim-hexokinase', {['do'] = 'make hexokinase' })
 
-Plug 'blackCauldron7/surround.nvim'
+Plug 'ur4ltz/surround.nvim'
 
 Plug 'lewis6991/gitsigns.nvim'
 
