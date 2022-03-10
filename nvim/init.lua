@@ -47,8 +47,6 @@ Plug 'nvim-lualine/lualine.nvim'
 
 Plug 'numToStr/Comment.nvim'
 
-Plug 'numToStr/Navigator.nvim'
-
 Plug 'kyazdani42/nvim-web-devicons'
 
 vim.call('plug#end')
@@ -418,11 +416,3 @@ require'Comment'.setup()
 
 -- typescript language server support
 require'acepukas.typescriptls'
-
--- Navigator.nvim (for TMUX)
-require'Navigator'.setup()
-map('n', "<C-h>", "<CMD>lua require('Navigator').left()<CR>", default_opts)
-map('n', "<C-k>", "<CMD>lua require('Navigator').up()<CR>", default_opts)
-map('n', "<C-l>", "<CMD>lua require('Navigator').right()<CR>", default_opts)
-map('n', "<C-j>", "<CMD>lua require('Navigator').down()<CR>", default_opts)
-map('n', "<A-p>", "<CMD>lua require('Navigator').previous()<CR>", default_opts)
