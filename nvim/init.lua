@@ -389,3 +389,9 @@ require'Comment'.setup()
 
 -- typescript language server support
 require'acepukas.typescriptls'
+
+-- move lines around easy
+map('n', '<A-j>', ':m .+1<CR>==', default_opts)
+map('n', '<A-k>', ':m .-2<CR>==', default_opts)
+map('v', '<A-j>', ":m '>+1<CR>gv=gv", default_opts)
+map('v', '<A-k>', ":m '<-2<CR>gv=gv", default_opts)
