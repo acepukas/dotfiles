@@ -395,3 +395,9 @@ map('n', '<A-j>', ':m .+1<CR>==', default_opts)
 map('n', '<A-k>', ':m .-2<CR>==', default_opts)
 map('v', '<A-j>', ":m '>+1<CR>gv=gv", default_opts)
 map('v', '<A-k>', ":m '<-2<CR>gv=gv", default_opts)
+
+-- move around splits easy
+map('n', '<C-j>', '<C-w><C-j>', default_opts)
+map('n', '<C-k>', '<C-w><C-k>', default_opts)
+map('n', '<C-h>', '<C-w><C-h>', default_opts)
+map('n', '<C-l>', '<C-w><C-l>', default_opts)
