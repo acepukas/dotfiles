@@ -14,12 +14,7 @@ Plug 'sainnhe/gruvbox-material'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-lua/popup.nvim'
 
-Plug 'mfussenegger/nvim-dap'
-Plug 'rcarriga/nvim-dap-ui'
-Plug 'theHamsta/nvim-dap-virtual-text'
-Plug 'ray-x/guihua.lua' -- float term, codeaction and codelens gui support
-
-Plug 'ray-x/go.nvim'
+Plug('fatih/vim-go', {['do'] = ':GoUpdateBinaries'})
 
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
@@ -261,27 +256,6 @@ cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = 
 
 require'cmp_luasnip'
 
--- go.nvim
-require'go'.setup {
-  goimport = 'gopls', -- if set to 'gopls' will use golsp format
-  gofmt = 'gopls', -- if set to gopls will use golsp format
-  max_line_len = 120,
-  tag_transform = false,
-  test_dir = '',
-  comment_placeholder = '   ',
-  lsp_cfg = true, -- false: use your own lspconfig
-  lsp_gofumpt = true, -- true: set default gofmt in gopls format to gofumpt
-  lsp_on_attach = true, -- use on_attach from go.nvim
-  dap_debug = true,
-}
-
-require'vim.lsp.protocol'
-
-cmd [[autocmd BufWritePre (InsertLeave?) <buffer> lua vim.lsp.buf.formatting_sync(nil,500)]]
-
--- Run gofmt + goimport on save
-vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require('go.format').goimport() ]], false)
-
 -- tree-sitter setup for golang template files
 local parser_config = require'nvim-treesitter.parsers'.get_parser_configs()
 parser_config.gotmpl = {
@@ -351,8 +325,7 @@ local on_attach = function(client, bufnr)
 end
 
 -- loop over language servers and apply config to each one
--- local servers = { 'gopls', 'sumneko_lua', 'ccls'}
-local servers = { 'sumneko_lua', 'ccls'}
+local servers = { 'gopls', 'sumneko_lua', 'ccls'}
 for _, lsp in ipairs(servers) do
   local setup = {
     on_attach = on_attach,
