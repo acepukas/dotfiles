@@ -108,7 +108,10 @@ alias gdv='git difftool'
 # Typing EOF (CTRL+D) will not exit interactive sessions
 set -o ignoreeof
 
-export KEYTIMEOUT=1
+# setting to 15 ms to support using neovim as editor when typing vv in
+# zsh-vi-mode. Was previously set to 1 ms. There is a reason for this but I
+# can't remember why.
+export KEYTIMEOUT=15
 
 # disable ctrl-s and ctrl-q
 stty -ixon
