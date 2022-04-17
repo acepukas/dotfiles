@@ -227,7 +227,7 @@ cmp.setup({
       require'luasnip'.lsp_expand(args.body)
     end,
   },
-  mapping = {
+  mapping = cmp.mapping.preset.insert({
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -236,14 +236,15 @@ cmp.setup({
       behavior = cmp.ConfirmBehavior.insert,
       select = true,
     }
-  },
-  sources = {
+  }),
+  sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     { name = 'nvim_lua' },
     { name = 'luasnip' },
+  }, {
     { name = 'path' },
     { name = 'buffer', keyword_length = 5 },
-  },
+  }),
   formatting = {
     format = require'lspkind'.cmp_format({with_text = true, maxwidth = 50})
   },
