@@ -47,6 +47,7 @@ Plug 'kyazdani42/nvim-web-devicons'
 vim.call('plug#end')
 
 local cmd = vim.cmd
+local autocmd = vim.api.nvim_create_autocmd
 -- local exec = vim.api.nvim_exec
 local g = vim.g
 local opt = vim.opt
@@ -80,8 +81,6 @@ opt.listchars = {tab = '▸ ', trail = '.', eol = '¬',
   extends = '»', precedes = '«', nbsp = '⣿'}
 opt.showbreak = '↪ ' -- for wrapped lines
 
--- cmd [[au BufWrite * :%s/\s\+$//e]]
-
 -- Perf
 opt.hidden = true -- background buffers
 opt.history = 100 -- remember 100 lines in command history
@@ -91,29 +90,17 @@ opt.synmaxcol = 240
 -- Colorscheme
 opt.termguicolors = true
 
--- NORD COLORSCHEME CONFIG
--- g.nord_borders = true
--- g.nord_italic = false
+vim.api.nvim_create_augroup('gruvbox-material-theme-overrides', {})
 
--- cmd [[
--- augroup nord-theme-overrides
--- autocmd!
--- autocmd ColorScheme nord highlight Search ctermfg=11 ctermbg=0 gui=reverse guibg=#3B4252 guifg=#ebcb8b
--- augroup END
--- ]]
---
--- cmd [[colorscheme nord]]
+local hlgroups = { 'htmlTSTag', 'htmlTagName', 'jsxTagName', 'tsxTagName', 'tsxTSTag' }
 
-cmd [[
-augroup gruvbox-material-theme-overrides
-autocmd!
-autocmd ColorScheme gruvbox-material highlight link htmlTSTag Yellow
-                                 \ | highlight link htmlTagName Yellow
-                                 \ | highlight link jsxTagName Yellow
-                                 \ | highlight link tsxTagName Yellow
-                                 \ | highlight link tsxTSTag Yellow
-augroup END
-]]
+for _,v in ipairs(hlgroups) do
+  autocmd('ColorScheme', {
+    pattern = 'gruvbox-material',
+    command = string.gsub('highlight link GROUP Yellow', 'GROUP', v),
+    group = 'gruvbox-material-theme-overrides'
+  })
+end
 
 g.gruvbox_material_enable_italic = 0
 g.gruvbox_material_disable_italic_comment = 1
@@ -129,26 +116,31 @@ opt.tabstop = 2
 opt.smartindent = true
 
 -- don't auto comment new lines
-cmd [[au BufEnter * set fo-=c fo-=r fo-=o]]
+autocmd('BufEnter', { pattern = '*', command = 'set fo-=c fo-=r fo -=o'})
 
 -- remove line length marker for selected file types
-cmd [[autocmd FileType text,markdown,xml,html,xhtml setlocal cc=0]]
+autocmd('FileType', {
+  pattern = 'text,markdown,xml,html,xhtml',
+  command = 'setlocal cc=0'
+})
 
 -- 2 spaces for selected file types
-cmd [[
-  autocmd FileType xml,html,xhtml,css,scss,javascript,typescript,lua,yaml setlocal shiftwidth=2 tabstop=2
-]]
+autocmd('FileType', {
+  pattern = 'xml,html,xhtml,css,scss,javascript,typescript,lua,yaml',
+  command = 'setlocal shiftwidth=2 tabstop=2'
+})
 
 -- terminal
 cmd [[command Term :botright vsplit term://$SHELL]]
 
 -- enter insert mode when switching to terminal
 -- close terminal buffer on process exit
-cmd [[
-  autocmd TermOpen * setlocal listchars= nonumber norelativenumber nocursorline
-  autocmd TermOpen * startinsert
-  autocmd BufLeave term://* stopinsert
-]]
+autocmd('TermOpen', {
+  pattern = '*',
+  command = 'setlocal listchars= nonumber norelativenumber nocursorline'
+})
+autocmd('TermOpen', { pattern = '*', command = 'startinsert'})
+autocmd('BufLeave', { pattern = 'term://*', command = 'stopinsert'})
 
 -- tree-sitter
 require'nvim-treesitter.configs'.setup {
@@ -368,8 +360,14 @@ map('n', '<C-p>', '<cmd>Telescope find_files<CR>', default_opts)
 map('n', '<leader>*', '<cmd>Telescope grep_string<CR>', default_opts)
 map('n', '<leader>q', '<cmd>Telescope live_grep<CR>', default_opts)
 
-vim.cmd "autocmd User TelescopePreviewerLoaded setlocal number"
-vim.cmd "autocmd User TelescopePreviewerLoaded setlocal relativenumber"
+autocmd('User', {
+  pattern = 'TelescopePreviewerLoaded',
+  command = 'setlocal number'
+})
+autocmd('User', {
+  pattern = 'TelescopePreviewerLoaded',
+  command = 'setlocal relativenumber'
+})
 
 -- surround.nvim
 require'surround'.setup {mappings_style = 'surround'}
