@@ -50,8 +50,8 @@ local cmd = vim.cmd
 -- local exec = vim.api.nvim_exec
 local g = vim.g
 local opt = vim.opt
-local map = vim.api.nvim_set_keymap
-local default_opts = {noremap = true, silent = true}
+local map = vim.keymap.set
+local default_opts = {silent = true}
 
 g.mapleader = ' '
 opt.encoding = 'utf-8'
@@ -191,24 +191,24 @@ require'nvim-treesitter.configs'.setup {
 -- mappings
 map('n', '<backspace>', ':nohl<CR>', default_opts)
 
-map('', '<up>', '<nop>', {noremap = true})
-map('', '<down>', '<nop>', {noremap = true})
-map('', '<left>', '<nop>', {noremap = true})
-map('', '<right>', '<nop>', {noremap = true})
+map('', '<up>', '<nop>', default_opts)
+map('', '<down>', '<nop>', default_opts)
+map('', '<left>', '<nop>', default_opts)
+map('', '<right>', '<nop>', default_opts)
 
-map('v', 'J', ":m '>+1<CR>gv=gv", {noremap = true})
-map('v', 'K', ":m '<-2<CR>gv=gv", {noremap = true})
+map('v', 'J', ":m '>+1<CR>gv=gv", default_opts)
+map('v', 'K', ":m '<-2<CR>gv=gv", default_opts)
 
 -- luasnip
 require'luasnip'
 require'luasnip.loaders.from_vscode'.lazy_load({ paths = { './plugged/friendly-snippets' } })
 
-map("i", "<C-j>", "<Plug>luasnip-expand-or-jump", {})
-map("s", "<C-j>", "<Plug>luasnip-expand-or-jump", {})
-map("i", "<C-k>", "<Plug>luasnip-jump-prev", {})
-map("s", "<C-k>", "<Plug>luasnip-jump-prev", {})
-map("i", "<C-h>", "<Plug>luasnip-next-choice", {})
-map("s", "<C-h>", "<Plug>luasnip-next-choice", {})
+map("i", "<C-j>", "<Plug>luasnip-expand-or-jump", default_opts)
+map("s", "<C-j>", "<Plug>luasnip-expand-or-jump", default_opts)
+map("i", "<C-k>", "<Plug>luasnip-jump-prev", default_opts)
+map("s", "<C-k>", "<Plug>luasnip-jump-prev", default_opts)
+map("i", "<C-h>", "<Plug>luasnip-next-choice", default_opts)
+map("s", "<C-h>", "<Plug>luasnip-next-choice", default_opts)
 
 -- nvim-cmp
 
@@ -281,7 +281,6 @@ local nvim_lsp = require'lspconfig'
 
 local on_attach = function(client, bufnr)
 
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -303,23 +302,23 @@ local on_attach = function(client, bufnr)
   cmd('command! LspAddWorkspaceFolder lua vim.lsp.but.add_workspace_folder()')
   cmd('command! LspRemoveWorkspaceFolder lua vim.lsp.but.remove_workspace_folder()')
 
-  local opts = { noremap=true, silent=true }
+  local opts = { buffer=bufnr, silent=true }
 
-  buf_set_keymap('n', 'gD', ':LspDec<CR>', opts)
-  buf_set_keymap('n', 'gd', ':LspDef<CR>', opts)
-  buf_set_keymap('n', 'K', ':LspHover<CR>', opts)
-  buf_set_keymap('n', 'gi', ':LspImplementation<CR>', opts)
-  buf_set_keymap('n', '<leader>wa', 'LspAddWorkspaceFolder<CR>', opts)
-  buf_set_keymap('n', '<leader>wr', 'LspRemoveWorkspaceFolder<CR>', opts)
-  buf_set_keymap('n', '<leader>D', ':LspTypeDef<CR>', opts)
-  buf_set_keymap('n', '<leader>rn', ':LspRename<CR>', opts)
-  buf_set_keymap('n', '<leader>ca', ':LspCodeAction<CR>', opts)
-  buf_set_keymap('n', 'gr', ':LspRefs<CR>', opts)
-  buf_set_keymap('n', '<leader>e', ':LspDiagLine<CR>', opts)
-  buf_set_keymap('n', '[d', ':LspDiagPrev<CR>', opts)
-  buf_set_keymap('n', ']d', ':LspDiagNext<CR>', opts)
-  buf_set_keymap('n', '<leader>l', ':LspDiagSetLocList<CR>', opts)
-  buf_set_keymap('n', '<leader>f', ':LspFormatting<CR>', opts)
+  map('n', 'gD', ':LspDec<CR>', opts)
+  map('n', 'gd', ':LspDef<CR>', opts)
+  map('n', 'K', ':LspHover<CR>', opts)
+  map('n', 'gi', ':LspImplementation<CR>', opts)
+  map('n', '<leader>wa', 'LspAddWorkspaceFolder<CR>', opts)
+  map('n', '<leader>wr', 'LspRemoveWorkspaceFolder<CR>', opts)
+  map('n', '<leader>D', ':LspTypeDef<CR>', opts)
+  map('n', '<leader>rn', ':LspRename<CR>', opts)
+  map('n', '<leader>ca', ':LspCodeAction<CR>', opts)
+  map('n', 'gr', ':LspRefs<CR>', opts)
+  map('n', '<leader>e', ':LspDiagLine<CR>', opts)
+  map('n', '[d', ':LspDiagPrev<CR>', opts)
+  map('n', ']d', ':LspDiagNext<CR>', opts)
+  map('n', '<leader>l', ':LspDiagSetLocList<CR>', opts)
+  map('n', '<leader>f', ':LspFormatting<CR>', opts)
 
   require'illuminate'.on_attach(client)
 
