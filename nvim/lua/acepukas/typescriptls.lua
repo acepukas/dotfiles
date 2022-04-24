@@ -1,8 +1,8 @@
 local cmd = vim.cmd
+local map = vim.keymap.set
 
 local function on_attach(client, bufnr)
 
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -24,23 +24,23 @@ local function on_attach(client, bufnr)
   cmd('command! LspAddWorkspaceFolder lua vim.lsp.but.add_workspace_folder()')
   cmd('command! LspRemoveWorkspaceFolder lua vim.lsp.but.remove_workspace_folder()')
 
-  local opts = { noremap=true, silent=true }
+  local opts = { buffer=bufnr, silent=true }
 
-  buf_set_keymap('n', 'gD', ':LspDec<CR>', opts)
-  buf_set_keymap('n', 'gd', ':LspDef<CR>', opts)
-  buf_set_keymap('n', 'K', ':LspHover<CR>', opts)
-  buf_set_keymap('n', 'gi', ':LspImplementation<CR>', opts)
-  buf_set_keymap('n', '<leader>wa', 'LspAddWorkspaceFolder<CR>', opts)
-  buf_set_keymap('n', '<leader>wr', 'LspRemoveWorkspaceFolder<CR>', opts)
-  buf_set_keymap('n', '<leader>D', ':LspTypeDef<CR>', opts)
-  buf_set_keymap('n', '<leader>rn', ':LspRename<CR>', opts)
-  buf_set_keymap('n', '<leader>ca', ':LspCodeAction<CR>', opts)
-  buf_set_keymap('n', 'gr', ':LspRefs<CR>', opts)
-  buf_set_keymap('n', '<leader>e', ':LispDiagLine<CR>', opts)
-  buf_set_keymap('n', '[d', ':LspDiagPrev<CR>', opts)
-  buf_set_keymap('n', ']d', ':LspDiagNext()<CR>', opts)
-  buf_set_keymap('n', '<leader>l', ':LspDiagSetLocList<CR>', opts)
-  buf_set_keymap('n', '<leader>f', ':LspFormatting<CR>', opts)
+  map('n', 'gD', ':LspDec<CR>', opts)
+  map('n', 'gd', ':LspDef<CR>', opts)
+  map('n', 'K', ':LspHover<CR>', opts)
+  map('n', 'gi', ':LspImplementation<CR>', opts)
+  map('n', '<leader>wa', 'LspAddWorkspaceFolder<CR>', opts)
+  map('n', '<leader>wr', 'LspRemoveWorkspaceFolder<CR>', opts)
+  map('n', '<leader>D', ':LspTypeDef<CR>', opts)
+  map('n', '<leader>rn', ':LspRename<CR>', opts)
+  map('n', '<leader>ca', ':LspCodeAction<CR>', opts)
+  map('n', 'gr', ':LspRefs<CR>', opts)
+  map('n', '<leader>e', ':LispDiagLine<CR>', opts)
+  map('n', '[d', ':LspDiagPrev<CR>', opts)
+  map('n', ']d', ':LspDiagNext()<CR>', opts)
+  map('n', '<leader>l', ':LspDiagSetLocList<CR>', opts)
+  map('n', '<leader>f', ':LspFormatting<CR>', opts)
 
   require'illuminate'.on_attach(client)
 
