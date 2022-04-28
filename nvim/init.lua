@@ -31,6 +31,7 @@ Plug 'windwp/nvim-autopairs'
 
 Plug 'nvim-telescope/telescope.nvim'
 Plug('nvim-telescope/telescope-fzf-native.nvim', {['do'] = 'make' })
+Plug 'nvim-telescope/telescope-rg.nvim'
 
 Plug('rrethy/vim-hexokinase', {['do'] = 'make hexokinase' })
 
@@ -354,11 +355,12 @@ require'telescope'.setup {
 }
 
 require'telescope'.load_extension('fzf')
+require'telescope'.load_extension('live_grep_raw')
 
 map('n', '<leader><Tab>', '<cmd>Telescope buffers<CR>', default_opts)
 map('n', '<C-p>', '<cmd>Telescope find_files<CR>', default_opts)
 map('n', '<leader>*', '<cmd>Telescope grep_string<CR>', default_opts)
-map('n', '<leader>q', '<cmd>Telescope live_grep<CR>', default_opts)
+map('n', '<leader>q', '<cmd>Telescope live_grep_raw<CR>', default_opts)
 
 autocmd('User', {
   pattern = 'TelescopePreviewerLoaded',
