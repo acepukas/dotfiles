@@ -355,12 +355,12 @@ require'telescope'.setup {
 }
 
 require'telescope'.load_extension('fzf')
-require'telescope'.load_extension('live_grep_raw')
+require'telescope'.load_extension('live_grep_args')
 
 map('n', '<leader><Tab>', '<cmd>Telescope buffers<CR>', default_opts)
 map('n', '<C-p>', '<cmd>Telescope find_files<CR>', default_opts)
 map('n', '<leader>*', '<cmd>Telescope grep_string<CR>', default_opts)
-map('n', '<leader>q', '<cmd>Telescope live_grep_raw<CR>', default_opts)
+map('n', '<leader>q', '<cmd>Telescope live_grep_args<CR>', default_opts)
 
 autocmd('User', {
   pattern = 'TelescopePreviewerLoaded',
