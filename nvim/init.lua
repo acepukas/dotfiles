@@ -25,6 +25,7 @@ Plug 'RRethy/vim-illuminate'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'rafamadriz/friendly-snippets'
 Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
 Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'jose-elias-alvarez/null-ls.nvim'
 
@@ -245,6 +246,7 @@ cmp.setup({
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     { name = 'nvim_lua' },
+    { name = 'nvim_lsp_signature_help' },
   }, {
     { name = 'path' },
     { name = 'buffer', keyword_length = 5 },
@@ -303,7 +305,6 @@ local on_attach = function(client, bufnr)
   cmd('command! LspTypeDef lua vim.lsp.buf.type_definition()')
   cmd('command! LspAddWorkspaceFolder lua vim.lsp.buf.add_workspace_folder()')
   cmd('command! LspRemoveWorkspaceFolder lua vim.lsp.buf.remove_workspace_folder()')
-  cmd('command! LspSignatureHelp lua vim.lsp.buf.signature_help()')
 
   local opts = { buffer=bufnr, silent=true }
 
@@ -321,7 +322,6 @@ local on_attach = function(client, bufnr)
   map('n', '[d', ':LspDiagPrev<CR>', opts)
   map('n', ']d', ':LspDiagNext<CR>', opts)
   map('n', '<leader>l', ':LspDiagSetLocList<CR>', opts)
-  map('i', '<M-k>', ' <Esc>:LspSignatureHelp<CR>xi', opts)
 
   require'illuminate'.on_attach(client)
 
