@@ -40,6 +40,7 @@ Plug('rrethy/vim-hexokinase', {['do'] = 'make hexokinase' })
 Plug 'ur4ltz/surround.nvim'
 
 Plug 'lewis6991/gitsigns.nvim'
+Plug 'sindrets/diffview.nvim'
 
 Plug 'nvim-lualine/lualine.nvim'
 
