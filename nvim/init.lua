@@ -26,6 +26,7 @@ Plug 'L3MON4D3/LuaSnip'
 Plug 'rafamadriz/friendly-snippets'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'saadparwaiz1/cmp_luasnip'
+Plug 'jose-elias-alvarez/null-ls.nvim'
 
 Plug 'windwp/nvim-autopairs'
 
@@ -242,7 +243,6 @@ cmp.setup({
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     { name = 'nvim_lua' },
-    { name = 'luasnip' },
   }, {
     { name = 'path' },
     { name = 'buffer', keyword_length = 5 },
@@ -289,20 +289,19 @@ local on_attach = function(client, bufnr)
 
   cmd('command! LspDec lua vim.lsp.buf.declaration()')
   cmd('command! LspDef lua vim.lsp.buf.definition()')
-  cmd('command! LspFormatting lua vim.lsp.buf.formatting()')
-  cmd('command! LspCodeAction Telescope lsp_code_actions')
+  cmd('command! LspCodeAction lua vim.lsp.buf.code_action()')
   cmd('command! LspHover lua vim.lsp.buf.hover()')
   cmd('command! LspRename lua vim.lsp.buf.rename()')
-  cmd('command! LspOrganize lua lsp_organize_imports()')
   cmd('command! LspRefs lua vim.lsp.buf.references()')
   cmd('command! LspImplementation lua vim.lsp.buf.implementation()')
   cmd('command! LspDiagPrev lua vim.diagnostic.goto_prev()')
   cmd('command! LspDiagNext lua vim.diagnostic.goto_next()')
   cmd('command! LspDiagLine lua vim.diagnostic.open_float()')
   cmd('command! LspDiagSetLocList lua vim.diagnostic.setloclist()')
-  cmd('command! LspTypeDef lua vim.lsp.but.type_definition()')
-  cmd('command! LspAddWorkspaceFolder lua vim.lsp.but.add_workspace_folder()')
-  cmd('command! LspRemoveWorkspaceFolder lua vim.lsp.but.remove_workspace_folder()')
+  cmd('command! LspTypeDef lua vim.lsp.buf.type_definition()')
+  cmd('command! LspAddWorkspaceFolder lua vim.lsp.buf.add_workspace_folder()')
+  cmd('command! LspRemoveWorkspaceFolder lua vim.lsp.buf.remove_workspace_folder()')
+  cmd('command! LspSignatureHelp lua vim.lsp.buf.signature_help()')
 
   local opts = { buffer=bufnr, silent=true }
 
@@ -320,15 +319,43 @@ local on_attach = function(client, bufnr)
   map('n', '[d', ':LspDiagPrev<CR>', opts)
   map('n', ']d', ':LspDiagNext<CR>', opts)
   map('n', '<leader>l', ':LspDiagSetLocList<CR>', opts)
-  map('n', '<leader>f', ':LspFormatting<CR>', opts)
+  map('i', '<M-k>', ' <Esc>:LspSignatureHelp<CR>xi', opts)
 
   require'illuminate'.on_attach(client)
 
 end
 
+local util = require('vim.lsp.util')
+
+local make_autocmd_format_callback = function(client, bufnr)
+  return function()
+      local params = util.make_formatting_params({})
+      local result, err = client.request_sync(
+        "textDocument/formatting", params, nil, bufnr)
+      if result and result.result then
+        util.apply_text_edits(result.result, bufnr, "utf-8")
+      elseif err then
+        vim.notify("formatting_callback: " .. err, vim.log.levels.WARN)
+      end
+  end
+end
+
+local lspFmtGrp = vim.api.nvim_create_augroup("LspFormatting", {})
+
+local formatting_callback = function(client, bufnr)
+    if client.supports_method("textDocument/formatting") then
+        vim.api.nvim_clear_autocmds({ group = lspFmtGrp, buffer = bufnr })
+        vim.api.nvim_create_autocmd("BufWritePre", {
+            group = lspFmtGrp,
+            buffer = bufnr,
+            callback = make_autocmd_format_callback(client, bufnr),
+        })
+    end
+end
+
 -- loop over language servers and apply config to each one
-local servers = { 'gopls', 'sumneko_lua', 'ccls'}
-for _, lsp in ipairs(servers) do
+local servers = { 'gopls', 'sumneko_lua', 'ccls', 'tsserver' }
+for _, server in ipairs(servers) do
   local setup = {
     on_attach = on_attach,
     capabilities = require'cmp_nvim_lsp'.update_capabilities(
@@ -337,19 +364,52 @@ for _, lsp in ipairs(servers) do
       debounce_text_changes = 150,
     },
   }
-  if lsp == 'sumneko_lua' then
+  if server == 'sumneko_lua' then
     require'acepukas.luals'.setup(setup)
-  elseif lsp == 'ccls' then
-    local ccls_conf = {
+  elseif server == 'ccls' then
+    setup = vim.tbl_deep_extend("force", setup, {
       cmd = {'ccls'},
       filetype = {"c", "cpp"},
       root_dir = nvim_lsp.util.root_pattern("compile_commands.json",
         "compile_flags.txt", ".git"),
-    }
-    for k, v in pairs(ccls_conf) do setup[k] = v end
+    })
+  elseif server == 'gopls' then
+    setup = vim.tbl_deep_extend("force", setup, {
+      settings = {
+        gopls = {
+          gofumpt = true,
+          usePlaceholders = true,
+          linksInHover = false,
+        }
+      },
+      on_attach = function(client, bufnr)
+        formatting_callback(client, bufnr)
+        on_attach(client, bufnr)
+      end
+    })
   end
-  nvim_lsp[lsp].setup(setup)
+  nvim_lsp[server].setup(setup)
 end
+
+-- null-ls.nvim
+local builtins = require("null-ls").builtins
+require("null-ls").setup({
+  sources = {
+    builtins.formatting.prettier,
+    builtins.formatting.trim_newlines,
+    builtins.formatting.trim_whitespace,
+    builtins.diagnostics.eslint,
+    builtins.completion.spell,
+    builtins.completion.luasnip,
+    builtins.code_actions.gitsigns,
+  },
+  on_attach = function(client, bufnr)
+    -- if lsp client is gopls, do not attach formatter to client
+    if client.name ~= 'gopls' then
+      formatting_callback(client, bufnr)
+    end
+  end
+})
 
 -- telescope.nvim
 require'telescope'.setup {
@@ -395,9 +455,6 @@ require'lualine'.setup {
 
 -- Comment.nvim
 require'Comment'.setup()
-
--- typescript language server support
-require'acepukas.typescriptls'
 
 -- move lines around easy
 map('n', '<A-j>', ':m .+1<CR>==', default_opts)
