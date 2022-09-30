@@ -33,6 +33,7 @@ Plug 'windwp/nvim-autopairs'
 Plug 'nvim-telescope/telescope.nvim'
 Plug('nvim-telescope/telescope-fzf-native.nvim', {['do'] = 'make' })
 Plug 'nvim-telescope/telescope-rg.nvim'
+Plug 'nvim-telescope/telescope-ui-select.nvim'
 
 Plug('rrethy/vim-hexokinase', {['do'] = 'make hexokinase' })
 
@@ -420,11 +421,15 @@ require'telescope'.setup {
       override_file_sorter = true,
       case_mode = 'smart_case',
     },
+    ["ui-select"] = {
+      require("telescope.themes").get_dropdown {}
+    }
   },
 }
 
 require'telescope'.load_extension('fzf')
 require'telescope'.load_extension('live_grep_args')
+require'telescope'.load_extension('ui-select')
 
 map('n', '<leader><Tab>', '<cmd>Telescope buffers<CR>', default_opts)
 map('n', '<C-p>', '<cmd>Telescope find_files<CR>', default_opts)
