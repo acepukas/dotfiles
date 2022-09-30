@@ -93,7 +93,16 @@ opt.termguicolors = true
 
 vim.api.nvim_create_augroup('gruvbox-material-theme-overrides', {})
 
-local hlgroups = { 'htmlTSTag', 'htmlTagName', 'jsxTagName', 'tsxTagName', 'tsxTSTag' }
+local hlgroups = {
+  'htmlTSTag',
+  'htmlTagName',
+  'htmlTagN',
+  'xmlTagName',
+  'javascriptTSTag',
+  'jsxTagName',
+  'tsxTagName',
+  'tsxTSTag'
+}
 
 for _,v in ipairs(hlgroups) do
   autocmd('ColorScheme', {
