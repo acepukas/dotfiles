@@ -5,7 +5,6 @@ whotest[0]='test' || (echo 'Failure: arrays not supported in this version of bas
 # create any directories that may not exist yet
 mkdir -p $HOME/bin
 mkdir -p $HOME/.tmux
-mkdir -p $HOME/.oh-my-zsh/custom/themes
 mkdir -p $HOME/.config
 
 DOTFILES=$HOME/dotfiles
@@ -20,12 +19,9 @@ PATHS=(
   ["$DOTFILES/ripgrep/ignore"]="$HOME/.ignore"
   ["$DOTFILES/tmux/tmux.conf"]="$HOME/.tmux.conf"
   ["$DOTFILES/tmux/themes"]="$HOME/.tmux/themes"
-  ["$DOTFILES/tmux/terminal"]="$HOME/.tmux/terminal"
-  ["$DOTFILES/todo.txt/todo"]="$HOME/.todo"
-  ["$DOTFILES/todo.txt/todo.actions.d"]="$HOME/.todo.actions.d"
   ["$DOTFILES/nvim"]="$HOME/.config/nvim"
   ["$DOTFILES/zsh/zshrc"]="$HOME/.zshrc"
-  ["$DOTFILES/zsh/oh-my-zsh/themes/agnosterc.zsh-theme"]="$HOME/.oh-my-zsh/custom/themes/agnosterc.zsh-theme"
+  ["$DOTFILES/p10k/p10k.zsh"]="$HOME/.p10k.zsh"
   ["$DOTFILES/bat"]="$HOME/.config/bat"
 )
 

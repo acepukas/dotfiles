@@ -67,6 +67,7 @@ TERM xterm-color
 TERM xterm-debian
 TERM xterm-termite
 TERM xterm-kitty
+TERM tmux-256color
 
 # Below are the color init strings for the basic file types. A color init string
 # consists of one or more of the following numeric codes:
@@ -245,17 +246,22 @@ EXEC  1;30;32
 .ogv  01;36
 .ogx  01;36
 
-## Config files (cyan)
-.conf       01;36
-.cnf        01;36
-.cfg        01;36
-.ini        01;36
-.properties 01;36
-.yaml       01;36
-.yml       01;36
-.vcl        01;36 # Varnish
-.mod        01;36
-.sum        01;36
+## Config files (dark grey)
+.conf           38;5;8;1
+.cnf            38;5;8;1
+.cfg            38;5;8;1
+.ini            38;5;8;1
+.properties     38;5;8;1
+.yaml           38;5;8;1
+.yml            38;5;8;1
+.vcl            38;5;8;1 # Varnish
+.mod            38;5;8;1
+.sum            38;5;8;1
+.ignore         38;5;8;1
+.gitignore      38;5;8;1
+.prettierrc     38;5;8;1
+.prettierignore 38;5;8;1
+.json           38;5;8;1
 
 ## Source code files (yellow)
 .c            01;33
@@ -274,32 +280,36 @@ EXEC  1;30;32
 .go           01;33
 
 # template files
-.pug          01;96
+.pug          38;2;211;113;80;1
+.html         38;2;211;113;80;1
 
 ## Data / database (light green)
-.db     01;92
-.sql    01;92
-.json   01;92
-.plist  01;92 # OSX properties
-.fs     01;92 # ZODB Data.fs
+.db     38;5;14;1
+.sql    38;5;14;1
+.csv    38;5;14;1
+.plist  38;5;14;1 # OSX properties
+.fs     38;5;14;1 # ZODB Data.fs
 
 # documents
-.doc  01;91
-.ppt  01;91
-.xls  01;91
-.docx 01;91
-.pptx 01;91
-.xlsx 01;91
-.odt  01;91
-.ods  01;91
-.odp  01;91
-.pdf  01;91
-.tex  01;91
-.md   01;91
+.doc  38;2;231;138;78;1
+.ppt  38;2;231;138;78;1
+.xls  38;2;231;138;78;1
+.docx 38;2;231;138;78;1
+.pptx 38;2;231;138;78;1
+.xlsx 38;2;231;138;78;1
+.odt  38;2;231;138;78;1
+.ods  38;2;231;138;78;1
+.odp  38;2;231;138;78;1
+.tex  38;2;231;138;78;1
+.md   38;2;231;138;78;1
+
+# book documents
+.pdf  38;5;103;1
+.epub 38;5;103;1
 
 # stylesheets
-.styl 01;96
-.css  01;96
+.styl 38;2;211;134;155;1
+.css  38;2;211;134;155;1
 
 ## Machine generated files / non-important (bright black)
 .log        01;37
@@ -326,4 +336,3 @@ EXEC  1;30;32
 .class      01;37
 .cache      01;37
 .egg-info   01;37
-
