@@ -8,6 +8,8 @@ vim.call('plug#begin', '~/.config/nvim/plugged')
 
 Plug 'neovim/nvim-lspconfig'
 Plug('nvim-treesitter/nvim-treesitter', {['do'] = ':TSUpdate'})
+Plug 'nvim-treesitter/playground'
+Plug 'Wansmer/treesj'
 
 Plug 'sainnhe/gruvbox-material'
 
@@ -31,6 +33,7 @@ Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'jose-elias-alvarez/null-ls.nvim'
 
 Plug 'windwp/nvim-autopairs'
+Plug 'windwp/nvim-ts-autotag'
 
 Plug 'nvim-telescope/telescope.nvim'
 Plug('nvim-telescope/telescope-fzf-native.nvim', {['do'] = 'make' })
@@ -40,7 +43,7 @@ Plug 'Slotos/telescope-lsp-handlers.nvim'
 
 Plug('rrethy/vim-hexokinase', {['do'] = 'make hexokinase' })
 
-Plug 'ur4ltz/surround.nvim'
+Plug 'kylechui/nvim-surround'
 
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'sindrets/diffview.nvim'
@@ -60,6 +63,10 @@ Plug 'cdelledonne/vim-cmake'
 
 Plug 'alexghergh/nvim-tmux-navigation'
 Plug 'KabbAmine/zeavim.vim'
+
+Plug 'mbbill/undotree'
+
+Plug 'vimwiki/vimwiki'
 
 vim.call('plug#end')
 
@@ -94,8 +101,14 @@ opt.smartcase = false
 opt.scrolloff = 7
 
 opt.list = true
-opt.listchars = {tab = '▸ ', trail = '.', eol = '¬',
-  extends = '»', precedes = '«', nbsp = '⣿'}
+opt.listchars = {
+  tab = '▸ ',
+  trail = '.',
+  eol = '¬',
+  extends = '»',
+  precedes = '«',
+  nbsp = '⣿',
+}
 opt.showbreak = '↪ ' -- for wrapped lines
 
 -- Perf
@@ -191,6 +204,7 @@ require'nvim-treesitter.configs'.setup {
     'python',
     'regex',
     'scss',
+    'sql',
     'toml',
     'tsx',
     'typescript',
@@ -198,6 +212,7 @@ require'nvim-treesitter.configs'.setup {
     'yaml',
     'markdown',
     'markdown_inline',
+    'query',
   },
   highlight = {
     enable = true,
@@ -219,13 +234,41 @@ map('', '<right>', '<nop>', default_opts)
 map('v', 'J', ":m '>+1<CR>gv=gv", default_opts)
 map('v', 'K', ":m '<-2<CR>gv=gv", default_opts)
 
+-- treesj
+require("treesj").setup()
+
 -- luasnip
 local luasnip = require'luasnip'
-luasnip.config.set_config({
-  region_check_events = 'InsertEnter',
-  delete_check_events = 'InsertLeave',
+
+-- hopefully fixes the luasnip jump and dance
+vim.api.nvim_create_autocmd('ModeChanged', {
+  pattern = '*',
+  callback = function()
+    if ((vim.v.event.old_mode == 's' and vim.v.event.new_mode == 'n') or vim.v.event.old_mode == 'i')
+        and luasnip.session.current_nodes[vim.api.nvim_get_current_buf()]
+        and not luasnip.session.jump_active
+    then
+      luasnip.unlink_current()
+    end
+  end
 })
+
+-- load snippets from various locations
 require'luasnip.loaders.from_vscode'.lazy_load({ paths = { './plugged/friendly-snippets' } })
+require'luasnip.loaders.from_lua'.lazy_load({ paths = { '~/.config/nvim/snippets' } })
+
+luasnip.config.set_config({
+  history = true,
+  updateevents = "TextChanged,TextChangedI",
+  enable_autosnippets = true,
+  ext_opts = {
+    [require("luasnip.util.types").choiceNode] = {
+      active = {
+        virt_text = { { "*", "Title" }}
+      }
+    }
+  }
+})
 
 map("i", "<C-h>", "<Plug>luasnip-next-choice", default_opts)
 map("s", "<C-h>", "<Plug>luasnip-next-choice", default_opts)
@@ -294,7 +337,7 @@ cmp.setup({
         end
       end,
       s = cmp.mapping.confirm({ select = true }),
-      c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true })
+      c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
     }),
     ["<C-e>"] = cmp.mapping({
       i = cmp.mapping.close()
@@ -584,17 +627,18 @@ map('n', '<C-p>', '<cmd>Telescope find_files<CR>', default_opts)
 map('n', '<leader>*', '<cmd>Telescope grep_string vimgrep_arguments=rg,--color=never,--no-heading,--with-filename,--line-number,--column,-s,-w<CR>', default_opts)
 map('n', '<leader>q', '<cmd>Telescope live_grep_args<CR>', default_opts)
 
-autocmd('User', {
-  pattern = 'TelescopePreviewerLoaded',
-  command = 'setlocal number'
-})
+-- NOTE: what is this doing here?
+-- autocmd('User', {
+--   pattern = 'TelescopePreviewerLoaded',
+--   command = 'setlocal number'
+-- })
 autocmd('User', {
   pattern = 'TelescopePreviewerLoaded',
   command = 'setlocal relativenumber'
 })
 
--- surround.nvim
-require'surround'.setup {mappings_style = 'surround'}
+-- nvim-surround
+require("nvim-surround").setup()
 
 -- gitsigns.nvim
 require'gitsigns'.setup()
@@ -682,3 +726,43 @@ require'nvim-tmux-navigation'.setup{}
 g.zv_file_types = {
   javascript = 'javascript,nodejs',
 }
+
+-- undotree
+map('n', '<F5>', ':UndotreeToggle<CR>', default_opts)
+
+-- remap arrow keys for wildmenu
+vim.cmd [[
+set wildcharm=<C-Z>
+let edit_re = '\(e\%[dit]\|v\?split\) '
+cnoremap <expr> <up> getcmdline() =~# edit_re && wildmenumode() ? "\<left>" : "\<up>"
+cnoremap <expr> <down> getcmdline() =~# edit_re && wildmenumode() ? "\<right>" : "\<down>"
+cnoremap <expr> <left> getcmdline() =~# edit_re && wildmenumode() ? "\<up>" : "\<left>"
+cnoremap <expr> <right> getcmdline() =~# edit_re && wildmenumode() ? " \<bs>\<C-Z>" : "\<right>"
+]]
+
+-- vimwiki
+
+vim.cmd [[
+let g:vimwiki_list = [{
+  \ 'automatic_nested_syntaxes': 1,
+  \ 'auto_export': 1,
+  \ 'path_html': '/var/www/my.vimwiki.net',
+  \ 'path': '~/vimwiki/',
+  \ 'syntax': 'markdown',
+  \ 'ext': '.md',
+  \ 'links_space_char': '-',
+  \ 'css_name': 'style.css',
+  \ 'template_path': '~/vimwiki/templates',
+  \ 'template_default': 'default',
+  \ 'template_ext': '.tmpl',
+  \ 'custom_wiki2html': 'vw2html',
+  \ 'custom_wiki2html_args': '-chroma-tab-width=2 -chroma-with-classes=t',
+  \ }]
+
+let g:vimwiki_global_ext = 0
+let g:vimwiki_toc_header_level = 2
+let g:vimwiki_toc_link_format = 1
+]]
+
+-- nvim-ts-autotag
+require('nvim-ts-autotag').setup()
