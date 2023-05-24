@@ -535,7 +535,7 @@ for _, server in ipairs(servers) do
     },
   }
   if server == 'lua_ls' then
-    require'acepukas.luals'.setup(setup)
+    require'user.luals'.setup(setup)
   elseif server == 'ccls' then
     setup = vim.tbl_deep_extend("force", setup, {
       cmd = {'ccls'},
