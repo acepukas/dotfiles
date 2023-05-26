@@ -127,15 +127,11 @@ return {
             s = cmp.mapping.confirm({ select = true }),
             c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
           }),
-          ["<C-e>"] = cmp.mapping({
-            i = cmp.mapping.close()
-          }),
-          ["<C-q>"] = cmp.mapping({
-            i = cmp.mapping.abort()
-          }),
-          ['<C-Space>'] = cmp.mapping({i = cmp.mapping.complete()}),
-          ['<C-d>'] = cmp.mapping({i = cmp.mapping.scroll_docs(-4)}),
-          ['<C-f>'] = cmp.mapping({i = cmp.mapping.scroll_docs(4)}),
+          ["<C-e>"] = cmp.mapping(cmp.mapping.close(), {"i"}),
+          ["<C-q>"] = cmp.mapping(cmp.mapping.abort(), {"i"}),
+          ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), {"i"}),
+          ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), {"i"}),
+          ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), {"i"}),
         },
         sources = cmp.config.sources({
           { name = 'nvim_lsp', priority = 8 },
