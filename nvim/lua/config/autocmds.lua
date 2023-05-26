@@ -35,7 +35,6 @@ autocmd('BufLeave', { pattern = 'term://*', command = 'stopinsert'})
 
 -- au BufNewFile,BufRead *path-possibly-using-globbing setlocal setting=value
 
-local default_opts = {silent = true}
 local map = require("util").map
 local swRasterizerAuCmdGroup =
   vim.api.nvim_create_augroup("swRasterizerAuCmdGroup", {})
@@ -46,8 +45,8 @@ vim.api.nvim_create_autocmd({"BufNewFile","BufRead"}, {
   pattern = "/home/aaron/dev/cpp/sw-rasterizer/*",
   callback = function()
     vim.g.cmake_default_config = "Release"
-    map('n', '<F10>', ":!bash -c './" .. vim.g.cmake_default_config .. "/rasterizer'<CR>", default_opts)
-    map('n', '<F11>', ':CMakeGenerate<CR>', default_opts)
-    map('n', '<F12>', ':CMakeBuild<CR>', default_opts)
+    map('n', '<F10>', ":!bash -c './" .. vim.g.cmake_default_config .. "/rasterizer'<CR>")
+    map('n', '<F11>', ':CMakeGenerate<CR>')
+    map('n', '<F12>', ':CMakeBuild<CR>')
   end,
 })

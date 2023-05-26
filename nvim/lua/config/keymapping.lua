@@ -1,24 +1,23 @@
-local default_opts = {silent = true}
 local map = require("util").map
 
 -- clear search hilighting with a backspace
-map('n', '<backspace>', ':nohl<CR>', default_opts)
+map('n', '<backspace>', ':nohl<CR>')
 
 -- disable arrow keys
-map('', '<up>', '<nop>', default_opts)
-map('', '<down>', '<nop>', default_opts)
-map('', '<left>', '<nop>', default_opts)
-map('', '<right>', '<nop>', default_opts)
+map('', '<up>', '<nop>')
+map('', '<down>', '<nop>')
+map('', '<left>', '<nop>')
+map('', '<right>', '<nop>')
 
 -- move selected lines up or down with J or K
-map('x', 'J', ":m '>+1<CR>gv=gv", default_opts)
-map('x', 'K', ":m '<-2<CR>gv=gv", default_opts)
+map('x', 'J', ":m '>+1<CR>gv=gv")
+map('x', 'K', ":m '<-2<CR>gv=gv")
 
 -- move around splits easy
-map('n', '<C-j>', '<C-w><C-j>', default_opts)
-map('n', '<C-k>', '<C-w><C-k>', default_opts)
-map('n', '<C-h>', '<C-w><C-h>', default_opts)
-map('n', '<C-l>', '<C-w><C-l>', default_opts)
+map('n', '<C-j>', '<C-w><C-j>')
+map('n', '<C-k>', '<C-w><C-k>')
+map('n', '<C-h>', '<C-w><C-h>')
+map('n', '<C-l>', '<C-w><C-l>')
 
 -- remap arrow keys for wildmenu
 vim.cmd [[
@@ -31,15 +30,17 @@ cnoremap <expr> <right> getcmdline() =~# edit_re && wildmenumode() ? " \<bs>\<C-
 ]]
 
 -- luasnip
-map("i", "<C-h>", "<Plug>luasnip-next-choice", default_opts)
-map("s", "<C-h>", "<Plug>luasnip-next-choice", default_opts)
+map("i", "<C-h>", "<Plug>luasnip-next-choice")
+map("s", "<C-h>", "<Plug>luasnip-next-choice")
 
 -- Telescope
-map('n', '<leader><Tab>', '<cmd>Telescope buffers<CR>', default_opts)
-map('n', '<C-p>', '<cmd>Telescope find_files<CR>', default_opts)
+map('n', '<leader><Tab>', '<cmd>Telescope buffers<CR>', { desc = "List open buffers" })
+map('n', '<C-p>', '<cmd>Telescope find_files<CR>', { desc = "Recursive file fuzzy search" })
 -- vimgrep_arguments are custom here to ensure case sensitivity and word boundary are respected
-map('n', '<leader>*', '<cmd>Telescope grep_string vimgrep_arguments=rg,--color=never,--no-heading,--with-filename,--line-number,--column,-s,-w<CR>', default_opts)
-map('n', '<leader>q', '<cmd>Telescope live_grep_args<CR>', default_opts)
+map('n', '<leader>*',
+  '<cmd>Telescope grep_string vimgrep_arguments=rg,--color=never,--no-heading,--with-filename,--line-number,--column,-s,-w<CR>',
+  { desc = "Recursive search word under corsor" })
+map('n', '<leader>q', '<cmd>Telescope live_grep_args<CR>', { desc = "Live grep search" })
 
 -- nvim-tmux-navigation
 map('n', '<c-h>', '<Cmd>NvimTmuxNavigateLeft<CR>')
@@ -50,7 +51,10 @@ map('n', '<c-\\>', '<Cmd>NvimTmuxNavigateLastActive<CR>')
 -- map('n', '<c-Space>', '<Cmd>NvimTmuxNavigateNext<CR>')
 
 -- undotree
-map('n', '<F5>', ':UndotreeToggle<CR>', default_opts)
+map('n', '<F5>', ':UndotreeToggle<CR>')
+
+-- toggle spell check
+map('n', '<leader>t', '<cmd>setlocal invspell<cr>', { desc = "Spell check toggle" })
 
 -- zeal
 local ft_map = {
@@ -74,6 +78,6 @@ vim.api.nvim_create_autocmd('FileType', {
   desc = "zeal docs command",
   group = vim.api.nvim_create_augroup('zeal_command', { clear = true }),
   callback = function(opts)
-    map('n', 'gz', zeal_cmd(opts.match), {silent = true, buffer = opts.buf})
+    map('n', 'gz', zeal_cmd(opts.match), {buffer = opts.buf, desc = "Open zeal doc for word under cursor" })
   end,
 })
