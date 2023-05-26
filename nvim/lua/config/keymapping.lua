@@ -51,3 +51,29 @@ map('n', '<c-\\>', '<Cmd>NvimTmuxNavigateLastActive<CR>')
 
 -- undotree
 map('n', '<F5>', ':UndotreeToggle<CR>', default_opts)
+
+-- zeal
+local ft_map = {
+  ["gotmpl.html"] = "html",
+  sql = "psql",
+  sh = "bash",
+  javascript = "javascript,nodejs"
+}
+
+local function zeal_cmd(ft)
+  for k, v in pairs(ft_map) do
+    if k == ft then
+      ft = v
+      break
+    end
+  end
+  return "<cmd>!zeal \"" .. ft .. ":<cword>\" &<cr><cr>"
+end
+
+vim.api.nvim_create_autocmd('FileType', {
+  desc = "zeal docs command",
+  group = vim.api.nvim_create_augroup('zeal_command', { clear = true }),
+  callback = function(opts)
+    map('n', 'gz', zeal_cmd(opts.match), {silent = true, buffer = opts.buf})
+  end,
+})
