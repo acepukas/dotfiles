@@ -2,13 +2,13 @@
 
 ## Symlinking
 
-To create symlinks to dot files run the following script *from your home directory*:
+To create symlinks to dot files run the following script _from your home directory_:
 
 ```sh
 ./dofiles/symlink.sh link
 ```
 
-To unlink, run the following *from your home directory*:
+To unlink, run the following _from your home directory_:
 
 ```sh
 ./dofiles/symlink.sh unlink
@@ -16,7 +16,7 @@ To unlink, run the following *from your home directory*:
 
 To add a new link, add an entry to the `PATHS` associative array in `symlink.sh`. Running `symlink.sh` won't attempt to relink established links.
 
-*NOTE:* On OS X the version of bash shipped with Darwin may be too out of date for the `symlink.sh` script. If so, a more up to date version of bash can be installed with `brew install bash`
+_NOTE:_ On OS X the version of bash shipped with Darwin may be too out of date for the `symlink.sh` script. If so, a more up to date version of bash can be installed with `brew install bash`
 
 ## Utility Installation
 
@@ -45,7 +45,6 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/mas
 ```
 
 via wget:
-
 
 ```sh
 sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
