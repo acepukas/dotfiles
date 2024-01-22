@@ -1,58 +1,5 @@
 return {
   {
-    "numToStr/Comment.nvim",
-    lazy = true,
-    keys = {
-      { "gcc", nil, desc = "Comment.nvim" },
-      { "gc", nil, mode = "x", desc = "Comment.nvim selected" },
-    },
-    config = true
-  },
-  {
-    "rafamadriz/friendly-snippets",
-  },
-  {
-    "L3MON4D3/LuaSnip",
-    version = "1.*",
-    build = "make install_jsregexp",
-    event = "InsertEnter",
-    dependencies = {
-      "rafamadriz/friendly-snippets",
-    },
-    config = function(_, opts)
-      local luasnip = require'luasnip'
-
-      -- hopefully fixes the luasnip jump and dance
-      vim.api.nvim_create_autocmd('ModeChanged', {
-        pattern = '*',
-        callback = function()
-          if ((vim.v.event.old_mode == 's' and vim.v.event.new_mode == 'n') or vim.v.event.old_mode == 'i')
-              and luasnip.session.current_nodes[vim.api.nvim_get_current_buf()]
-              and not luasnip.session.jump_active
-          then
-            luasnip.unlink_current()
-          end
-        end
-      })
-
-      require'luasnip.loaders.from_vscode'.lazy_load({ paths = { '~/.local/share/nvim/lazy/friendly-snippets' } })
-      require'luasnip.loaders.from_lua'.lazy_load({ paths = { '~/.config/nvim/snippets' } })
-
-      luasnip.config.set_config({
-        history = true,
-        updateevents = "TextChanged,TextChangedI",
-        enable_autosnippets = true,
-        ext_opts = {
-          [require("luasnip.util.types").choiceNode] = {
-            active = {
-              virt_text = { { "*", "Title" }}
-            }
-          }
-        }
-      })
-    end
-  },
-  {
     "hrsh7th/nvim-cmp",
     event = "InsertEnter",
     dependencies = {
@@ -161,43 +108,5 @@ return {
         },
       }
     end,
-  },
-  {
-    "windwp/nvim-autopairs",
-    dependencies = {
-      "hrsh7th/nvim-cmp"
-    },
-    event = "InsertEnter",
-    config = function(_, opts)
-      require('nvim-autopairs').setup(opts)
-      local cmp_autopairs = require'nvim-autopairs.completion.cmp'
-      local on_confirm_done = cmp_autopairs.on_confirm_done({
-        map_char = { tex = '' }
-      })
-      require("cmp").event:on('confirm_done', on_confirm_done)
-    end
-  },
-  {
-    "kylechui/nvim-surround",
-    config = true,
-  },
-  {
-    "Wansmer/treesj",
-    keys = {
-      { '<space>m', nil, desc = "Toggle line join" },
-      { '<space>j', nil, desc = "Join line" },
-      { '<space>s', nil, desc = "Split line" },
-    },
-    opts = { max_join_length = 150 },
-  },
-  {
-    "cdelledonne/vim-cmake",
-    config = function(_, _)
-      vim.g.cmake_link_compile_commands = 1
-    end,
-  },
-  {
-    "windwp/nvim-ts-autotag",
-    config = true,
   },
 }

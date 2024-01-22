@@ -1,31 +1,5 @@
 return {
   {
-    "kyazdani42/nvim-web-devicons", lazy = true,
-  },
-  {
-    "nvim-lualine/lualine.nvim",
-    opts = function()
-      return {
-        options = {
-          theme = 'gruvbox-material',
-        },
-        sections = {
-          lualine_c = { { 'filename', path = 1 } }
-        }
-      }
-    end
-  },
-  {
-    "kosayoda/nvim-lightbulb",
-    opts = function()
-      return {
-        autocmd = {
-          enabled = true,
-        },
-      }
-    end
-  },
-  {
     "rcarriga/nvim-notify",
     keys = {
       {

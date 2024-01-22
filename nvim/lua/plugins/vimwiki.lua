@@ -1,11 +1,5 @@
 return {
   {
-    "nvim-lua/plenary.nvim",
-    dependencies = {
-      "nvim-telescope/telescope.nvim"
-    },
-  },
-  {
     "vimwiki/vimwiki",
     init = function(_)
       vim.cmd [[
