@@ -81,3 +81,8 @@ vim.api.nvim_create_autocmd('FileType', {
     map('n', 'gz', zeal_cmd(opts.match), {buffer = opts.buf, desc = "Open zeal doc for word under cursor" })
   end,
 })
+
+map('n', '<leader>n', ':Neotree filesystem reveal left<CR>')
+
+-- TEMPORARY: run a python script
+-- map('n', '<F9>', ':echo system(\'python "\' . expand(\'%\') . \'"\')<cr>')

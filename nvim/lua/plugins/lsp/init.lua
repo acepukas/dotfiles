@@ -4,9 +4,6 @@ return {
     dependencies = {
       {
         "hrsh7th/cmp-nvim-lsp",
-        cond = function()
-          return require("util").has("nvim-cmp")
-        end,
       },
     },
     opts = {
@@ -22,9 +19,9 @@ return {
 
       local signs = {
         { text = "✗", hl = "Error" },
-        { text = "", hl = "Warn" },
+        { text = "⚠", hl = "Warn" },
         { text = "", hl = "Information" },
-        { text = "", hl = "Hint" },
+        { text = "?", hl = "Hint" },
       }
 
       for _, sign in ipairs(signs) do
@@ -43,6 +40,7 @@ return {
 
       vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
 
+      -- huh?
       opts.capabilities = capabilities
 
       local setup = {
@@ -57,16 +55,26 @@ return {
         lua_ls = require("plugins.lsp.servers.luals").setup(setup),
         clangd = require("plugins.lsp.servers.clangd").setup(setup),
         -- ccls = require("plugins.lsp.servers.ccls").setup(setup),
+        hls = require("plugins.lsp.servers.hls").setup(setup),
+        cssls = require("plugins.lsp.servers.cssls").setup(setup),
+        html = require("plugins.lsp.servers.html").setup(setup),
       }
 
       for server, server_conf in pairs(opts.servers) do
         nvim_lsp[server].setup(server_conf)
       end
 
-    end
+    end,
+    -- setup = {
+    --   clangd = function(_, opts)
+    --     local clangd_ext_opts = require("util").opts("clangd_extensions.nvim")
+    --     require("clangd_extensions").setup(vim.tbl_deep_extend("force", clangd_ext_opts or {}, { server = opts }))
+    --     return false
+    --   end,
+    -- }
   },
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
     event = { "BufReadPre", "BufNewFile" },
     opts = function()
       local nls = require("null-ls")
@@ -95,5 +103,35 @@ return {
         end,
       }
     end,
+  },
+  {
+    "p00f/clangd_extensions.nvim",
+    lazy = true,
+    config = function() end,
+    opts = {
+      inlay_hints = {
+        inline = false,
+      },
+      ast = {
+        --These require codicons (https://github.com/microsoft/vscode-codicons)
+        role_icons = {
+          type = "",
+          declaration = "",
+          expression = "",
+          specifier = "",
+          statement = "",
+          ["template argument"] = "",
+        },
+        kind_icons = {
+          Compound = "",
+          Recovery = "",
+          TranslationUnit = "",
+          PackExpansion = "",
+          TemplateTypeParm = "",
+          TemplateTemplateParm = "",
+          TemplateParamObject = "",
+        },
+      },
+    },
   }
 }

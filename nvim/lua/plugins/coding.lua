@@ -64,6 +64,7 @@ return {
       "onsails/lspkind-nvim",
       "saadparwaiz1/cmp_luasnip",
       "L3MON4D3/LuaSnip",
+      "p00f/clangd_extensions.nvim",
     },
     opts = function()
 
@@ -145,10 +146,13 @@ return {
         sorting = {
           priority_weight = 1.0,
           comparators = {
-            cmp.config.compare.locality,
-            cmp.config.compare.recently_used,
-            cmp.config.compare.score,
             cmp.config.compare.offset,
+            cmp.config.compare.exact,
+            cmp.config.compare.recently_used,
+            require("clangd_extensions.cmp_scores"),
+            cmp.config.compare.kind,
+            cmp.config.compare.sort_text,
+            cmp.config.compare.length,
             cmp.config.compare.order,
           }
         },

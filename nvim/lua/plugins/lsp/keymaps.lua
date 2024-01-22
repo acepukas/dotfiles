@@ -43,6 +43,7 @@ function M.on_attach(client, bufnr)
   map('n', '[d', ':LspDiagPrev<CR>', setOpts({ desc = "Previous diagnostic" }))
   map('n', ']d', ':LspDiagNext<CR>', setOpts({ desc = "Next diagnostic" }))
   map('n', '<leader>l', ':LspDiagSetLocList<CR>', setOpts({ desc = "Dianostics to loclist" }))
+  map('n', "<leader>cR", ":ClangdSwitchSourceHeader<cr>", setOpts({ desc = "Switch Source/Header (C/C++)"}))
 
   require'illuminate'.on_attach(client)
 

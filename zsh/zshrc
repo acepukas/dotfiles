@@ -71,7 +71,7 @@ case "$HOSTNAME" in
   hy-brasil)
     ;;
   shangri-la)
-    plugins+=(ripgrep zsh-autosuggestions httpie zsh-syntax-highlighting)
+    plugins+=(ripgrep zsh-autosuggestions httpie zsh-syntax-highlighting archlinux)
     ;;
   Aarons-MBP)
     plugins+=(osx)
@@ -196,8 +196,12 @@ esac
 # dircolors
 eval $($DIRCOLORS -b $HOME/.dir_colors)
 
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+[ -f "/home/aaron/.ghcup/env" ] && source "/home/aaron/.ghcup/env" # ghcup-env
+
+# Added by ProtonUp-Qt on 26-10-2023 09:10:57
+if [ -d "/home/aaron/stl/prefix" ]; then export PATH="$PATH:/home/aaron/stl/prefix"; fi
