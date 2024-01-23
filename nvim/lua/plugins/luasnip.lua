@@ -7,7 +7,7 @@ return {
     dependencies = {
       "rafamadriz/friendly-snippets",
     },
-    config = function(_, opts)
+    config = function()
       local luasnip = require'luasnip'
 
       -- hopefully fixes the luasnip jump and dance
@@ -38,6 +38,13 @@ return {
           }
         }
       })
+
+
+      -- keymapping
+      local map = require("util").map
+
+      map("i", "<C-h>", "<Plug>luasnip-next-choice")
+      map("s", "<C-h>", "<Plug>luasnip-next-choice")
     end
   },
 }

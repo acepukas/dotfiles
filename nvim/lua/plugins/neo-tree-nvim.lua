@@ -7,5 +7,13 @@ return {
       "nvim-tree/nvim-web-devicons",
       "MunifTanjim/nui.nvim",
     },
+    config = function()
+
+      -- keymapping
+      local map = require("util").map
+
+      map('n', '<leader>n', ':Neotree filesystem reveal left<CR>', { desc = 'Neotree' })
+
+    end,
   },
 }

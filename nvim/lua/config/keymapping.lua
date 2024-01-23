@@ -29,30 +29,6 @@ cnoremap <expr> <left> getcmdline() =~# edit_re && wildmenumode() ? "\<up>" : "\
 cnoremap <expr> <right> getcmdline() =~# edit_re && wildmenumode() ? " \<bs>\<C-Z>" : "\<right>"
 ]]
 
--- luasnip
-map("i", "<C-h>", "<Plug>luasnip-next-choice")
-map("s", "<C-h>", "<Plug>luasnip-next-choice")
-
--- Telescope
-map('n', '<leader><Tab>', '<cmd>Telescope buffers<CR>', { desc = "List open buffers" })
-map('n', '<C-p>', '<cmd>Telescope find_files<CR>', { desc = "Recursive file fuzzy search" })
--- vimgrep_arguments are custom here to ensure case sensitivity and word boundary are respected
-map('n', '<leader>*',
-  '<cmd>Telescope grep_string vimgrep_arguments=rg,--color=never,--no-heading,--with-filename,--line-number,--column,-s,-w<CR>',
-  { desc = "Recursive search word under corsor" })
-map('n', '<leader>q', '<cmd>Telescope live_grep_args<CR>', { desc = "Live grep search" })
-
--- nvim-tmux-navigation
-map('n', '<c-h>', '<Cmd>NvimTmuxNavigateLeft<CR>')
-map('n', '<c-j>', '<Cmd>NvimTmuxNavigateDown<CR>')
-map('n', '<c-k>', '<Cmd>NvimTmuxNavigateUp<CR>')
-map('n', '<c-l>', '<Cmd>NvimTmuxNavigateRight<CR>')
-map('n', '<c-\\>', '<Cmd>NvimTmuxNavigateLastActive<CR>')
--- map('n', '<c-Space>', '<Cmd>NvimTmuxNavigateNext<CR>')
-
--- undotree
-map('n', '<F5>', ':UndotreeToggle<CR>')
-
 -- toggle spell check
 map('n', '<leader>t', '<cmd>setlocal invspell<cr>', { desc = "Spell check toggle" })
 
@@ -81,8 +57,6 @@ vim.api.nvim_create_autocmd('FileType', {
     map('n', 'gz', zeal_cmd(opts.match), {buffer = opts.buf, desc = "Open zeal doc for word under cursor" })
   end,
 })
-
-map('n', '<leader>n', ':Neotree filesystem reveal left<CR>')
 
 -- TEMPORARY: run a python script
 -- map('n', '<F9>', ':echo system(\'python "\' . expand(\'%\') . \'"\')<cr>')
