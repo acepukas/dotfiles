@@ -16,7 +16,6 @@ return {
       capabilities = {},
     },
     config = function(_, opts)
-
       local signs = {
         { text = "✗", hl = "Error" },
         { text = "⚠", hl = "Warn" },
@@ -29,14 +28,14 @@ return {
           text = sign.text,
           texthl = "DiagnosticSign" .. sign.hl,
         }
-        vim.fn.sign_define("DiagnosticSign" .. sign.hl, signData)
+        vim.fn.sign_define(signData.texthl, signData)
       end
 
       local nvim_lsp = require("lspconfig")
-      require('lspconfig.configs')
+      require("lspconfig.configs")
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities.textDocument.completion.completionItem.snippetSupport = true
-      capabilities = require'cmp_nvim_lsp'.default_capabilities(capabilities)
+      capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
       vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
 
@@ -50,7 +49,7 @@ return {
       }
 
       opts.servers = {
-        gopls = require('plugins.lsp.servers.gopls').setup(setup),
+        gopls = require("plugins.lsp.servers.gopls").setup(setup),
         emmet_ls = require("plugins.lsp.servers.emmet").setup(setup),
         lua_ls = require("plugins.lsp.servers.luals").setup(setup),
         clangd = require("plugins.lsp.servers.clangd").setup(setup),
@@ -63,7 +62,6 @@ return {
       for server, server_conf in pairs(opts.servers) do
         nvim_lsp[server].setup(server_conf)
       end
-
     end,
     -- setup = {
     --   clangd = function(_, opts)

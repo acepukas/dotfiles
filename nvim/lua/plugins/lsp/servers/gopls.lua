@@ -8,15 +8,15 @@ function M.setup(opts)
         gofumpt = true,
         usePlaceholders = true,
         linksInHover = false,
-      }
+      },
     },
     init_options = {
-      usePlaceholders = true
+      usePlaceholders = true,
     },
     on_attach = function(client, bufnr)
       require("plugins.lsp.format").attach_go_save_utils(client, bufnr)
-      require("plugins.lsp.keymaps").on_attach(client, bufnr)
-    end
+      opts.on_attach(client, bufnr)
+    end,
   })
 end
 
