@@ -12,6 +12,8 @@ map("", "<right>", "<nop>")
 -- move selected lines up or down with J or K
 map("x", "J", ":m '>+1<CR>gv=gv")
 map("x", "K", ":m '<-2<CR>gv=gv")
+-- map("n", "<T-J>", ":m '>+1<CR>gv=gv")
+-- map("n", "<T-K>", ":m '<-2<CR>gv=gv")
 
 -- move around splits easy
 map("n", "<C-j>", "<C-w><C-j>")

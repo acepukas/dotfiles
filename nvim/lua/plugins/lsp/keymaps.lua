@@ -4,8 +4,8 @@ local cmd = vim.cmd
 local map = require("util").map
 
 function M.on_attach(client, bufnr)
-  local function buf_set_option(...)
-    vim.api.nvim_buf_set_option(bufnr, ...)
+  local function buf_set_option(name, value)
+    vim.api.nvim_set_option_value(name, value, { buf = bufnr })
   end
 
   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
@@ -13,7 +13,6 @@ function M.on_attach(client, bufnr)
   cmd("command! LspDec lua vim.lsp.buf.declaration()")
   cmd("command! LspDef lua vim.lsp.buf.definition()")
   cmd("command! LspCodeAction lua vim.lsp.buf.code_action()")
-  cmd("command! LspHover lua vim.lsp.buf.hover()")
   cmd("command! LspRename lua vim.lsp.buf.rename()")
   cmd("command! LspRefs lua vim.lsp.buf.references()")
   cmd("command! LspImplementation lua vim.lsp.buf.implementation()")
@@ -28,7 +27,6 @@ function M.on_attach(client, bufnr)
 
   map("n", "gD", ":LspDec<CR>", setOpts({ desc = "Declaration" }))
   map("n", "gd", ":LspDef<CR>", setOpts({ desc = "Definition" }))
-  map("n", "K", ":LspHover<CR>", opts)
   map("n", "gi", ":LspImplementation<CR>", setOpts({ desc = "Implementation" }))
   map("n", "<leader>wa", "LspAddWorkspaceFolder<CR>", setOpts({ desc = "Add workspace Folder" }))
   map("n", "<leader>wr", "LspRemoveWorkspaceFolder<CR>", setOpts({ desc = "Remove workspace Folder" }))
@@ -42,14 +40,8 @@ function M.on_attach(client, bufnr)
 end
 
 function M.diag_keymaps()
-  cmd("command! LspDiagPrev lua vim.diagnostic.goto_prev()")
-  cmd("command! LspDiagNext lua vim.diagnostic.goto_next()")
-  cmd("command! LspDiagLine lua vim.diagnostic.open_float()")
   cmd("command! LspDiagSetLocList lua vim.diagnostic.setloclist()")
 
-  map("n", "[d", ":LspDiagPrev<CR>", { desc = "Previous diagnostic" })
-  map("n", "]d", ":LspDiagNext<CR>", { desc = "Next diagnostic" })
-  map("n", "<leader>e", ":LspDiagLine<CR>", { desc = "Show diagnostic" })
   map("n", "<leader>l", ":LspDiagSetLocList<CR>", { desc = "Dianostics to loclist" })
 end
 
