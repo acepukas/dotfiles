@@ -57,6 +57,7 @@ return {
         hls = require("plugins.lsp.servers.hls").setup(setup),
         cssls = require("plugins.lsp.servers.cssls").setup(setup),
         html = require("plugins.lsp.servers.html").setup(setup),
+        tsserver = require("plugins.lsp.servers.tsserver").setup(setup),
       }
 
       for server, server_conf in pairs(opts.servers) do

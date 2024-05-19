@@ -202,6 +202,3 @@ eval $($DIRCOLORS -b $HOME/.dir_colors)
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 [ -f "/home/aaron/.ghcup/env" ] && source "/home/aaron/.ghcup/env" # ghcup-env
-
-# Added by ProtonUp-Qt on 26-10-2023 09:10:57
-if [ -d "/home/aaron/stl/prefix" ]; then export PATH="$PATH:/home/aaron/stl/prefix"; fi
