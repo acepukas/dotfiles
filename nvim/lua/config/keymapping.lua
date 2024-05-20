@@ -10,10 +10,10 @@ map("", "<left>", "<nop>")
 map("", "<right>", "<nop>")
 
 -- move selected lines up or down with J or K
-map("x", "J", ":m '>+1<CR>gv=gv")
-map("x", "K", ":m '<-2<CR>gv=gv")
--- map("n", "<T-J>", ":m '>+1<CR>gv=gv")
--- map("n", "<T-K>", ":m '<-2<CR>gv=gv")
+map("x", "<M-j>", ":m '>+1<CR>gv=gv")
+map("x", "<M-k>", ":m '<-2<CR>gv=gv")
+map("n", "<M-k>", "ddkP")
+map("n", "<M-j>", "ddp")
 
 -- move around splits easy
 map("n", "<C-j>", "<C-w><C-j>")
