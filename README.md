@@ -22,7 +22,17 @@ _NOTE:_ On OS X the version of bash shipped with Darwin may be too out of date f
 
 ### ZSH
 
-Ubuntu: sudo apt-get install zsh
+Arch:
+
+```sh
+pacman -S zsh
+```
+
+Ubuntu:
+
+```sh
+sudo apt-get install zsh
+```
 
 OS X: Use homebrew
 
@@ -84,9 +94,17 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 ### Ripgrep (rg)
 
-Arch: `pacman -S ripgrep`
+Arch:
 
-OS X: `brew install ripgrep`
+```sh
+pacman -S ripgrep
+```
+
+OS X:
+
+```sh
+brew install ripgrep
+```
 
 ### fd
 
