@@ -21,7 +21,7 @@ PATHS=(
   ["$DOTFILES/tmux/themes"]="$HOME/.tmux/themes"
   ["$DOTFILES/nvim"]="$HOME/.config/nvim"
   ["$DOTFILES/zsh/zshrc"]="$HOME/.zshrc"
-  ["$DOTFILES/p10k/p10k.zsh"]="$HOME/.p10k.zsh"
+  ["$DOTFILES/starship/starship.toml"]="$HOME/.config/starship.toml"
   ["$DOTFILES/bat"]="$HOME/.config/bat"
 )
 
