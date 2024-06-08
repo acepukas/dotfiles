@@ -64,12 +64,5 @@ return {
         nvim_lsp[server].setup(server_conf)
       end
     end,
-    -- setup = {
-    --   clangd = function(_, opts)
-    --     local clangd_ext_opts = require("util").opts("clangd_extensions.nvim")
-    --     require("clangd_extensions").setup(vim.tbl_deep_extend("force", clangd_ext_opts or {}, { server = opts }))
-    --     return false
-    --   end,
-    -- }
   },
 }
