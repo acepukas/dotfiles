@@ -2,7 +2,7 @@ return {
   {
     "vimwiki/vimwiki",
     init = function(_)
-      vim.cmd [[
+      vim.cmd([[
       let g:vimwiki_list = [{
         \ 'automatic_nested_syntaxes': 1,
         \ 'auto_export': 1,
@@ -22,7 +22,7 @@ return {
       let g:vimwiki_global_ext = 0
       let g:vimwiki_toc_header_level = 2
       let g:vimwiki_toc_link_format = 1
-      ]]
+      ]])
     end,
   },
 }
