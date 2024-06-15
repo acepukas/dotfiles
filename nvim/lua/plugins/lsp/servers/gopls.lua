@@ -8,7 +8,15 @@ function M.setup(opts)
         gofumpt = true,
         usePlaceholders = true,
         linksInHover = false,
+        ["build.templateExtensions"] = { "gohtml", "html" },
       },
+    },
+    filetypes = {
+      "go",
+      "gomod",
+      "gowork",
+      "gotmpl",
+      "gotmpl.html",
     },
     init_options = {
       usePlaceholders = true,
