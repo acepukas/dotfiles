@@ -9,20 +9,30 @@
 	status = auto
 [diff]
 	tool = nvimdiff2
+	colorMoved = default
 [difftool]
 	prompt = false
 	trustExitCode = true
 [difftool "nvimdiff2"]
 	cmd = nvim -d $LOCAL $REMOTE
-[pager]
-	diff = 
 [merge]
 	tool = vimdiff
+	conflictstyle = diff3
 [mergetool]
 	prompt = true
 [mergetool "vimdiff"]
 	cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 [core]
 	excludesfile = ~/.gitignore_global
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only --features=interactive
+[include]
+	path = ~/.config/git-delta/themes.gitconfig
+[delta]
+	features = mellow-barbet
+	navigate = true
+	true-color = always
+	side-by-side = false
 [init]
 	defaultBranch = master

@@ -23,6 +23,7 @@ PATHS=(
   ["$DOTFILES/zsh/zshrc"]="$HOME/.zshrc"
   ["$DOTFILES/starship/starship.toml"]="$HOME/.config/starship.toml"
   ["$DOTFILES/bat"]="$HOME/.config/bat"
+  ["$DOTFILES/git-delta"]="$HOME/.config/git-delta"
 )
 
 COMMAND=$1
