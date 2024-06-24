@@ -1,19 +1,24 @@
 local autocmd = vim.api.nvim_create_autocmd
+local augroup = vim.api.nvim_create_augroup
 
 -- Telescope
 autocmd("User", {
+  group = augroup("TelescopeAuGroup", {}),
   pattern = "TelescopePreviewerLoaded",
   command = "setlocal relativenumber",
 })
 
+local FormattingAuGroup = augroup("FormattingAuGroup", {})
 -- remove line length marker for selected file types
 autocmd("FileType", {
+  group = FormattingAuGroup,
   pattern = "text,markdown,xml,html,xhtml",
   command = "setlocal cc=0",
 })
 
 -- 2 spaces for selected file types
 autocmd("FileType", {
+  group = FormattingAuGroup,
   pattern = "xml,html,xhtml,css,scss,javascript,typescript,lua,yaml",
   command = "setlocal shiftwidth=2 tabstop=2",
 })
@@ -21,19 +26,29 @@ autocmd("FileType", {
 -- terminal
 vim.cmd([[command Term :botright vsplit term://$SHELL]])
 
+local TerminalAuGroup = augroup("TerminalAuGroup", {})
 -- enter insert mode when switching to terminal
 -- close terminal buffer on process exit
 autocmd("TermOpen", {
+  group = TerminalAuGroup,
   pattern = "*",
   command = "setlocal listchars= nonumber norelativenumber nocursorline",
 })
-autocmd("TermOpen", { pattern = "*", command = "startinsert" })
-autocmd("BufLeave", { pattern = "term://*", command = "stopinsert" })
+autocmd("TermOpen", {
+  group = TerminalAuGroup,
+  pattern = "*",
+  command = "startinsert",
+})
+autocmd("BufLeave", {
+  group = TerminalAuGroup,
+  pattern = "term://*",
+  command = "stopinsert",
+})
 
 -- neovim built in commenting
-vim.api.nvim_create_autocmd({ "FileType" }, {
+autocmd({ "FileType" }, {
   desc = "Force commentstring to include spaces",
-  -- group = ...,
+  group = augroup("commentStringIncludeSpacesAuGroup", {}),
   callback = function(event)
     local cs = vim.bo[event.buf].commentstring
     vim.bo[event.buf].commentstring = cs:gsub("(%S)%%s", "%1 %%s")
@@ -46,12 +61,10 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 -- au BufNewFile,BufRead *path-possibly-using-globbing setlocal setting=value
 
 local map = require("util").map
-local swRasterizerAuCmdGroup =
-  vim.api.nvim_create_augroup("swRasterizerAuCmdGroup", {})
 
-vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+autocmd({ "BufNewFile", "BufRead" }, {
   once = true,
-  group = swRasterizerAuCmdGroup,
+  group = augroup("swRasterizerAuCmdGroup", {}),
   pattern = "/home/aaron/dev/cpp/sw-rasterizer/*",
   callback = function()
     vim.g.cmake_default_config = "Release"

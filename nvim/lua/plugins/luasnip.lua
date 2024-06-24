@@ -12,6 +12,7 @@ return {
 
       -- hopefully fixes the luasnip jump and dance
       vim.api.nvim_create_autocmd("ModeChanged", {
+        group = vim.api.nvim_create_augroup("ModeChangedLuasnipAuGroup", {}),
         pattern = "*",
         callback = function()
           if
