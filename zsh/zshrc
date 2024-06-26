@@ -126,11 +126,18 @@ export FZF_DEFAULT_COMMAND="$FD_COMMAND_BASE -t f"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_PREVIEW_PREVIEW_BAT_THEME='gruvbox-material'
 _fzf_compgen_path() {
-  eval ${FD_COMMAND_BASE} --exclude ".git" . "$1"
+  eval ${FD_COMMAND_BASE} --type f --exclude ".git" . "$1"
+}
+_fzf_compgen_dir() {
+  eval ${FD_COMMAND_BASE} --type d --exclude ".git" . "$1"
 }
 export FZF_DEFAULT_OPTS="
   -m --history $HOME/.fzf.history --bind ctrl-a:select-all,alt-n:next-history,alt-p:previous-history,ctrl-n:down,ctrl-p:up
   --color hl:11,prompt:14,marker:02,pointer:04,info:14
+"
+export FZF_ALT_C_OPTS="
+--walker dir,hidden
+--walker-skip .git,node_modules,target
 "
 
 # colored man pages
@@ -191,7 +198,5 @@ esac
 
 # dircolors
 eval $($DIRCOLORS -b $HOME/.dir_colors)
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 [ -f "/home/aaron/.ghcup/env" ] && source "/home/aaron/.ghcup/env" # ghcup-env
