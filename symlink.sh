@@ -24,6 +24,7 @@ PATHS=(
   ["$DOTFILES/starship/starship.toml"]="$HOME/.config/starship.toml"
   ["$DOTFILES/bat"]="$HOME/.config/bat"
   ["$DOTFILES/git-delta"]="$HOME/.config/git-delta"
+  ["$DOTFILES/lazygit"]="$HOME/.config/lazygit"
 )
 
 COMMAND=$1
