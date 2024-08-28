@@ -67,7 +67,7 @@ case "$HOSTNAME" in
   hy-brasil)
     ;;
   shangri-la)
-    plugins+=(ripgrep zsh-autosuggestions httpie zsh-syntax-highlighting archlinux)
+    plugins+=(zsh-autosuggestions httpie zsh-syntax-highlighting archlinux)
     ;;
   Aarons-MBP)
     plugins+=(osx)
