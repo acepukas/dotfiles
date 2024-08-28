@@ -155,6 +155,8 @@ format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
 symbol = ""
 style = "bg:color_blue"
 format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
+# Don't trigger for files with the py extension
+detect_extensions = []
 
 [docker_context]
 symbol = ""
