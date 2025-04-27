@@ -57,7 +57,7 @@ return {
         hls = require("plugins.lsp.servers.hls").setup(setup),
         cssls = require("plugins.lsp.servers.cssls").setup(setup),
         html = require("plugins.lsp.servers.html").setup(setup),
-        tsserver = require("plugins.lsp.servers.tsserver").setup(setup),
+        ts_ls = require("plugins.lsp.servers.tsserver").setup(setup),
         pyright = require("plugins.lsp.servers.pyright").setup(setup),
       }
 
