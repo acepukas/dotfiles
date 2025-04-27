@@ -183,8 +183,8 @@ case "$HOSTNAME" in
     export ARCHFLAGS="-arch i386"
     ;;
   shangri-la)
-    if [[ -a $HOME/.shangri-la.zshrc ]]; then
-      . $HOME/.shangri-la.zshrc
+    if [[ -a $HOME/.shangri-la.zsh ]]; then
+      . $HOME/.shangri-la.zsh
     fi
     ;;
   Aarons-MBP)
