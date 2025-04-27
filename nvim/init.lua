@@ -1,5 +1,7 @@
 -- require("config")
 
+vim.deprecate = function() end
+
 require("config.options")
 
 -- initialize lazy.nvim system requirements
