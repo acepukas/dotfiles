@@ -6,6 +6,9 @@ end
 
 function M.map(mode, lhs, rhs, opts)
   local keys = require("lazy.core.handler").handlers.keys
+  if not keys then
+    return
+  end
   ---@cast keys LazyKeysHandler
   -- do not create the keymap if a lazy keys handler exists
   if not keys.active[keys.parse({ lhs, mode = mode }).id] then
