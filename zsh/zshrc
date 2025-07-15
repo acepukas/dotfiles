@@ -69,6 +69,9 @@ case "$HOSTNAME" in
   shangri-la)
     plugins+=(zsh-autosuggestions httpie zsh-syntax-highlighting archlinux)
     ;;
+  elysium)
+    plugins+=(zsh-autosuggestions zsh-syntax-highlighting archlinux)
+    ;;
   Aarons-MBP)
     plugins+=(osx)
     ;;
@@ -121,7 +124,7 @@ export RG_COMMAND_BASE='rg --ignore-file ~/.ignore --hidden --follow --colors=pa
 export FD_COMMAND_BASE='fd --ignore-file ~/.ignore --hidden --follow'
 
 # FZF
-[ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh
+[ -f /usr/bin/fzf ] && source <(fzf --zsh)
 export FZF_DEFAULT_COMMAND="$FD_COMMAND_BASE -t f"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_PREVIEW_PREVIEW_BAT_THEME='gruvbox-material'
@@ -187,6 +190,11 @@ case "$HOSTNAME" in
       . $HOME/.shangri-la.zsh
     fi
     ;;
+  elysium)
+    if [[ -a $HOME/.elysium.zsh ]]; then
+      . $HOME/.elysium.zsh
+    fi
+    ;;
   Aarons-MBP)
     if [[ -a $HOME/.mac.zshrc ]]; then
       . $HOME/.mac.zshrc
@@ -196,7 +204,11 @@ case "$HOSTNAME" in
     ;;
 esac
 
-# dircolors
-eval $($DIRCOLORS -b $HOME/.dir_colors)
-
 [ -f "/home/aaron/.ghcup/env" ] && source "/home/aaron/.ghcup/env" # ghcup-env
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# dircolors (should come last)
+eval $($DIRCOLORS -b $HOME/.dir_colors)
