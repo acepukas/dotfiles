@@ -48,17 +48,21 @@ return {
         on_attach = require("plugins.lsp.keymaps").on_attach,
       }
 
+      local confsDir = "plugins.lsp.servers."
+
       opts.servers = {
-        gopls = require("plugins.lsp.servers.gopls").setup(setup),
-        emmet_ls = require("plugins.lsp.servers.emmet").setup(setup),
-        lua_ls = require("plugins.lsp.servers.luals").setup(setup),
-        clangd = require("plugins.lsp.servers.clangd").setup(setup),
-        -- ccls = require("plugins.lsp.servers.ccls").setup(setup),
-        hls = require("plugins.lsp.servers.hls").setup(setup),
-        cssls = require("plugins.lsp.servers.cssls").setup(setup),
-        html = require("plugins.lsp.servers.html").setup(setup),
-        ts_ls = require("plugins.lsp.servers.tsserver").setup(setup),
-        pyright = require("plugins.lsp.servers.pyright").setup(setup),
+        gopls = require(confsDir .. "gopls").setup(setup),
+        emmet_language_server = require(confsDir .. "emmet_language_server").setup(
+          setup
+        ),
+        lua_ls = require(confsDir .. "luals").setup(setup),
+        clangd = require(confsDir .. "clangd").setup(setup),
+        -- -- ccls = require(confsDir .. "ccls").setup(setup),
+        -- hls = require(confsDir .. "hls").setup(setup),
+        cssls = require(confsDir .. "cssls").setup(setup),
+        html = require(confsDir .. "html").setup(setup),
+        ts_ls = require(confsDir .. "tsserver").setup(setup),
+        pyright = require(confsDir .. "pyright").setup(setup),
       }
 
       for server, server_conf in pairs(opts.servers) do
