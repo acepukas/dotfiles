@@ -17,10 +17,10 @@ return {
     },
     config = function(_, opts)
       local signs = {
-        { text = "✗", hl = "Error" },
-        { text = "⚠", hl = "Warn" },
-        { text = "", hl = "Information" },
-        { text = "?", hl = "Hint" },
+        { text = "󰅚", hl = "Error" },
+        { text = "󰀪", hl = "Warn" },
+        { text = "󰋽", hl = "Info" },
+        { text = "󰌶", hl = "Hint" },
       }
 
       for _, sign in ipairs(signs) do
