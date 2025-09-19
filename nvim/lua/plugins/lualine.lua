@@ -1,16 +1,16 @@
 return {
   {
-    'nvim-lualine/lualine.nvim',
+    "nvim-lualine/lualine.nvim",
     dependencies = {
-      'arkav/lualine-lsp-progress',
+      "arkav/lualine-lsp-progress",
     },
     opts = function()
       return {
         options = {
-          theme = 'gruvbox-material',
+          theme = "gruvbox-material",
         },
         sections = {
-          lualine_c = { { 'filename', path = 1 }, 'lsp_progress' },
+          lualine_c = { { "filename", path = 1 }, "lsp_progress" },
         },
       }
     end,
