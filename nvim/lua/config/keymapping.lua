@@ -60,8 +60,46 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- Global Diagnostic Keymaps (works with LSP servers and nvim-lint linters)
-require("plugins.lsp.keymaps").diag_keymaps()
-
 -- TEMPORARY: run a python script
 -- map('n', '<F9>', ':echo system(\'python "\' . expand(\'%\') . \'"\')<cr>')
+
+-- Adds numbered line jumps to the jump list (like 10j or 5k)
+vim.keymap.set({ "n", "x" }, "j", function()
+  return vim.v.count > 1 and "m'" .. vim.v.count .. "j" or "j"
+end, { noremap = true, expr = true })
+
+vim.keymap.set({ "n", "x" }, "k", function()
+  return vim.v.count > 1 and "m'" .. vim.v.count .. "k" or "k"
+end, { noremap = true, expr = true })
+
+-- use telescope for displaying references instead of neovim built in lsp api
+vim.api.nvim_create_autocmd({ "LspAttach" }, {
+  callback = function(args)
+    local buf_set_keymap = vim.api.nvim_buf_set_keymap
+    local opts = { noremap = true, silent = true, desc = "References" }
+    -- Map 'grr' to open Telescope's LSP references picker
+    buf_set_keymap(
+      args.buf,
+      "n",
+      "grr",
+      '<cmd>lua require("telescope.builtin").lsp_references()<cr>',
+      opts
+    )
+  end,
+})
+
+-- goto definition mapping
+vim.api.nvim_create_autocmd({ "LspAttach" }, {
+  callback = function(args)
+    local buf_set_keymap = vim.api.nvim_buf_set_keymap
+    local opts = { noremap = true, silent = true, desc = "Goto Definition" }
+    -- Map 'grd' to builtin LSP goto definition api
+    buf_set_keymap(args.buf, "n", "grd", "<cmd>LspGotoDefinition<cr>", opts)
+  end,
+})
+
+-- Use telescope for diagnostics list
+-- Define a keymap to open a Telescope picker for diagnostics
+vim.keymap.set("n", "<leader>l", function()
+  require("telescope.builtin").diagnostics()
+end, { desc = "Open Telescope diagnostics" })

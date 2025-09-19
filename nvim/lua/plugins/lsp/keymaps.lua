@@ -10,11 +10,9 @@ function M.on_attach(client, bufnr)
 
   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 
-  cmd("command! LspTypeDef lua vim.lsp.buf.type_definition()")
   cmd("command! LspAddWorkspaceFolder lua vim.lsp.buf.add_workspace_folder()")
-  cmd(
-    "command! LspRemoveWorkspaceFolder lua vim.lsp.buf.remove_workspace_folder()"
-  )
+  cmd("command! LspRemoveWorkspaceFolder lua vim.lsp.buf.remove_workspace_folder()")
+  cmd("command! LspGotoDefinition lua vim.lsp.buf.definition()")
 
   local opts = { buffer = bufnr }
   local function setOpts(o)
@@ -35,29 +33,12 @@ function M.on_attach(client, bufnr)
   )
   map(
     "n",
-    "<leader>D",
-    ":LspTypeDef<CR>",
-    setOpts({ desc = "Type definition" })
-  )
-  map(
-    "n",
     "<leader>cR",
     ":ClangdSwitchSourceHeader<cr>",
     setOpts({ desc = "Switch Source/Header (C/C++)" })
   )
 
   require("illuminate").on_attach(client)
-end
-
-function M.diag_keymaps()
-  cmd("command! LspDiagSetLocList lua vim.diagnostic.setloclist()")
-
-  map(
-    "n",
-    "<leader>l",
-    ":LspDiagSetLocList<CR>",
-    { desc = "Dianostics to loclist" }
-  )
 end
 
 return M
