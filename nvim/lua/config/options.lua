@@ -38,6 +38,23 @@ opt.listchars = {
 }
 opt.showbreak = '↪ ' -- for wrapped lines
 
+-- wildignore
+opt.wildignore = {
+  "*.o",
+  "*.obj",
+  "*.bak",
+  "*.swp",
+  "*.swo",
+  "*.tmp",
+  ".git",
+  ".svn",
+  ".DS_Store",
+  "node_modules",
+  "dist",
+  "build",
+  "*_templ.go",
+}
+
 -- Perf
 opt.hidden = true -- background buffers
 opt.history = 100 -- remember 100 lines in command history

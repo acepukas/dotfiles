@@ -63,6 +63,7 @@ return {
         html = require(confsDir .. "html").setup(setup),
         ts_ls = require(confsDir .. "tsserver").setup(setup),
         pyright = require(confsDir .. "pyright").setup(setup),
+        templ = setup,
       }
 
       for server, server_conf in pairs(opts.servers) do

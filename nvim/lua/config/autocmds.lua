@@ -12,14 +12,14 @@ local FormattingAuGroup = augroup("FormattingAuGroup", {})
 -- remove line length marker for selected file types
 autocmd("FileType", {
   group = FormattingAuGroup,
-  pattern = "text,markdown,xml,html,xhtml",
+  pattern = "text,markdown,xml,html,xhtml,templ",
   command = "setlocal cc=0",
 })
 
 -- 2 spaces for selected file types
 autocmd("FileType", {
   group = FormattingAuGroup,
-  pattern = "xml,html,xhtml,css,scss,javascript,typescript,lua,yaml",
+  pattern = "xml,html,xhtml,css,scss,javascript,typescript,lua,yaml,templ",
   command = "setlocal shiftwidth=2 tabstop=2",
 })
 

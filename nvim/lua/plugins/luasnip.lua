@@ -10,6 +10,8 @@ return {
     config = function()
       local luasnip = require("luasnip")
 
+      luasnip.filetype_extend("templ", { "html" })
+
       -- hopefully fixes the luasnip jump and dance
       vim.api.nvim_create_autocmd("ModeChanged", {
         group = vim.api.nvim_create_augroup("ModeChangedLuasnipAuGroup", {}),
