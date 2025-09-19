@@ -77,3 +77,14 @@ autocmd({ "BufNewFile", "BufRead" }, {
     map("n", "<F12>", ":CMakeBuild<CR>")
   end,
 })
+
+-- custom highlights for gruvbox-material
+local function set_custom_highlights()
+  vim.api.nvim_set_hl(0, "@constant.css", { link = "Character", bold = true })
+end
+
+set_custom_highlights()
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+  callback = set_custom_highlights,
+})
