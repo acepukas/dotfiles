@@ -24,9 +24,10 @@ require("lazy").setup("plugins", {
   dev = {
     path = "~/dev/neovim_plugins",
   },
-  install = { colorscheme = { "gruvbox-material", "habamax" } },
+  install = { colorscheme = { "gruvbox-material", "retrobox" } },
   checker = { enabled = true },
 })
 
 require("config.keymapping")
 require("config.autocmds")
+require("tools.run_sql")
