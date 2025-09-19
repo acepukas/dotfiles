@@ -15,12 +15,6 @@ map("x", "<M-k>", ":m '<-2<CR>gv=gv")
 map("n", "<M-k>", "ddkP")
 map("n", "<M-j>", "ddp")
 
--- move around splits easy
-map("n", "<C-j>", "<C-w><C-j>")
-map("n", "<C-k>", "<C-w><C-k>")
-map("n", "<C-h>", "<C-w><C-h>")
-map("n", "<C-l>", "<C-w><C-l>")
-
 -- remap arrow keys for wildmenu
 vim.cmd([[
 set wildcharm=<C-Z>
