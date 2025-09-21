@@ -31,3 +31,4 @@ require("lazy").setup("plugins", {
 require("config.keymapping")
 require("config.autocmds")
 require("tools.run_sql")
+require("plugins.lsp.format")

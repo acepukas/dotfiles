@@ -31,7 +31,6 @@ return {
         vim.fn.sign_define(signData.texthl, signData)
       end
 
-      local nvim_lsp = require("lspconfig")
       require("lspconfig.configs")
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -45,7 +44,6 @@ return {
       local setup = {
         capabilities = capabilities,
         flags = { debounce_text_changes = 150 },
-        on_attach = require("plugins.lsp.keymaps").on_attach,
       }
 
       local confsDir = "plugins.lsp.servers."
@@ -56,18 +54,18 @@ return {
           setup
         ),
         lua_ls = require(confsDir .. "luals").setup(setup),
-        clangd = require(confsDir .. "clangd").setup(setup),
-        -- -- ccls = require(confsDir .. "ccls").setup(setup),
+        clangd = setup,
         -- hls = require(confsDir .. "hls").setup(setup),
-        cssls = require(confsDir .. "cssls").setup(setup),
-        html = require(confsDir .. "html").setup(setup),
-        ts_ls = require(confsDir .. "tsserver").setup(setup),
-        pyright = require(confsDir .. "pyright").setup(setup),
+        cssls = setup,
+        html = setup,
+        ts_ls = setup,
+        pyright = setup,
         templ = setup,
       }
 
       for server, server_conf in pairs(opts.servers) do
-        nvim_lsp[server].setup(server_conf)
+        vim.lsp.config(server, server_conf)
+        vim.lsp.enable(server)
       end
     end,
   },

@@ -18,6 +18,7 @@ return {
         markdown = { "prettier" },
         lua = { "stylua" },
         templ = { "templ" },
+        go = { "goimports", "gofumpt" },
       },
       format_on_save = {
         lsp_format = "fallback",
@@ -29,6 +30,11 @@ return {
           command = "/home/aaron/go/bin/templ",
           args = { "fmt", "-stdin-filepath", "$FILENAME" },
           exit_codes = { 0, 1 },
+        },
+        gofumpt = {
+          inherit = true,
+          command = "/home/aaron/go/bin/gofumpt",
+          prepend_args = { "-extra" },
         },
       },
     })

@@ -5,7 +5,7 @@ function M.setup(opts)
     mason = false,
     settings = {
       gopls = {
-        gofumpt = true,
+        gofumpt = false,
         usePlaceholders = true,
         linksInHover = false,
         ["build.templateExtensions"] = { "gohtml", "html" },
@@ -21,10 +21,6 @@ function M.setup(opts)
     init_options = {
       usePlaceholders = true,
     },
-    on_attach = function(client, bufnr)
-      require("plugins.lsp.format").attach_go_save_utils(client, bufnr)
-      opts.on_attach(client, bufnr)
-    end,
   })
 end
 
