@@ -105,6 +105,7 @@ vim.api.nvim_create_autocmd({ "LspAttach" }, {
     vim.cmd(
       "command! LspRemoveWorkspaceFolder lua vim.lsp.buf.remove_workspace_folder()"
     )
+    vim.cmd("command! LspDocumentSymbols lua vim.lsp.buf.document_symbol()")
 
     local buf_set_keymap = vim.api.nvim_buf_set_keymap
     -- use telescope for displaying references instead of neovim built in lsp api
@@ -124,6 +125,15 @@ vim.api.nvim_create_autocmd({ "LspAttach" }, {
       "grd",
       "<cmd>LspGotoDefinition<cr>",
       setOpts({ desc = "Goto Definition" })
+    )
+    -- document symbols mapping
+    -- Map 'grs' to builtin LSP document symbols list
+    buf_set_keymap(
+      args.buf,
+      "n",
+      "grs",
+      "<cmd>LspDocumentSymbols<cr>",
+      setOpts({ desc = "Document Symbols" })
     )
 
     buf_set_keymap(

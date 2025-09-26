@@ -10,52 +10,40 @@ return {
       diagnostics = {
         underline = true,
         virtual_text = false,
-        signs = true,
+        signs = {
+          text = {
+            [vim.diagnostic.severity.ERROR] = "󰅚",
+            [vim.diagnostic.severity.WARN] = "󰀪",
+            [vim.diagnostic.severity.INFO] = "󰋽",
+            [vim.diagnostic.severity.HINT] = "󰌶",
+          },
+        },
         severity_sort = true,
       },
-      capabilities = {},
     },
     config = function(_, opts)
-      local signs = {
-        { text = "󰅚", hl = "Error" },
-        { text = "󰀪", hl = "Warn" },
-        { text = "󰋽", hl = "Info" },
-        { text = "󰌶", hl = "Hint" },
-      }
-
-      for _, sign in ipairs(signs) do
-        local signData = {
-          text = sign.text,
-          texthl = "DiagnosticSign" .. sign.hl,
-        }
-        vim.fn.sign_define(signData.texthl, signData)
-      end
+      vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
 
       require("lspconfig.configs")
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities.textDocument.completion.completionItem.snippetSupport = true
       capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
-      vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
-
-      -- huh?
-      opts.capabilities = capabilities
-
       local setup = {
         capabilities = capabilities,
         flags = { debounce_text_changes = 150 },
       }
 
-      local confsDir = "plugins.lsp.servers."
+      local reqConf = function(fname)
+        return require("plugins.lsp.servers." .. fname)
+      end
 
-      opts.servers = {
-        gopls = require(confsDir .. "gopls").setup(setup),
-        emmet_language_server = require(confsDir .. "emmet_language_server").setup(
-          setup
-        ),
-        lua_ls = require(confsDir .. "luals").setup(setup),
+      local servers = {
+        gopls = reqConf("gopls").setup(setup),
+        emmet_language_server = reqConf("emmet_language_server").setup(setup),
+        lua_ls = reqConf("luals").setup(setup),
         clangd = setup,
-        -- hls = require(confsDir .. "hls").setup(setup),
+        -- hls = reqConf("hls").setup(setup),
         cssls = setup,
         html = setup,
         ts_ls = setup,
@@ -63,7 +51,7 @@ return {
         templ = setup,
       }
 
-      for server, server_conf in pairs(opts.servers) do
+      for server, server_conf in pairs(servers) do
         vim.lsp.config(server, server_conf)
         vim.lsp.enable(server)
       end
