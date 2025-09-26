@@ -11,6 +11,13 @@ return {
       local telescope = require("telescope")
       local lga_actions = require("telescope-live-grep-args.actions")
       opts = vim.tbl_extend("force", opts, {
+        defaults = {
+          mappings = {
+            i = {
+              ["<c-h>"] = require("telescope.actions.layout").toggle_preview,
+            },
+          },
+        },
         extensions = {
           fzf = {
             fuzzy = true,
