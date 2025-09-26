@@ -35,7 +35,7 @@ opt.listchars = {
   precedes = "«",
   nbsp = "⣿",
 }
-opt.showbreak = '↪ ' -- for wrapped lines
+opt.showbreak = "↪ " -- for wrapped lines
 
 -- wildignore
 opt.wildignore = {
