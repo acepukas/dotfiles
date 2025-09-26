@@ -282,6 +282,7 @@ EXEC  1;30;32
 # template files
 .pug          38;2;211;113;80;1
 .html         38;2;211;113;80;1
+.templ        38;2;211;113;80;1
 
 ## Data / database (light green)
 .db     38;5;14;1
@@ -312,27 +313,28 @@ EXEC  1;30;32
 .css  38;2;211;134;155;1
 
 ## Machine generated files / non-important (bright black)
-.log        01;37
-.bak        01;37
-.aux        01;37
-.lof        01;37
-.lol        01;37
-.lot        01;37
-.out        01;37
-.toc        01;37
-.bbl        01;37
-.blg        01;37
-*~          01;37
-*#          01;37
-.part       01;37
-.incomplete 01;37
-.swp        01;37
-.tmp        01;37
-.temp       01;37
-.o          01;37
-.obj        01;37
-.pyc        01;37
-.pyo        01;37
-.class      01;37
-.cache      01;37
-.egg-info   01;37
+.log        37
+.bak        37
+.aux        37
+.lof        37
+.lol        37
+.lot        37
+.out        37
+.toc        37
+.bbl        37
+.blg        37
+*~          37
+*#          37
+.part       37
+.incomplete 37
+.swp        37
+.tmp        37
+.temp       37
+.o          37
+.obj        37
+.pyc        37
+.pyo        37
+.class      37
+.cache      37
+.egg-info   37
+*_templ.go  37
