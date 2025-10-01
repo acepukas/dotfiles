@@ -120,7 +120,7 @@ set -o ignoreeof
 export KEYTIMEOUT=15
 
 # RIPGREP config
-export RG_COMMAND_BASE='rg --ignore-file ~/.ignore --hidden --follow --colors=path:fg:white --colors=line:fg:white --colors=match:fg:yellow'
+export RIPGREP_CONFIG_PATH=~/.rgrc
 export FD_COMMAND_BASE='fd --ignore-file ~/.ignore --hidden --follow'
 
 # FZF

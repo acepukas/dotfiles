@@ -17,6 +17,7 @@ PATHS=(
   ["$DOTFILES/git/gitconfig"]="$HOME/.gitconfig"
   ["$DOTFILES/git/gitignore_global"]="$HOME/.gitignore_global"
   ["$DOTFILES/ripgrep/ignore"]="$HOME/.ignore"
+  ["$DOTFILES/ripgrep/rgrc"]="$HOME/.rgrc"
   ["$DOTFILES/tmux/tmux.conf"]="$HOME/.tmux.conf"
   ["$DOTFILES/tmux/themes"]="$HOME/.tmux/themes"
   ["$DOTFILES/nvim"]="$HOME/.config/nvim"

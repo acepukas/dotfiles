@@ -1,0 +1,13 @@
+--ignore-file
+~/.ignore
+--hidden
+--follow
+--colors=path:fg:blue
+--colors=line:fg:magenta
+--colors=match:fg:yellow
+--type-add
+templ:*.templ
+--type-add
+be:*.{go,sql,mod,env}
+--type-add
+fe:*.{html,templ,js,mjs,css}
