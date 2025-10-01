@@ -34,6 +34,10 @@ return {
           ["ui-select"] = require("telescope.themes").get_dropdown({}),
         },
         pickers = {
+          find_files = {
+            file_ignore_patterns = { "node_modules", ".git" },
+            hidden = true,
+          },
           buffers = {
             ignore_current_buffer = true,
             sort_lastused = true,
@@ -61,13 +65,13 @@ return {
         { desc = "Recursive file fuzzy search" }
       )
       -- vimgrep_arguments are custom here to ensure case sensitivity and word boundary are respected
-      local live_grep_args_shortcuts =
-        require("telescope-live-grep-args.shortcuts")
+      local lga_shortcuts = require("telescope-live-grep-args.shortcuts")
       map("n", "<leader>*", function()
-        live_grep_args_shortcuts.grep_word_under_cursor({
-          postfix = " -F -s -w",
-        })
+        lga_shortcuts.grep_word_under_cursor({ postfix = " -F -s -w" })
       end, { desc = "Recursive search word under corsor" })
+      map("x", "<leader>*", function()
+        lga_shortcuts.grep_visual_selection({ postfix = " -F -s -w" })
+      end, { desc = "Recursive search visually selected" })
       map(
         "n",
         "<leader>q",
