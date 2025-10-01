@@ -24,6 +24,16 @@ return {
     config = function(_, opts)
       vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
 
+      local diagSignTypes = { "Error", "Warn", "Info", "Hint" }
+
+      for i, sign in ipairs(diagSignTypes) do
+        local signData = {
+          text = opts.diagnostics.signs.text[i],
+          texthl = "DiagnosticSign" .. sign,
+        }
+        vim.fn.sign_define(signData.texthl, signData)
+      end
+
       require("lspconfig.configs")
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities.textDocument.completion.completionItem.snippetSupport = true
