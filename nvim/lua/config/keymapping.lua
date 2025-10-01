@@ -28,9 +28,16 @@ cnoremap <expr> <right> getcmdline() =~# edit_re && wildmenumode() ? " \<bs>\<C-
 -- toggle spell check
 map(
   "n",
-  "<leader>t",
+  "<leader>ts",
   "<cmd>setlocal invspell<cr>",
-  { desc = "Spell check toggle" }
+  { desc = "[T]oggle [S]pell check " }
+)
+
+map(
+  "n",
+  "<leader>tc",
+  ":setlocal <C-R>=&conceallevel ? 'conceallevel=0' : 'conceallevel=2'<CR><CR>",
+  { desc = "[T]oggle [C]onceallevel" }
 )
 
 -- zeal
@@ -156,6 +163,6 @@ vim.api.nvim_create_autocmd({ "LspAttach" }, {
 
 -- Use telescope for diagnostics list
 -- Define a keymap to open a Telescope picker for diagnostics
-vim.keymap.set("n", "<leader>l", function()
+map("n", "<leader>l", function()
   require("telescope.builtin").diagnostics()
 end, { desc = "Open Telescope diagnostics" })
