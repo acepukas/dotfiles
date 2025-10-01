@@ -96,25 +96,63 @@ return {
           ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i" }),
         },
         sources = cmp.config.sources({
-          { name = "nvim_lsp", priority = 8 },
-          { name = "luasnip", priority = 7 },
-          { name = "nvim_lua", priority = 5 },
-          { name = "nvim_lsp_signature_help" },
-        }, {
-          { name = "path", priority = 5, option = { get_cwd = cwd } },
-          { name = "buffer", option = { get_bufnrs = get_bufnrs } },
+          {
+            name = "nvim_lsp",
+            priority = 8,
+            group_index = 1,
+          },
+          {
+            name = "luasnip",
+            priority = 7,
+            group_index = 1,
+          },
+          {
+            name = "nvim_lua",
+            priority = 5,
+            group_index = 1,
+            entry_filter = function()
+              if vim.bo.filetype ~= "lua" then
+                return false
+              end
+            end,
+          },
+          {
+            name = "buffer",
+            option = { get_bufnrs = get_bufnrs },
+            max_item_count = 5,
+            keyword_length = 2,
+            priority = 4,
+            entry_filter = function(entry)
+              return not entry.exact
+            end,
+            group_index = 3,
+          },
+          {
+            name = "path",
+            priority = 4,
+            option = { get_cwd = cwd },
+            group_index = 3,
+          },
+          {
+            name = "nvim_lsp_signature_help",
+            priority = 4,
+            group_index = 2,
+          },
         }),
         sorting = {
           priority_weight = 1.0,
           comparators = {
-            cmp.config.compare.offset,
-            cmp.config.compare.exact,
+            cmp.config.compare.locality,
             cmp.config.compare.recently_used,
-            require("clangd_extensions.cmp_scores"),
-            cmp.config.compare.kind,
-            cmp.config.compare.sort_text,
-            cmp.config.compare.length,
+            cmp.config.compare.score,
+            cmp.config.compare.offset,
             cmp.config.compare.order,
+            -- cmp.config.compare.exact,
+            -- require("clangd_extensions.cmp_scores"),
+            -- cmp.config.compare.kind,
+            -- cmp.config.compare.sort_text,
+            -- cmp.config.compare.length,
+            -- cmp.config.compare.order,
           },
         },
         formatting = {
