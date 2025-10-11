@@ -107,6 +107,9 @@ vim.api.nvim_create_autocmd({ "LspAttach" }, {
     )
     vim.cmd("command! LspGotoDefinition lua vim.lsp.buf.definition()")
     vim.cmd(
+      "command! LspGotoImplementation lua require('telescope.builtin').lsp_implementations()"
+    )
+    vim.cmd(
       "command! LspAddWorkspaceFolder lua vim.lsp.buf.add_workspace_folder()"
     )
     vim.cmd(
@@ -133,6 +136,15 @@ vim.api.nvim_create_autocmd({ "LspAttach" }, {
       "<cmd>LspGotoDefinition<cr>",
       setOpts({ desc = "Goto Definition" })
     )
+
+    buf_set_keymap(
+      args.buf,
+      "n",
+      "gri",
+      "<cmd>LspGotoImplementation<cr>",
+      setOpts({ desc = "Goto Implementation" })
+    )
+
     -- document symbols mapping
     -- Map 'grs' to builtin LSP document symbols list
     buf_set_keymap(
