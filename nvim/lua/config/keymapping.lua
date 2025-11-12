@@ -83,18 +83,18 @@ vim.keymap.set({ "n", "x" }, "k", function()
   return vim.v.count > 1 and "m'" .. vim.v.count .. "k" or "k"
 end, { noremap = true, expr = true })
 
--- Used for LspAttach convenience
-local opts = { noremap = true, silent = true }
-local function setOpts(o)
-  return vim.tbl_deep_extend("force", o, opts)
-end
-
 -- LspAttach executes code on the lsp attach event. Any code that can only be
 -- set up as soon as the lsp has attached to a buffer should be placed in an
 -- LspAttach auto command.
 vim.api.nvim_create_autocmd({ "LspAttach" }, {
   group = vim.api.nvim_create_augroup("my.lsp.keymaps", {}),
   callback = function(args)
+    -- Used for LspAttach convenience
+    local opts = { noremap = true, silent = true }
+    local function setOpts(o)
+      return vim.tbl_deep_extend("force", o, opts)
+    end
+
     -- activate omnifunc
     vim.api.nvim_set_option_value(
       "omnifunc",
@@ -178,3 +178,8 @@ vim.api.nvim_create_autocmd({ "LspAttach" }, {
 map("n", "<leader>l", function()
   require("telescope.builtin").diagnostics()
 end, { desc = "Open Telescope diagnostics" })
+
+-- Resume last telescope search
+map("n", "<leader>r", function()
+  require("telescope.builtin").resume()
+end, { desc = "Resume last Telescope search" })
