@@ -2,13 +2,11 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     version = false,
+    branch = "main",
+    lazy = false,
     build = ":TSUpdate",
     event = { "BufReadPost", "BufNewFile" },
     dependencies = {
-      {
-        "nvim-treesitter/playground",
-        cmd = "TSPlaygroundToggle",
-      },
       {
         "nvim-treesitter/nvim-treesitter-textobjects",
         init = function()
@@ -32,13 +30,33 @@ return {
         end,
       },
     },
-    opts = {
-      highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = true,
-      },
-      indent = { enable = true },
-      ensure_installed = {
+    config = function()
+      local function treesitter_enable(filetype)
+        local WAIT_TIME = 1000 * 30 -- 30 seconds
+        local lang = vim.treesitter.language.get_lang(filetype)
+        if lang ~= nil then
+          require("nvim-treesitter").install(lang):wait(WAIT_TIME)
+          vim.api.nvim_create_autocmd("FileType", {
+            desc = "Enable Treesitter features for " .. lang,
+            pattern = vim.treesitter.language.get_filetypes(lang),
+            callback = function()
+              if vim.treesitter.query.get(lang, "highlights") then
+                vim.treesitter.start()
+              end
+              if vim.treesitter.query.get(lang, "indents") then
+                vim.bo.indentexpr =
+                  "v:lua.require('nvim-treesitter').indentexpr()"
+              end
+              if vim.treesitter.query.get(lang, "folds") then
+                vim.wo.foldmethod = "expr"
+                vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+              end
+            end,
+          })
+        end
+      end
+
+      local syntaxes = {
         "bash",
         "c",
         "cmake",
@@ -69,34 +87,11 @@ return {
         "markdown_inline",
         "query",
         "gotmpl",
-      },
-    },
-    config = function(_, opts)
-      -- treesitter setup for golang template files
-      local parser_config =
-        require("nvim-treesitter.parsers").get_parser_configs()
-      parser_config.gotmpl = {
-        install_info = {
-          url = "https://github.com/ngalaiko/tree-sitter-go-template",
-          files = { "src/parser.c" },
-        },
-        filetype = "gotmpl",
-        used_by = { "gohtmltmpl", "gotexttmpl", "gotmpl", "yaml" },
       }
 
-      -- load language parser only if not already available
-      if type(opts.ensure_installed) == "table" then
-        local added = {}
-        opts.ensure_installed = vim.tbl_filter(function(lang)
-          if added[lang] then
-            return false
-          end
-          added[lang] = true
-          return true
-        end, opts.ensure_installed)
+      for _, syntax in ipairs(syntaxes) do
+        treesitter_enable(syntax)
       end
-
-      require("nvim-treesitter.configs").setup(opts)
     end,
   },
 }
