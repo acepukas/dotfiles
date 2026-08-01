@@ -21,7 +21,7 @@
 [mergetool]
 	prompt = true
 [mergetool "vimdiff"]
-	cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+	cmd = nvim -d $LOCAL $REMOTE $MERGED -c 'wincmd w' -c 'wincmd J'
 [core]
 	excludesfile = ~/.gitignore_global
 	pager = delta
@@ -33,7 +33,6 @@
 	features = mellow-barbet
 	navigate = true
 	true-color = always
-	side-by-side = false
 [init]
 	defaultBranch = master
 [url "git@github.com:"]
